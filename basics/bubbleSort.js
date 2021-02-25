@@ -1,5 +1,5 @@
 
-// bubble sort
+// bubble sort => 2 optimizations: flag var & 2nd for loop
 
 // const bubbleSort = arr => { // worst way
 // for (let i = 0; i < arr.length; i++, count++) {
@@ -28,3 +28,15 @@ const bubbleSort = arr => {
 
   return arr;
 };
+
+
+
+// let array = [ 4, 3, 2, 1, -10, 11, 3030, -23, 43, 42, 41, -1, -2, -10, -9, 8, 8 ];
+// console.log(array);
+// console.log( 'res:', bubbleSort(array) );
+
+
+// let arr = [ 1, 2, 3, 4 ];
+// [ arr[0], arr[1] ] = [ arr[1], arr[0] ];
+// console.log('arr:', arr)
+
