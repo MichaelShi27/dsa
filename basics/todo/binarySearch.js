@@ -4,7 +4,7 @@ const binarySearch = (arr, target) => {
 
   while (low !== high) {
     let mid = Math.floor( (high + low) / 2 );
-    console.log(high, mid, low);
+    // console.log(high, mid, low);
     if (arr[mid] > target) high = mid;
     else if (arr[mid] < target) low = mid;
     else return mid;
