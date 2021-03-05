@@ -1,3 +1,5 @@
+// in results arr, 0 means 2nd team won, 1 means 1st won
+
 const tournamentWinner = (competitions, results) => {
   const obj = {};
   let max = 0;

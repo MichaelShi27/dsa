@@ -1,3 +1,5 @@
+// find minimum change amount that can't be created as a sum of coin vals in arr
+
 const nonConstructibleChange = coins => {
   coins = coins.sort((a, b) => a - b);
   let currentMax = 0;
@@ -17,3 +19,5 @@ console.log( nonConstructibleChange(coins) );
 
 
 // can also solve by switching 8 & 9, removing 5, changing coins[i + 1] to [i], return currentMax + 1 inside for loop
+
+// derive the algo by thinking of what the first and second values in the sorted array HAVE to be, i.e. 1 and less than 3

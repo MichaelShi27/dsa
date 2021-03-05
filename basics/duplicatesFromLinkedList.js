@@ -10,6 +10,7 @@ const removeDuplicatesFromLinkedList = list => {
   return list;
 };
 
+// can also solve w/ an inner loop that traverses all current duplicates at once, then removes them all at once
 
 // TESTING
 

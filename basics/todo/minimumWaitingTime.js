@@ -1,3 +1,7 @@
+// each num in an arr represents the time it takes to do that task
+// find the minimum total waiting time of an array if you add up the time each task had to wait
+// first el doesn't need to wait
+
 // const minimumWaitingTime = queries => {
 //   if (queries.length === 1) return 0;
 
