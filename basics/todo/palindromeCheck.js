@@ -13,3 +13,5 @@ let string = 'abcddcba';
 console.log( isPalindrome(string) );
 
 // can also just reverse string and check if it's equal to input lol
+
+// also a recursive solution - starting from both ends, check if each value is equal, then increment/decrement pointer and recurse with new pointers
