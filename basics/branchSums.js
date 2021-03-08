@@ -25,3 +25,5 @@ const branchSums = (node, arr = [], sum = 0) => {
 
   return arr;
 };
+
+// O(n) time?

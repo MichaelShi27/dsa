@@ -1,14 +1,15 @@
-const findClosestValue = (node, val, currentRes = 0, currentGap = Number.POSITIVE_INFINITY) => {
+const findClosestValueInBst = (node, val, currentRes) => {
+  if (!node) return;
   if (node.value === val) return val;
-  if ( Math.abs(val - node.value) < currentGap ) {
+  if (currentRes === undefined) currentRes = node.value;
+
+  if ( Math.abs(val - node.value) < Math.abs(val - currentRes) )
     currentRes = node.value;
-    currentGap = val - node.value;
-  }
 
   if (val > node.value)
-    findClosestValue(node.right, val, currentRes, currentGap);
+    currentRes = findClosestValueInBst(node.right, val, currentRes);
   if (val < node.value)
-    findClosestValue(node.left, val, currentRes, currentGap);
+    currentRes = findClosestValueInBst(node.left, val, currentRes);
 
-    return currentRes;
+  return currentRes;
 };
