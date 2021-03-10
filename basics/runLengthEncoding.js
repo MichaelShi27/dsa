@@ -12,9 +12,10 @@ const runLengthEncoding = string => {
   return res.join('');
 };
 
+// move count++ into for loop
 
 // let str = 'AAA'; // 3A
-// let str = 'AAAAAAAAAAAA'; // 9A3A
-let str = 'AAAAAAAAAAAAABBCCCCDD'; // 9A4A2B4C2D
+let str = 'AAAAAAAAAA'; // 9A1A
+// let str = 'AAAAAAAAAAAAABBCCCCDD'; // 9A4A2B4C2D
 
 console.log( runLengthEncoding(str) );

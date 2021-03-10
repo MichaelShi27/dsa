@@ -9,7 +9,7 @@ const caesarCipherEncryptor = (string, key) => {
   let res = [];
 
   for (let i = 0; i < string.length; i++) {
-    let num = obj[str[i]];
+    let num = obj[string[i]];
     num += key;
     if (num > 26) num %= 26;
     res.push(obj[num]);
@@ -19,3 +19,5 @@ const caesarCipherEncryptor = (string, key) => {
 
 let str = 'xyz';
 console.log( caesarCipherEncryptor(str, 2) );
+
+// just use array lol
