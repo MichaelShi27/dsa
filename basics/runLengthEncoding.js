@@ -4,7 +4,7 @@ const runLengthEncoding = string => {
   for (let i = 0; i < string.length; i++) {
     count++;
 
-    if (!str[i + 1] || str[i] !== str[i + 1] || count === 9) {
+    if (str[i] !== str[i + 1] || count === 9) {
       res.push(`${count}${str[i]}`)
       count = 0;
     }
