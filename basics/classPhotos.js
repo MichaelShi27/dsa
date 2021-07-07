@@ -1,5 +1,5 @@
-// // all kids in a row must wear same color shirt (only 2 rows)
-// // every kid must be strictly taller than kid in front
+// // // all kids in a row must wear same color shirt (only 2 rows)
+// // // every kid must be strictly taller than kid in front
 const classPhotos = (redShirtHeights, blueShirtHeights) => {
   let tallerArr = redShirtHeights.sort((a, b) => a - b);
   let shorterArr = blueShirtHeights.sort((a, b) => a - b);
