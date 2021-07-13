@@ -118,4 +118,100 @@ const capitalizeWords = arr => {
   return arr;
 };
 
-console.log( capitalizeWords(['hi', 'there', 'my friend']) );
+// console.log( capitalizeWords(['hi', 'there', 'my friend']) );
+
+// function foo(arr) {
+//   let count = 0;
+//   for (var i = 0; i < arr.length; i++) {
+//       for (var j = 0; j <= i; j++) {
+//           // console.log(i, j);
+//           count++;
+//       }
+//   }
+//   console.log(count);
+//   console.log(arr.length ** 2 / count);
+// }
+
+// const fill = num => {
+//   let arr = [];
+//   for (let i = 0; i <= num; i++)
+//     arr.push(i);
+//   return arr;
+// }
+// console.log( foo(fill(1000)) );
+
+// const stringifyNumbers = obj => {
+//   for (let key in obj) {
+//     if ( isObject(obj[key]) )
+//       obj[key] = stringifyNumbers(obj[key]);
+//     if (typeof obj[key] === 'number')
+//       obj[key] = obj[key].toString();
+//   }
+//   return obj;
+// };
+
+const stringifyNumbers = obj => {
+  let res = {};
+  for (let key in obj) {
+    if ( isObject(obj[key]) )
+      res[key] = stringifyNumbers(obj[key]);
+    else if (typeof obj[key] === 'number')
+      res[key] = obj[key].toString();
+    else
+      res[key] = obj[key];
+  }
+  return res;
+};
+
+let obj = {
+  num: 1, test: [], data: {
+    val: 4,info: {
+      isRight: true, random: 66
+    }
+  }
+};
+// console.log(stringifyNumbers(obj));
+
+const collectStrings = obj => {
+  let arr = [];
+
+  for (let key in obj) {
+    if (typeof obj[key] === 'string')
+      arr.push(obj[key]);
+    if ( isObject(obj[key]) )
+      arr = arr.concat( collectStrings(obj[key]) );
+  }
+  return arr
+};
+
+let test = {
+  stuff: "foo",
+  data: {
+      val: {
+          thing: {
+              info: "bar",
+              moreInfo: {
+                  evenMoreInfo: {
+                      weMadeIt: "baz"
+                  }
+              }
+          }
+      }
+  }
+}
+// console.log(collectStrings(test));
+
+const addStringNumbers = (str1, str2) => {
+  const obj = { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 0: 0 };
+
+  const convertToNum = str => {
+    let num = 0;
+    for (let i = str.length - 1, base = 1; i > - 1; i--, base *= 10)
+      num += obj[str[i]] * base;
+    return num;
+  }
+
+  return convertToNum(str1) + convertToNum(str2);
+};
+
+// console.log(addStringNumbers('101', '13'));
