@@ -43,6 +43,7 @@ var productExceptSelf = function(nums) {
     const res = [];
     for (let i = 0; i < nums.length; i++)
         res.push( left[i] * right[i] );
+
     return res;
 };
 
