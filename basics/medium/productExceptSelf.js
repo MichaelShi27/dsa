@@ -1,4 +1,4 @@
-// iven an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+// Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
 
 // The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
 
@@ -22,6 +22,7 @@
 // -30 <= nums[i] <= 30
 // The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
 
+// linear space
 var productExceptSelf = function(nums) {
     const left = [];
     const right = new Array(nums.length);
@@ -44,3 +45,23 @@ var productExceptSelf = function(nums) {
         res.push( left[i] * right[i] );
     return res;
 };
+
+
+// constant space, similar to above
+var productExceptSelf = function(nums) {
+  const res = [ 1 ];
+
+  for (let i = 1; i < nums.length; i++)
+      res.push( res[i - 1] * nums[i - 1] );
+
+  let right = 1;
+  for (let i = nums.length - 1; i >= 0; i--) {
+      res[i] *= right;
+      right *= nums[i];
+  }
+
+  return res;
+};
+
+
+// can also do O(1) space and a single loop, fill in right & left at same time

@@ -43,6 +43,23 @@ const isHappy = n => {
   return sum === 1;
 };
 
+// iter
+const isHappy = n => {
+  let sum = 0;
+  const store = {};
+
+  while (sum !== 1 && !store[sum]) {
+    store[sum] = true;
+    sum = 0;
+    while (n) {
+      sum += (n % 10) ** 2;
+      n = Math.floor(n / 10);
+    }
+    n = sum;
+  }
+  return sum === 1;
+};
+
 // recursive
 const isHappy = (n, store = {}) => {
   let sum = 0;
