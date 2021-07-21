@@ -34,10 +34,11 @@ const isHappy = n => {
   const store = {};
 
   while (sum !== 1 && !store[sum]) {
-      store[sum] = true;
-      sum = 0;
-      for (let num of n.toString())
-          sum += num ** 2;
+    store[sum] = true;
+    sum = 0;
+    for (let num of n.toString())
+      sum += num ** 2;
+    n = sum;
   }
   return sum === 1;
 };

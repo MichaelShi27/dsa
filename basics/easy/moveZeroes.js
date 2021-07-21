@@ -19,24 +19,39 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 
-// iter
-// var moveZeroes = function(nums) {
-//     for (let i = 0, j = 0; i < nums.length; i++, j++) {
-//         if (!nums[j]) {
-//             nums.push(nums[j]);
-//             nums.splice(j, 1);
-//             j--;
-//         }
-//     }
+// naive
+//  var moveZeroes = function(nums) {
+//   let count = 0;
+//   for (let i = 0; i < nums.length; i++) {
+//       if (nums[i] === 0) {
+//           count++;
+//           nums.splice(i, 1);
+//           i--;
+//       }
+//   }
+//   for (let i = 0; i < count; i++)
+//       nums.push(0)
 // };
+
+
+// iter
+var moveZeroes = function(nums) {
+    for (let i = 0, j = 0; i < nums.length; i++, j++) {
+        if (nums[j] === 0) {
+            nums.push(0);
+            nums.splice(j, 1);
+            j--;
+        }
+    }
+};
 
 
 // recurs
 var moveZeroes = function(nums, i = 0, j = 0) {
   if (i === nums.length) return;
 
-  if (!nums[j]) {
-      nums.push(nums[j]);
+  if (nums[j] === 0) {
+      nums.push(0);
       nums.splice(j, 1);
       j--;
   }
@@ -44,5 +59,4 @@ var moveZeroes = function(nums, i = 0, j = 0) {
   j++;
 
   moveZeroes(nums, i, j);
-  return nums;
 };
