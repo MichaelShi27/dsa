@@ -60,6 +60,25 @@ const isHappy = n => {
   return sum === 1;
 };
 
+const getNext = n => {
+  let sum = 0;
+  while (n) {
+    sum += (n % 10) ** 2;
+    n = Math.floor(n / 10);
+  }
+  return sum;
+};
+
+const isHappy = n => {
+  let fast = getNext(n);
+  let slow = n;
+  while (fast !== 1 && fast !== slow) {
+    fast = getNext( getNext(fast) );
+    slow = getNext(slow);
+  }
+  return fast === 1;
+};
+
 // recursive
 const isHappy = (n, store = {}) => {
   let sum = 0;

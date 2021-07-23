@@ -47,6 +47,29 @@ var productExceptSelf = function(nums) {
     return res;
 };
 
+// 2
+var productExceptSelf = function(nums) {
+  const left = [];
+
+  for (let i = 0; i < nums.length; i++) {
+      if (i === 0)
+          left.push(1);
+      else
+          left.push( left[i - 1] * nums[i - 1] );
+  }
+  let right = 1;
+  for (let i = nums.length - 1; i >= 0; i--) {
+      left[i] *= right;
+      right *= nums[i];
+  }
+
+  const res = [];
+  for (let i = 0; i < nums.length; i++)
+      res.push( left[i] );
+
+  return res;
+};
+
 
 // constant space, similar to above
 var productExceptSelf = function(nums) {
@@ -66,3 +89,21 @@ var productExceptSelf = function(nums) {
 
 
 // can also do O(1) space and a single loop, fill in right & left at same time
+
+
+// someone else's solution:
+const productExceptSelf = function(nums) {
+    const output = [];
+    let leftMult = 1;
+    let rightMult = 1;
+
+    for (let i = nums.length - 1, j = 0; i >= 0; i--, j++) {
+        output[i] = (output[i] ?? 1) * rightMult;
+        output[j] = (output[j] ?? 1) * leftMult;
+
+        rightMult *= nums[i];
+        leftMult *= nums[j];
+    }
+
+    return output;
+}
