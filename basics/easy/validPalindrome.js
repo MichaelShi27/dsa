@@ -60,7 +60,8 @@ const isPalindrome = s => {
       q--;
       continue;
     }
-    if (s[p].toLowerCase() !== s[q].toLowerCase()) return false;
+    if (s[p].toLowerCase() !== s[q].toLowerCase())
+      return false;
     p++;
     q--;
   }
