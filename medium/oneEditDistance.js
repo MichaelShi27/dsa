@@ -44,6 +44,8 @@ const isOneEditDistance = (s, t) => {
       if (s[i + 1] === t[j + 1]) {
         s[i] = t[j];
         count++;
+      } else {
+        if (s[i + 1] = t[j])
       }
     }
     if (count > 1) return false;

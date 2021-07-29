@@ -43,3 +43,12 @@ var findTheDifference = function(s, t) {
       if (o[key] === 1)
           return key;
 };
+
+const max = 10000
+let ct = 0;
+for (let i = 0; i < max; i++) {
+  for (let j = i; j < max; j++) {
+    ct++;
+  }
+}
+console.log(ct);
