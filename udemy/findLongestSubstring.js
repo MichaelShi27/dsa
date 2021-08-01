@@ -1,3 +1,6 @@
+// find longest substr with all unique chars
+// https://www.udemy.com/course/js-algorithms-and-data-structures-masterclass/learn/quiz/4410594
+
 // better solution
 const findLongestSubstring = str => {
   let longest = 0;
@@ -14,7 +17,7 @@ const findLongestSubstring = str => {
   return longest;
 };
 
-// orig solution
+// my orig solution
 const findLongestSubstring = str => {
   let longest = 0;
   const seen = {};
