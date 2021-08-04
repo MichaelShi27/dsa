@@ -139,16 +139,30 @@ let array = [ 'hello there', 'booooo', 'yeet' ];
 
 const isObject = arg => typeof arg === "object" && !Array.isArray(arg);
 
-function nestedEvenSum(arg) {
-  let sum = 0;
-  if (isObject(arg)) {
-    for (let key in arg)
-      sum += nestedEvenSum(arg[key]);
-    return sum;
-  }
-  if (arg % 2 === 0) return arg;
-  return 0;
-}
+// // my better solution
+// const nestedEvenSum = o => {
+//     let sum = 0;
+//     for (let key in o) {
+//         const val = o[key];
+//         if (typeof val === 'object')
+//             sum += nestedEvenSum(val);
+//         else if (typeof val === 'number' && val % 2 === 0)
+//             sum += val;
+//     }
+//     return sum;
+// };
+
+// // my weird solution
+// function nestedEvenSum(arg) {
+//   let sum = 0;
+//   if (isObject(arg)) {
+//     for (let key in arg)
+//       sum += nestedEvenSum(arg[key]);
+//     return sum;
+//   }
+//   if (arg % 2 === 0) return arg;
+//   return 0;
+// }
 
 
 var obj1 = {
