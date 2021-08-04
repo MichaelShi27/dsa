@@ -190,11 +190,13 @@ var obj2 = {
 
 const capitalizeWords = arr => {
   if (arr.length === 1) return [ arr[0].toUpperCase() ];
+  const last = arr.pop().toUpperCase();
+  return [ ...capitalizeWords(arr), last ];
+};
 
-  const el = arr.pop();
-  arr = capitalizeWords(arr);
-  arr.push(el.toUpperCase());
-  return arr;
+const capitalizeWords = arr => {
+  if (!arr.length) return [];
+  return [ arr[0].toUpperCase(), ...capitalizeWords(arr.slice(1)) ];
 };
 
 // console.log( capitalizeWords(['hi', 'there', 'my friend']) );
