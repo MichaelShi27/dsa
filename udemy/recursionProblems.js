@@ -194,10 +194,10 @@ const capitalizeWords = arr => {
   return [ ...capitalizeWords(arr), last ];
 };
 
-const capitalizeWords = arr => {
-  if (!arr.length) return [];
-  return [ arr[0].toUpperCase(), ...capitalizeWords(arr.slice(1)) ];
-};
+// const capitalizeWords = arr => {
+//   if (!arr.length) return [];
+//   return [ arr[0].toUpperCase(), ...capitalizeWords(arr.slice(1)) ];
+// };
 
 // console.log( capitalizeWords(['hi', 'there', 'my friend']) );
 
@@ -232,7 +232,7 @@ const capitalizeWords = arr => {
 // };
 
 const stringifyNumbers = obj => {
-  let res = {};
+  const res = {};
   for (let key in obj) {
     if ( isObject(obj[key]) )
       res[key] = stringifyNumbers(obj[key]);
@@ -255,11 +255,10 @@ let obj = {
 
 const collectStrings = obj => {
   let arr = [];
-
   for (let key in obj) {
     if (typeof obj[key] === 'string')
       arr.push(obj[key]);
-    if ( isObject(obj[key]) )
+    else if ( isObject(obj[key]) )
       arr = arr.concat( collectStrings(obj[key]) );
   }
   return arr
