@@ -1,3 +1,4 @@
+// naive
 const stringSearch = (str, targ) => {
   let ct = 0;
 
