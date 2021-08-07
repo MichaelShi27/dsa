@@ -4,7 +4,8 @@ const selectionSort = arr => {
     for (let j = i + 1; j < arr.length; j++)
       if (arr[j] < arr[smallest])
         smallest = j;
-    [ arr[i], arr[smallest] ] = [ arr[smallest], arr[i] ];
+    if (i !== smallest) // small optimization
+      [ arr[i], arr[smallest] ] = [ arr[smallest], arr[i] ];
   }
   return arr;
 };
