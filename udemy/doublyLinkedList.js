@@ -93,17 +93,70 @@ class DoublyLinkedList {
     node.val = val;
     return true;
   }
+
+  insert(idx, val) {
+    if (idx === 0)
+      return !!this.unshift(val);
+    if (idx === this.length)
+      return !!this.push(val);
+
+    const next = this.get(idx);
+    if (!next)
+      return false;
+
+    const prev = next.prev;
+    const inserted = new Node(val);
+    prev.next = inserted;
+    next.prev = inserted;
+    inserted.prev = prev;
+    inserted.next = next;
+
+    this.length++;
+    return true;
+  }
+
+  remove(idx) {
+    if (idx === 0)
+      return !!this.shift();
+    if (idx === this.length - 1)
+      return !!this.pop();
+
+    const removed = this.get(idx);
+    if (!removed)
+      return false;
+
+    removed.prev.next = removed.next;
+    removed.next.prev = removed.prev;
+    removed.prev = null;
+    removed.next = null;
+
+    this.length--;
+    return removed;
+  }
 }
 
+const printList = list => {
+  const arr = [];
+  let curr = list.head;
+  while (curr) {
+    arr.push(curr.val);
+    curr = curr.next;
+  }
+  return arr;
+};
+
 const newList = new DoublyLinkedList();
-newList.push('7');
-newList.push('8');
-newList.push('9');
-newList.unshift('6');
-newList.unshift('5');
-newList.unshift('4');
-newList.unshift('3');
+// newList.push('7');
+// newList.push('8');
+// newList.push('9');
+// newList.unshift('6');
+// newList.unshift('5');
+// newList.unshift('4');
+// newList.unshift('3');
 newList.unshift('2');
 newList.unshift('1');
 newList.unshift('0');
-// console.log(newList, newList.length);
+newList.insert(0, 'hi');
+console.log( printList(newList), newList.length );
+console.log(newList.head);
+console.log(newList.tail);

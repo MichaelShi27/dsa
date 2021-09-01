@@ -84,14 +84,15 @@ class SinglyLinkedList {
   }
 
   insert(idx, val) {
-    if (idx < 0 || idx > this.length)
-      return false;
     if (idx === 0)
       return !!this.unshift(val);
     if (idx === this.length)
       return !!this.push(val);
 
     const prev = this.get(idx - 1);
+    if (!prev)
+      return false;
+
     const next = prev.next;
     prev.next = new Node(val);
     prev.next.next = next;
