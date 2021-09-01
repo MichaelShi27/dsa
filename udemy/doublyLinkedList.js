@@ -133,6 +133,16 @@ class DoublyLinkedList {
     this.length--;
     return removed;
   }
+
+  reverse() {
+    let curr = this.head;
+    while (curr) {
+      [ curr.next, curr.prev ] = [ curr.prev, curr.next ];
+      curr = curr.prev;
+    }
+    [ this.head, this.tail ] = [ this.tail, this.head ];
+    return this;
+  }
 }
 
 const printList = list => {
@@ -153,10 +163,11 @@ const newList = new DoublyLinkedList();
 // newList.unshift('5');
 // newList.unshift('4');
 // newList.unshift('3');
-newList.unshift('2');
-newList.unshift('1');
-newList.unshift('0');
-newList.insert(0, 'hi');
+// newList.unshift('2');
+// newList.unshift('1');
+// newList.unshift('0');
+// newList.insert(0, 'hi');
+newList.reverse();
 console.log( printList(newList), newList.length );
 console.log(newList.head);
 console.log(newList.tail);
