@@ -115,13 +115,29 @@ class SinglyLinkedList {
     this.length--;
     return removed;
   }
+
+  reverse() {
+    if (!this.head || !this.head.next)
+      return this.head;
+    let prev = null;
+    let curr = this.head;
+    let next = curr.next;
+
+    while (curr) {
+      curr.next = prev;
+      prev = curr;
+      curr = next;
+      next = next ? next.next : null;
+    }
+    [ this.head, this.tail ] = [ this.tail, this.head ]
+    return this;
+  }
 }
 
 const newList = new SinglyLinkedList();
-// newList.push('7');
-// newList.push('8');
-// newList.push('9');
-// newList.unshift('6');
-console.log( newList.insert(0, 0) );
+newList.push('7');
+newList.push('8');
+newList.push('9');
+newList.unshift('6');
+newList.reverse();
 console.log(newList, newList.length);
-console.log(newList.head.next.next);
