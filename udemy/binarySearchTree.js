@@ -61,6 +61,21 @@ class BinarySearchTree {
     //   return curr.right ? this.find(val, curr.right) : false;
     // else return true;
 
+    // iterative
+    const node = new Node(val);
+    if (!this.root) return;
+
+    while (true) {
+      if (val < curr.val) {
+        if (curr.left) curr = curr.left;
+        else return false;
+      } else if (val > curr.val) {
+        if (curr.right) curr = curr.right;
+        else return false;
+      } else
+        return true;
+    }
+  }
 }
 
 
@@ -76,4 +91,4 @@ bst.insert(18);
 bst.insert(2);
 bst.insert(12);
 bst.insert(16);
-console.log(bst.find(9.1));
+console.log(bst.find(16));
