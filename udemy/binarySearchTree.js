@@ -11,7 +11,7 @@ class BinarySearchTree {
     this.root = null;
   }
 
-  insert(val, curr = this.root) { // 2nd arg for recursive approach
+  insert(val, curr = this.root) {
     // recursive
     const node = new Node(val);
     if (!this.root) {
@@ -30,7 +30,6 @@ class BinarySearchTree {
     //   this.root = node;
     //   return this;
     // }
-    // let curr = this.root;
 
     // while (true) {
     //   if (val < curr.val) {
@@ -52,6 +51,17 @@ class BinarySearchTree {
     // }
   }
 
+  find(val, curr = this.root) {
+    // // recursive
+    // if (!this.root) return;
+
+    // if (val < curr.val)
+    //   return curr.left ? this.find(val, curr.left) : false;
+    // else if (val > curr.val)
+    //   return curr.right ? this.find(val, curr.right) : false;
+    // else return true;
+
+}
 
 
 const bst = new BinarySearchTree();
@@ -66,4 +76,4 @@ bst.insert(18);
 bst.insert(2);
 bst.insert(12);
 bst.insert(16);
-console.log(bst);
+console.log(bst.find(9.1));
