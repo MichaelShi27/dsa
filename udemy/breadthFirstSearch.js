@@ -26,18 +26,42 @@ class BinarySearchTree {
   }
 }
 
-const bfs = root => {
-  // iterative
-  const q = [ root ];
-  const visited = [];
+// const bfs = root => {
+//   // // iterative
+//   // const q = [ root ];
+//   // const visited = [];
 
-  while (q.length) {
-    root = q.shift();
-    if (root.left) q.push(root.left);
-    if (root.right) q.push(root.right);
-    visited.push(root.val)
-  }
-  return visited;
+//   // while (q.length) {
+//   //   root = q.shift();
+//   //   if (root.left) q.push(root.left);
+//   //   if (root.right) q.push(root.right);
+//   //   visited.push(root.val)
+//   // }
+//   // return visited;
+
+//   // recursive w/ helper
+//   const q = [ root ];
+//   const visited = [];
+
+//   const helper = () => {
+//     if (!q.length) return visited;
+//     root = q.shift();
+//     if (root.left) q.push(root.left);
+//     if (root.right) q.push(root.right);
+//     visited.push(root.val);
+//     return helper();
+//   };
+//   return helper();
+// };
+
+// recursive
+const bfs = (root, q = [ root ], visited = []) => {
+  if (!q.length) return visited;
+  root = q.shift();
+  if (root.left) q.push(root.left);
+  if (root.right) q.push(root.right);
+  visited.push(root.val);
+  return bfs(root, q, visited);
 };
 
 const bst = new BinarySearchTree();
