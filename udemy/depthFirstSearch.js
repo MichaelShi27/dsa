@@ -25,52 +25,57 @@ class BinarySearchTree {
   }
 }
 
-const dfs = root => {
-  const visited = [];
-  if (!root) return visited;
+// pre-order: visit/push node first, then explore children
+// post-order: explore children first, then visit/push node
+// in-order: explore left, then visited node, then explore right
 
-  const stack = [ root ];
-  while (stack.length) {
-    let curr = stack.pop();
-    visited.push(curr.val);
-    if (curr.right) stack.push(curr.right);
-    if (curr.left) stack.push(curr.left);
-  }
-  return visited;
-};
-
-// // recursive w/ helper
+// // pre-order iterative
 // const dfs = root => {
+//   const visited = [];
+//   if (!root) return visited;
+
+//   const stack = [ root ];
+//   while (stack.length) {
+//     let curr = stack.pop();
+//     if (curr.right) stack.push(curr.right);
+//     if (curr.left) stack.push(curr.left);
+//     visited.push(curr.val);
+//   }
+//   return visited;
+// };
+
+// // in-order recursive w/ helper
+// const dfs = root => {
+//   if (!root) return;
 //   const visited = [];
 
 //   const helper = node => {
-//     visited.push(node.val);
-//     if (!node) return;
 //     if (node.left) helper(node.left);
+//     visited.push(node.val);
 //     if (node.right) helper(node.right);
 //   };
 //   helper(root);
 //   return visited;
 // };
 
-// // recursive
+// // post-order recursive
 // const dfs = node => {
 //   let visited = [];
-//   visited.push(node.val);
 //   if (!node) return visited;
 //   if (node.left) visited = [ ...visited, ...dfs(node.left) ];
 //   if (node.right) visited = [ ...visited, ...dfs(node.right) ];
+//   visited.push(node.val);
 //   return visited;
 // };
 
-// // recursive
-// const dfs = (node, visited = []) => {
-//   visited.push(node.val);
-//   if (!node) return visited;
-//   if (node.left) dfs(node.left, visited);
-//   if (node.right) dfs(node.right, visited);
-//   return visited;
-// };
+// pre-order recursive
+const dfs = (node, visited = []) => {
+  if (!node) return visited;
+  visited.push(node.val);
+  if (node.left) dfs(node.left, visited);
+  if (node.right) dfs(node.right, visited);
+  return visited;
+};
 
 const bst = new BinarySearchTree();
 bst.insert(10);
@@ -84,4 +89,9 @@ bst.insert(18);
 bst.insert(2);
 bst.insert(12);
 bst.insert(16);
-console.log( dfs(bst.root) );
+const res = dfs(bst.root);
+const postOrder = JSON.stringify([ 2, 6, 9, 8, 3, 12, 16, 18, 19, 14, 10 ]);
+const preOrder = JSON.stringify([ 10, 3, 2, 8, 6, 9, 14, 12, 19, 18, 16 ]);
+const inOrder = JSON.stringify([ 2, 3, 6, 8, 9, 10, 12, 14, 16, 18, 19 ]);
+console.log( JSON.stringify(res) === inOrder );
+// console.log(res);
