@@ -3,9 +3,6 @@ class MaxBinaryHeap {
     this.values = [];
   }
 
-  static getParentIdx(idx) { return Math.floor( (idx - 1) / 2 ); }
-  static getLeftChildIdx(idx) { return idx * 2 + 1; }
-
   insert(val) {
     const { values } = this;
     values.push(val);
@@ -13,7 +10,7 @@ class MaxBinaryHeap {
     let idx = values.length - 1;
     while (true) {
       const parentIdx = Math.floor( (idx - 1) / 2 );
-      if (val <= values[parentIdx] || idx === 0) break;
+      if (idx === 0 || val <= values[parentIdx]) break;
       [ values[idx], values[parentIdx] ] = [ values[parentIdx], values[idx] ];
       idx = parentIdx;
     }
@@ -37,8 +34,8 @@ class MaxBinaryHeap {
       let swapIdx;
       if (
         leftChild === undefined && rightChild === undefined ||
-        values[idx] > leftChild && values[idx] > rightChild ||
-        !rightChild && values[idx] > leftChild
+        values[idx] >= leftChild && values[idx] >= rightChild ||
+        !rightChild && values[idx] >= leftChild
       ) return max;
 
       if (rightChild === undefined) // if leftChild exists (due to nature of heap it always will before right) but right doesn't, so curr MUST be greater than leftChild
@@ -56,7 +53,7 @@ const isHeap = arr => {
   for (let i = 0; i * 2 + 1 < arr.length; i++) {
     const leftChildIdx = i * 2 + 1;
     const rightChildIdx = i * 2 + 2;
-    if (arr[i] <= arr[leftChildIdx] || arr[i] <= arr[rightChildIdx])
+    if (arr[i] < arr[leftChildIdx] || arr[i] < arr[rightChildIdx])
       return false;
   }
   return true;
@@ -75,13 +72,9 @@ const createRandomHeap = () => {
   const heap = new MaxBinaryHeap();
   const heapSize = 100;
   const maxNum = 100000;
-  const seen = new Set(); // the set is likely unnecessary since I'm not rounding the Math.random() results, but just in case
 
   for (let i = 0; i < heapSize; i++) {
-    let num = Math.random() * maxNum;
-    while ( seen.has(num) )
-      num = Math.random() * maxNum;
-    seen.add(num);
+    const num = Math.random() * maxNum;
     heap.insert(num);
   }
   return heap;
