@@ -71,7 +71,32 @@ const testExtractMax = heap => {
   return true;
 }
 
-const heap = new MaxBinaryHeap();
+const createRandomHeap = () => {
+  const heap = new MaxBinaryHeap();
+  const heapSize = 100;
+  const maxNum = 100000;
+  const seen = new Set(); // the set is likely unnecessary since I'm not rounding the Math.random() results, but just in case
+
+  for (let i = 0; i < heapSize; i++) {
+    let num = Math.random() * maxNum;
+    while ( seen.has(num) )
+      num = Math.random() * maxNum;
+    seen.add(num);
+    heap.insert(num);
+  }
+  return heap;
+};
+
+const testHeaps = func => {
+  const numberOfTests = 10000;
+  for (let i = 0; i < numberOfTests; i++) {
+    const heap = createRandomHeap();
+    if (!func(heap)) return heap.values;
+  }
+  return true;
+}
+
+// const heap = new MaxBinaryHeap();
 // heap.insert(17);
 // heap.insert(100);
 // heap.insert(36);
@@ -87,14 +112,4 @@ const heap = new MaxBinaryHeap();
 // heap.insert(1);
 // heap.insert(4);
 // heap.insert(11);
-// console.log(heap.values);
-// console.log(heap.extractMax());
-// console.log(heap.extractMax());
-// console.log(heap.extractMax());
-// console.log(heap.extractMax());
-// console.log(heap.extractMax());
-// console.log(heap.extractMax());
-// console.log(heap.extractMax());
-console.log(heap.values);
-// console.log( isHeap(heap.values) );
-console.log( testExtractMax(heap) );
+console.log(testHeaps(testExtractMax));
