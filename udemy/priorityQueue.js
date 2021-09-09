@@ -1,27 +1,39 @@
-class MaxBinaryHeap {
+// can make an arr and just store priority for each el with each el, then iterate over each time to find highest prio
+// but usually they're done with heaps
+
+// lower value for prio often means higher prio
+
+class Node {
+  constructor() {
+    this.val = null;
+    this.prio = null;
+  }
+}
+
+class PriorityQueue {
   constructor() {
     this.values = [];
   }
 
-  insert(val) {
+  enqueue(node) {
     const { values } = this;
-    values.push(val);
+    values.push(node);
 
     let idx = values.length - 1;
     while (true) {
       const parentIdx = Math.floor( (idx - 1) / 2 );
-      if (idx === 0 || val <= values[parentIdx]) break;
+      if (idx === 0 || node.prio >= values[parentIdx].prio) break;
       [ values[idx], values[parentIdx] ] = [ values[parentIdx], values[idx] ];
       idx = parentIdx;
     }
     return values;
   }
 
-  extractMax() {
+  dequeue() {
     const { values } = this;
     if (!values.length) return;
 
-    const max = values[0];
+    const highestPrio = values[0];
     values[0] = values[values.length - 1];
     values.pop();
 
@@ -34,14 +46,14 @@ class MaxBinaryHeap {
       let swapIdx;
       if (
         leftChild === undefined && rightChild === undefined ||
-        values[idx] >= leftChild && values[idx] >= rightChild ||
-        !rightChild && values[idx] >= leftChild
-      ) return max;
+        !rightChild && values[idx].prio <= leftChild.prio ||
+        values[idx].prio <= leftChild.prio && values[idx].prio <= rightChild.prio
+      ) return highestPrio;
 
       if (rightChild === undefined) // if leftChild exists (due to nature of heap it always will before right) but right doesn't, so curr MUST be greater than leftChild
         swapIdx = leftChildIdx;
       else                          // both left & right children exist
-        swapIdx = leftChild > rightChild ? leftChildIdx : rightChildIdx;
+        swapIdx = leftChild.prio < rightChild.prio ? leftChildIdx : rightChildIdx;
 
       [ values[idx], values[swapIdx] ] = [ values[swapIdx], values[idx] ];
       idx = swapIdx;
@@ -50,15 +62,20 @@ class MaxBinaryHeap {
 }
 
 const isHeap = arr => {
-  for (let i = 0; i * 2 + 1 < arr.length; i++)
-    if (arr[i] < arr[i * 2 + 1] || arr[i] < arr[i * 2 + 2])
-      return false;
+  for (let i = 0; i * 2 + 1 < arr.length; i++) {
+    const leftChildIdx = i * 2 + 1;
+    const rightChildIdx = i * 2 + 2;
+    if (
+      arr[rightChildIdx] && arr[i].prio > arr[rightChildIdx].prio ||
+      arr[i].prio > arr[leftChildIdx].prio
+    ) return false;
+  }
   return true;
 }
 
-const testExtractMax = heap => {
+const testDequeue = heap => {
   while (heap.values.length > 1) {
-    heap.extractMax();
+    heap.dequeue();
     if ( !isHeap(heap.values) )
       return false;
   }
@@ -66,40 +83,26 @@ const testExtractMax = heap => {
 }
 
 const createRandomHeap = () => {
-  const heap = new MaxBinaryHeap();
+  const heap = new PriorityQueue();
   const heapSize = 100;
-  const maxNum = 100000;
+  const maxVal = 100000;
+  const maxPrio = 100;
 
   for (let i = 0; i < heapSize; i++) {
-    const num = Math.random() * maxNum;
-    heap.insert(num);
+    const val = Math.random() * maxVal;
+    const prio = Math.floor( Math.random() * maxPrio );
+    heap.enqueue({ val: val, prio: prio });
   }
   return heap;
 };
 
 const testHeaps = func => {
-  const numberOfTests = 1000;
+  const numberOfTests = 10000;
   for (let i = 0; i < numberOfTests; i++) {
     const heap = createRandomHeap();
-    if (!func(heap)) return heap.values;
+    if (!func(heap)) return false;
   }
   return true;
 }
 
-// const heap = new MaxBinaryHeap();
-// heap.insert(17);
-// heap.insert(100);
-// heap.insert(36);
-// heap.insert(6);
-// heap.insert(12);
-// heap.insert(19);
-// heap.insert(25);
-// heap.insert(5);
-// heap.insert(9);
-// heap.insert(15);
-// heap.insert(13);
-// heap.insert(8);
-// heap.insert(1);
-// heap.insert(4);
-// heap.insert(11);
-console.log(testHeaps(testExtractMax));
+console.log( testHeaps(testDequeue) );
