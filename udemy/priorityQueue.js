@@ -84,21 +84,21 @@ const testDequeue = heap => {
 
 const createRandomHeap = () => {
   const heap = new PriorityQueue();
-  const heapSize = 100;
-  const maxVal = 100000;
-  const maxPrio = 100;
+  const HEAP_SIZE = 100;
+  const MAX_VAL = 100000;
+  const MAX_PRIO = 100;
 
-  for (let i = 0; i < heapSize; i++) {
-    const val = Math.random() * maxVal;
-    const prio = Math.floor( Math.random() * maxPrio );
+  for (let i = 0; i < HEAP_SIZE; i++) {
+    const val = Math.random() * MAX_VAL;
+    const prio = Math.floor( Math.random() * MAX_PRIO );
     heap.enqueue({ val: val, prio: prio });
   }
   return heap;
 };
 
 const testHeaps = func => {
-  const numberOfTests = 10000;
-  for (let i = 0; i < numberOfTests; i++) {
+  const NUM_OF_TESTS = 10000;
+  for (let i = 0; i < NUM_OF_TESTS; i++) {
     const heap = createRandomHeap();
     if (!func(heap)) return false;
   }

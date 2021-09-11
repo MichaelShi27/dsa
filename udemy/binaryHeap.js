@@ -67,19 +67,19 @@ const testExtractMax = heap => {
 
 const createRandomHeap = () => {
   const heap = new MaxBinaryHeap();
-  const heapSize = 100;
-  const maxNum = 100000;
+  const HEAP_SIZE = 100;
+  const MAX_NUM = 100000;
 
-  for (let i = 0; i < heapSize; i++) {
-    const num = Math.random() * maxNum;
+  for (let i = 0; i < HEAP_SIZE; i++) {
+    const num = Math.random() * MAX_NUM;
     heap.insert(num);
   }
   return heap;
 };
 
 const testHeaps = func => {
-  const numberOfTests = 1000;
-  for (let i = 0; i < numberOfTests; i++) {
+  const NUM_OF_TESTS = 1000;
+  for (let i = 0; i < NUM_OF_TESTS; i++) {
     const heap = createRandomHeap();
     if (!func(heap)) return heap.values;
   }
