@@ -30,11 +30,34 @@ class HashTable {
     for (let el of bucket)
       if (el[0] === key) return el[1];
   }
+
+  keys() {
+    const keys = [];
+    for (let bucket of this.keyMap)
+      for (let el of bucket || [])
+        keys.push(el[0]);
+    return keys;
+  }
+
+  values() {
+    const vals = [];
+    const seen = new Set();
+    for (let bucket of this.keyMap)
+      for (let el of bucket || []) {
+        const val = el[1];
+        if ( seen.has(val) ) continue;
+        vals.push(val);
+        seen.add(val);
+      }
+    return vals;
+  }
 }
 
 const ht = new HashTable();
 ht.set('a', 1);
 ht.set('b', 2);
 ht.set('b', 23);
-console.log(ht.keyMap);
+ht.set('c', 23);
+console.log(ht.keys());
+console.log(ht.values());
 console.log(ht.get('b'));
