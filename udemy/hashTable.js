@@ -25,10 +25,16 @@ class HashTable {
   }
 
   get(key) {
-    const idx = this._hash(key);
-    const bucket = this.keyMap[idx] || [];
+    const bucket = this.keyMap[this._hash(key)] || [];
     for (let el of bucket)
       if (el[0] === key) return el[1];
+  }
+
+  remove(key) {
+    const bucket = this.keyMap[this._hash(key)] || [];
+    for (let i = 0; i < bucket.length; i++)
+      if (bucket[i][0] === key)
+        return bucket.splice(i, 1);
   }
 
   keys() {
@@ -45,7 +51,7 @@ class HashTable {
     for (let bucket of this.keyMap)
       for (let el of bucket || []) {
         const val = el[1];
-        if ( seen.has(val) ) continue;
+        if (seen.has(val)) continue;
         vals.push(val);
         seen.add(val);
       }
@@ -58,6 +64,8 @@ ht.set('a', 1);
 ht.set('b', 2);
 ht.set('b', 23);
 ht.set('c', 23);
+ht.set('d', 1);
+ht.remove('a');
 console.log(ht.keys());
 console.log(ht.values());
 console.log(ht.get('b'));
