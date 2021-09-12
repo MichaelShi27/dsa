@@ -13,23 +13,28 @@ class HashTable {
 
   set(key, val) {
     const idx = this._hash(key);
-    if (!this.keyMap[idx])
-      this.keyMap[idx] = [];
-    this.keyMap[idx].push([ key, val ]);
+    const bucket = this.keyMap[idx] || [];
+
+    for (let i = 0; i < bucket.length; i++)
+      if (bucket[i][0] === key) {
+        bucket[i][1] = val;
+        return;
+      }
+    bucket.push([ key, val ]);
+    this.keyMap[idx] = bucket;
   }
 
   get(key) {
     const idx = this._hash(key);
-    const bucket = this.keyMap[idx];
-    if (bucket)
-      for (let el of bucket)
-        if (el[0] === key) return el[1];
-    return;
+    const bucket = this.keyMap[idx] || [];
+    for (let el of bucket)
+      if (el[0] === key) return el[1];
   }
 }
 
 const ht = new HashTable();
 ht.set('a', 1);
 ht.set('b', 2);
+ht.set('b', 23);
 console.log(ht.keyMap);
-console.log(ht.get('b'))
+console.log(ht.get('b'));
