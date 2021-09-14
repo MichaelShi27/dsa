@@ -3,12 +3,22 @@ class Graph {
     this.adjacencyList = {};
   }
 
-  addVertex(vertex) {
+  addVertex(v) {
     const list = this.adjacencyList;
-    if (list[vertex])
+    if (list[v])
       console.error('Vertex already exists!');
     else
-      list[vertex] = [];
+      list[v] = [];
+  }
+
+  removeVertex(v) {
+    const list = this.adjacencyList;
+    if (!list[v]) return;
+
+    for (let el of list[v])
+      list[el] = list[el].filter(val => val !== v); // can also use this.removeEdge, but that's extra work since it removes "this side" of each edge
+
+    delete list[v];
   }
 
   addEdge(v1, v2) {
@@ -47,5 +57,5 @@ g.addVertex('zak');
 g.addVertex('jack');
 g.addEdge('ben', 'jack');
 g.addEdge('ben', 'zak');
-g.removeEdge('ben', 'zak');
+g.removeVertex('ben');
 console.log(g.adjacencyList);
