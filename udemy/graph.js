@@ -50,18 +50,39 @@ class Graph {
     list[v2] = list[v2].filter(val => val !== v1);
   }
 
-  // recursive soluton
-  depthFirstTraversal(v, vertices = [], seen = {}) {
+  // // recursive approach
+  // depthFirstTraversal(v, vertices = [], seen = {}) {
+  //   const list = this.adjacencyList;
+  //   if (!list[v]) return;
+
+  //   seen[v] = true;
+  //   vertices.push(v);
+  //   for (let el of list[v])
+  //     if (!seen[el])
+  //       this.depthFirstTraversal(el, vertices, seen);
+  //   return vertices;
+  // }
+
+  // iterative approach => this implementation results in diff order than recursive,
+  // since the stack pops off the last child first (can easily fix w/ descending for-loop)
+  depthFirstTraversal(v) {
     const list = this.adjacencyList;
     if (!list[v]) return;
 
+    const vertices = [];
+    const stack = [ v ];
+    const seen = {};
     seen[v] = true;
-    vertices.push(v);
 
-    for (let el of list[v])
-      if (!seen[el])
-
-        this.depthFirstTraversal(el, vertices, seen);
+    while (stack.length) {
+      v = stack.pop();
+      vertices.push(v);
+      for (let el of list[v])
+        if (!seen[el]) {
+          stack.push(el);
+          seen[el] = true;
+        }
+    }
     return vertices;
   }
 }
