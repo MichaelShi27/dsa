@@ -1,3 +1,25 @@
+class WeightedGraph {
+  constructor() {
+    this.adjacencyList = {};
+  }
+
+  addVertex(v) {
+    const list = this.adjacencyList;
+    if (list[v])
+      console.error('Vertex already exists!');
+    else
+      list[v] = [];
+  }
+
+  addEdge(v1, v2, weight) {
+    const list = this.adjacencyList;
+    if (!list[v1] || !list[v2]) return;
+
+    list[v1].push({ vertex: v2, weight });
+    list[v2].push({ vertex: v1, weight });
+  }
+}
+
 class Graph {
   constructor() {
     this.adjacencyList = {};
