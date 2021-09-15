@@ -49,13 +49,47 @@ class Graph {
     list[v1] = list[v1].filter(val => val !== v2);
     list[v2] = list[v2].filter(val => val !== v1);
   }
+
+  // recursive soluton
+  depthFirstTraversal(v, vertices = [], seen = {}) {
+    const list = this.adjacencyList;
+    if (!list[v]) return;
+
+    seen[v] = true;
+    vertices.push(v);
+
+    for (let el of list[v])
+      if (!seen[el])
+
+        this.depthFirstTraversal(el, vertices, seen);
+    return vertices;
+  }
 }
 
 const g = new Graph();
-g.addVertex('ben');
-g.addVertex('zak');
-g.addVertex('jack');
-g.addEdge('ben', 'jack');
-g.addEdge('ben', 'zak');
-g.removeVertex('ben');
-console.log(g.adjacencyList);
+// g.addVertex('ben');
+// g.addVertex('zak');
+// g.addVertex('jack');
+// g.addEdge('ben', 'jack');
+// g.addEdge('ben', 'zak');
+// // g.removeVertex('ben');
+// console.log(g.adjacencyList);
+// console.log( g.depthFirstTraversal('ben') );
+
+g.addVertex('a');
+g.addVertex('b');
+g.addVertex('c');
+g.addVertex('d');
+g.addVertex('e');
+g.addVertex('f');
+
+g.addEdge('a', 'b');
+g.addEdge('a', 'c');
+g.addEdge('b', 'd');
+g.addEdge('c', 'e');
+g.addEdge('d', 'e');
+g.addEdge('d', 'f');
+g.addEdge('e', 'f');
+
+// console.log(g.adjacencyList);
+console.log( g.depthFirstTraversal('a') );
