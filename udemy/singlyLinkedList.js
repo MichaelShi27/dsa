@@ -133,6 +133,27 @@ class SinglyLinkedList {
     [ this.head, this.tail ] = [ this.tail, this.head ]
     return this;
   }
+
+  rotate(n) {
+    n %= this.length;
+    if (!n) return;
+    if (n < 0) n += this.length;
+
+    // while (n--) {
+    //   const newHead = this.head.next;
+    //   this.tail.next = this.head;
+    //   this.head.next = null;
+    //   this.tail = this.head;
+    //   this.head = newHead;
+    // }
+
+    const newTail = this.get(n - 1);
+    const newHead = newTail.next;
+    newTail.next = null;
+    this.tail.next = this.head;
+    this.head = newHead;
+    this.tail = newTail;
+  }
 }
 
 const newList = new SinglyLinkedList();
