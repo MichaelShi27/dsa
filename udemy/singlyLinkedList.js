@@ -84,6 +84,16 @@ class SinglyLinkedList {
     return this;
   }
 
+  // unshift(val) {
+  //   if (!this.length) this.push(val);
+  //   else {
+  //     const node = new Node(val);
+  //     node.next = this.head;
+  //     this.head = node;
+  //     this.length++;
+  //   }
+  // }
+
   get(idx) {
     if (!this.head || idx < 0 || idx >= this.length)
       return;
