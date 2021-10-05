@@ -45,6 +45,24 @@ class SinglyLinkedList {
     return curr.val;
   }
 
+  // pop() {
+  //   if (!this.length) return;
+  //   const removed = this.tail;
+
+  //   if (this.length === 1) {
+  //     this.head = null;
+  //     this.tail = null;
+  //   } else {
+  //     let curr = this.head;
+  //     while (curr.next !== this.tail)
+  //       curr = curr.next;
+  //     this.tail = curr;
+  //     this.tail.next = null;
+  //   }
+  //   this.length--;
+  //   return removed;
+  // }
+
   shift() {
     if (!this.head)
       return;
