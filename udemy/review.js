@@ -115,29 +115,61 @@ let list = new SinglyLinkedList();
 // list.insert(0, 0);
 // console.log( printList(list) );
 
-list.push(5);
-list.push(10);
-list.push(15);
-list.push(20);
-list.push(25);
-list.rotate(3);
-// list.push(1);
-// list.push(2);
-// list.push(3);
-// list.push(4);
-// list.rotate(2);
-console.log( printList(list) );
+const countZeroes = arr => {
+  let low = 0;
+  let high = arr.length - 1;
+  while (true) {
+    let mid = Math.floor((low + high) / 2);
 
-// list.unshift(0);
-// list.unshift(1);
-// list.unshift(2);
-// list.insert(0, 0);
-// console.log( printList(list) );
-// list.insert(1, 1);
-// console.log( printList(list) );
-// list.insert(3, 3);
-// console.log( printList(list) );
-// list.insert(7, 7)
-// list.insert(0, 7)
-// list.insert(6, 6)
-// console.log( printList(list) );
+    if (arr[mid] === 0) {
+      high = mid - 1;
+      if (arr[mid - 1] === 1)
+        return arr.length - mid;
+      if (mid === 1)
+        return arr.length;
+
+    } else {
+      low = mid + 1;
+      if (arr[mid + 1] === 0)
+        return arr.length - (mid + 1);
+      if (mid === arr.length - 2)
+        return 0;
+    }
+
+    // // below approach doesn't seem to work if just 1 one or zero
+    // if (arr[mid] === 0) {
+    //   if (mid === 1)
+    //     return arr.length;
+    //   if (mid === low + 1)
+    //     return arr.length - mid;
+    //   high = mid;
+
+    // } else {
+    //   if (mid === arr.length - 2)
+    //     return 0;
+    //   if (mid === high - 1)
+    //     return arr.length - (mid + 1);
+    //   low = mid;
+    // }
+  }
+};
+
+const zeroes = 1000000;
+const createArr = zeroes => {
+  let ones = 10;
+  const arr = [];
+  while (ones--) arr.push(1);
+  while (zeroes--) arr.push(0);
+  return arr;
+};
+
+let arr = createArr(zeroes);
+console.log(countZeroes(arr) === zeroes);
+console.log(countZeroes([0, 0, 0, 0, 0]) === 5);
+console.log(countZeroes([0, 0, 0, 0, 0, 0]) === 6);
+console.log(countZeroes([1, 1, 1, 1, 1]) === 0);
+console.log(countZeroes([1, 1, 1, 1, 1, 1]) === 0);
+console.log(countZeroes([1, 0, 0, 0, 0, 0]) === 5);
+console.log(countZeroes([1, 0, 0, 0, 0]) === 4);
+console.log(countZeroes([1, 1, 1, 1, 1, 0]) === 1);
+console.log(countZeroes([1, 1, 1, 1, 0]) === 1);
