@@ -154,22 +154,83 @@ const countZeroes = arr => {
   }
 };
 
+const testCountZeroes = zeroes => {
+  const createArr = zeroes => {
+    let ones = 10;
+    const arr = [];
+    while (ones--) arr.push(1);
+    while (zeroes--) arr.push(0);
+    return arr;
+  };
+  let arr = createArr(zeroes);
+  console.log(countZeroes(arr) === zeroes);
+  console.log(countZeroes([0, 0, 0, 0, 0]) === 5);
+  console.log(countZeroes([0, 0, 0, 0, 0, 0]) === 6);
+  console.log(countZeroes([1, 1, 1, 1, 1]) === 0);
+  console.log(countZeroes([1, 1, 1, 1, 1, 1]) === 0);
+  console.log(countZeroes([1, 0, 0, 0, 0, 0]) === 5);
+  console.log(countZeroes([1, 0, 0, 0, 0]) === 4);
+  console.log(countZeroes([1, 1, 1, 1, 1, 0]) === 1);
+  console.log(countZeroes([1, 1, 1, 1, 0]) === 1);
+};
 const zeroes = 1000000;
-const createArr = zeroes => {
-  let ones = 10;
-  const arr = [];
-  while (ones--) arr.push(1);
-  while (zeroes--) arr.push(0);
-  return arr;
+// testCountZeroes(zeroes);
+
+const sortedFrequency = (arr, num) => {
+  let low = 0;
+  let high = arr.length - 1;
+  let mid, start, end;
+  if (arr[low] > num || arr[high] < num) return -1;
+
+  while (true) {
+    mid = Math.floor((low + high) / 2);
+    if (arr[mid] < num) {
+      low = mid;
+      if (arr[mid + 1] === num) {
+        start = mid + 1;
+        break;
+      }
+    } else {
+      high = mid;
+      if (arr[mid] === num && mid === 0) {
+        start = mid;
+        break;
+      } else if (arr[mid] === num && arr[mid - 1] < num) {
+        start = mid;
+        break;
+      }
+    }
+  }
+
+  low = 0;
+  high = arr.length - 1;
+  while (true) {
+    mid = Math.floor((low + high) / 2);
+    if (arr[mid] > num) {
+      high = mid;
+      if (arr[mid - 1] === num) {
+        end = mid - 1;
+        break;
+      }
+    } else {
+      low = mid;
+      if (arr[mid + 1] === num && mid === arr.length - 2) {
+        end = mid + 1;
+        break;
+      } else if (arr[mid] === num && arr[mid + 1] > num) {
+        end = mid;
+        break;
+      }
+    }
+  }
+  return end - start + 1;
 };
 
-let arr = createArr(zeroes);
-console.log(countZeroes(arr) === zeroes);
-console.log(countZeroes([0, 0, 0, 0, 0]) === 5);
-console.log(countZeroes([0, 0, 0, 0, 0, 0]) === 6);
-console.log(countZeroes([1, 1, 1, 1, 1]) === 0);
-console.log(countZeroes([1, 1, 1, 1, 1, 1]) === 0);
-console.log(countZeroes([1, 0, 0, 0, 0, 0]) === 5);
-console.log(countZeroes([1, 0, 0, 0, 0]) === 4);
-console.log(countZeroes([1, 1, 1, 1, 1, 0]) === 1);
-console.log(countZeroes([1, 1, 1, 1, 0]) === 1);
+const testSortedFrequency = () => {
+  console.log(sortedFrequency( [1,1,2,2,2,2,3], 2 ) === 4);
+  console.log(sortedFrequency( [1,1,2,2,2,2,3], 3 ) === 1);
+  console.log(sortedFrequency( [1,1,2,2,2,2,3], 1 ) === 2);
+  console.log(sortedFrequency( [1,1,2,2,2,2,3], 4 ) === -1);
+  console.log(sortedFrequency( [1,2,2,2,2,3], 1 ) === 1);
+};
+testSortedFrequency();
