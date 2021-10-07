@@ -233,4 +233,20 @@ const testSortedFrequency = () => {
   console.log(sortedFrequency( [1,1,2,2,2,2,3], 4 ) === -1);
   console.log(sortedFrequency( [1,2,2,2,2,3], 1 ) === 1);
 };
-testSortedFrequency();
+// testSortedFrequency();
+
+const findRotatedIndex = () => {
+
+};
+
+const testSort = sort => {
+  const testArrayEquality = (arr1, arr2) => JSON.stringify(arr1) === JSON.stringify(arr2);
+  const defaultSort = arr => arr.sort((a, b) => a - b);
+  console.log(testArrayEquality( sort([ 3, 2, 0, -1, 1, 2, 3, 9, 0, 1, 9, 7 ]), [ -1, 0, 0, 1, 1, 2, 2, 3, 3, 7, 9, 9 ] ));
+  console.log(testArrayEquality( sort([ 6, 5, 4, 3, 2, 1, 0, -1 ]), [ -1, 0, 1, 2, 3, 4, 5, 6 ] ));
+  console.log(testArrayEquality( sort([ -3, -4, 9, 1, 2, 3, 4, 11, 5, 6, 7, 8, 10 ]), [ -4, -3, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] ));
+  console.log(testArrayEquality( sort([ 1 ]), [ 1 ] ));
+  console.log(testArrayEquality( sort([ 2, 1 ]), [ 1, 2 ] ));
+  console.log(testArrayEquality( sort([ 1, 2 ]), [ 1, 2 ] ));
+};
+
