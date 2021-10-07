@@ -248,6 +248,7 @@ const testSort = sort => {
   console.log(testArrayEquality( sort([ 1 ]), [ 1 ] ));
   console.log(testArrayEquality( sort([ 2, 1 ]), [ 1, 2 ] ));
   console.log(testArrayEquality( sort([ 1, 2 ]), [ 1, 2 ] ));
+  console.log(testArrayEquality( sort([ 2, 1, 3, 4, 5, 7, 6 ]), [ 1, 2, 3, 4, 5, 6, 7 ] ));
 };
 
 const bubbleSort = arr => {
@@ -264,4 +265,16 @@ const bubbleSort = arr => {
   return arr;
 };
 
-testSort(bubbleSort);
+const selectionSort = arr => {
+  for (let i = 0; i < arr.length - 1; i++) {
+    let minIdx = i;
+    for (let j = i + 1; j < arr.length; j++)
+      if (arr[j] < arr[minIdx])
+        minIdx = j;
+    if (i !== minIdx)
+      [ arr[i], arr[minIdx] ] = [ arr[minIdx], arr[i] ];
+  }
+  return arr;
+};
+
+testSort(selectionSort);
