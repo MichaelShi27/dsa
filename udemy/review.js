@@ -23,6 +23,36 @@ class SinglyLinkedList {
     this.length++;
   }
 
+  unshift(val) {
+    if (!this.length) this.push(val);
+    else {
+      const node = new Node(val);
+      node.next = this.head;
+      this.head = node;
+      this.length++;
+    }
+  }
+
+  insert(idx, val) {
+    if (idx > this.length || idx < 0) return false;
+    if (!idx)
+    this.unshift(val);
+    else if (idx === this.length)
+    this.push(val);
+    else {
+      const node = new Node(val);
+      let curr = this.head, prev = null;
+      while (idx--) {
+        prev = curr;
+        curr = curr.next;
+      }
+      prev.next = node;
+      node.next = curr;
+      this.length++;
+    }
+    return true;
+  }
+
   pop() {
     if (!this.length) return;
     const removed = this.tail;
@@ -41,34 +71,14 @@ class SinglyLinkedList {
     return removed;
   }
 
-  unshift(val) {
-    if (!this.length) this.push(val);
-    else {
-      const node = new Node(val);
-      node.next = this.head;
-      this.head = node;
-      this.length++;
-    }
-  }
-
-  insert(idx, val) {
-    if (idx > this.length || idx < 0) return false;
-    if (!idx)
-      this.unshift(val);
-    else if (idx === this.length)
-      this.push(val);
-    else {
-      const node = new Node(val);
-      let curr = this.head, prev = null;
-      while (idx--) {
-        prev = curr;
-        curr = curr.next;
-      }
-      prev.next = node;
-      node.next = curr;
-      this.length++;
-    }
-    return true;
+  shift() {
+    if (!this.length) return false;
+    const removed = this.head;
+    this.head = this.head.next;
+    this.length--;
+    if (this.length === 0)
+      this.tail = null;
+    return removed;
   }
 
   get(idx) {
@@ -235,8 +245,20 @@ const testSortedFrequency = () => {
 };
 // testSortedFrequency();
 
-const findRotatedIndex = () => {
+const findRotatedIndex = (arr, num) => {
+  const firstEl = arr[0];
+  const lastEl = arr[arr.length - 1];
 
+  let low = 0;
+  let high = arr.length - 1;
+  while (true) {
+    let mid = Math.floor((low + high) / 2);
+    if (arr[mid] < num) {
+
+    } else if (arr[mid] > num) {
+
+    } else return mid;
+  }
 };
 
 const testSort = sort => {
