@@ -262,17 +262,34 @@ const findRotatedIndex = (arr, num) => {
 
   let low = 0;
   let high = arr.length - 1;
+  let pivot;
   while (true) {
     let mid = Math.floor((low + high) / 2);
-    if (arr[mid] < num) {
-
-    } else if (arr[mid] > num) {
-
-    } else return mid;
+    if (arr[mid] <= arr[mid + 1]) {
+      if (arr[mid] > arr[low])
+        low = mid;
+      else
+        high = mid;
+    } else {
+      pivot = mid;
+      break;
+    }
+    // what if actually sorted
   }
+  return pivot;
+  // while (true) {
+  //   let mid = Math.floor((low + high) / 2);
+  //   if (arr[mid] < num) {
+
+  //   } else if (arr[mid] > num) {
+
+  //   } else return mid;
+  // }
 };
 
-const testSort = sort => {
+console.log(findRotatedIndex([ 15, 3, 5, 6, 7, 8, 10, 11, 14, 15 ]));
+
+const testSortingFunction = sort => {
   const testArrayEquality = (arr1, arr2) => JSON.stringify(arr1) === JSON.stringify(arr2);
   const defaultSort = arr => arr.sort((a, b) => a - b);
   console.log(testArrayEquality( sort([ 3, 2, 0, -1, 1, 2, 3, 9, 0, 1, 9, 7 ]), [ -1, 0, 0, 1, 1, 2, 2, 3, 3, 7, 9, 9 ] ));
@@ -310,4 +327,25 @@ const selectionSort = arr => {
   return arr;
 };
 
-testSort(selectionSort);
+const insertionSort = arr => {
+  for (let i = 1; i < arr.length; i++) { // using shifts
+    const temp = arr[i];
+    for (let j = i - 1; j >= -1; j--)
+      if (arr[j] > temp)
+        arr[j + 1] = arr[j];
+      else {
+        arr[j + 1] = temp;
+        break;
+      }
+  }
+  return arr;
+
+  // for (let i = 1; i < arr.length; i++) // using swaps
+  //   for (let j = i - 1; j > -1; j--)
+  //     if (arr[j + 1] < arr[j])
+  //       [ arr[j + 1], arr[j] ] = [ arr[j], arr[j + 1] ];
+  //     else break;
+  // return arr;
+};
+
+testSortingFunction(insertionSort);
