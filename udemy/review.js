@@ -81,6 +81,17 @@ class SinglyLinkedList {
     return removed;
   }
 
+  remove(idx) {
+    if (!this.length) return false;
+    if (idx === 0) return this.shift();
+    if (idx === this.length - 1) return this.pop();
+    const prev = this.get(idx - 1);
+    const removed = prev.next;
+    prev.next = removed.next;
+    this.length--;
+    return removed;
+  }
+
   get(idx) {
     if (!this.length || idx >= this.length || idx < 0) return;
     let curr = this.head;
