@@ -263,19 +263,23 @@ const findRotatedIndex = (arr, num) => {
   let low = 0;
   let high = arr.length - 1;
   let pivot;
-  while (true) {
+  if (arr[low] < arr[high])
+    pivot = -1;
+
+  while (pivot === undefined) {
     let mid = Math.floor((low + high) / 2);
-    if (arr[mid] <= arr[mid + 1]) {
-      if (arr[mid] > arr[low])
+    console.log(low, high)
+    if (low === high)
+      pivot = -1;
+    else if (arr[mid] <= arr[mid + 1]) {
+      if (arr[mid] > arr[low] || arr[mid] > arr[high])
         low = mid;
-      else
+      else if (arr[mid] < arr[high] || arr[mid] < arr[low])
         high = mid;
-    } else {
+    } else
       pivot = mid;
-      break;
-    }
-    // what if actually sorted
   }
+  console.log(pivot);
   return pivot;
   // while (true) {
   //   let mid = Math.floor((low + high) / 2);
@@ -287,7 +291,15 @@ const findRotatedIndex = (arr, num) => {
   // }
 };
 
-console.log(findRotatedIndex([ 15, 3, 5, 6, 7, 8, 10, 11, 14, 15 ]));
+// console.log(findRotatedIndex([ 1, 1, 1 ]) === -1);
+// console.log(findRotatedIndex([ 0, 1, 1 ]) === -1);
+// console.log(findRotatedIndex([ 1, 1, 1, 1, 1, 1, 1, 1 ]) === -1);
+// console.log(findRotatedIndex([ 0, 1, 1, 1, 1, 1, 1, 1 ]) === -1);
+// console.log(findRotatedIndex([ 1, 1, 1, 1, 1, 1, 1, 1, 0 ]) === 7);
+// console.log(findRotatedIndex([ 8, 1, 1, 1, 1, 1, 1, 1, 2 ]) === 0);
+// console.log(findRotatedIndex([ 8, 1, 1, 1, 1, 1, 1, 1, 2 ]) === 0);
+// console.log(findRotatedIndex([ 2, 3, 4, 8, 1, 1, 1, 1, 1, 1, 1, 2 ]) === 3);
+// console.log(findRotatedIndex([ 2, 3, 4, 8, 9, 10, 11, 12, 13, -3, -2, -1, 0 ]) === 8);
 
 const testSortingFunction = sort => {
   const testArrayEquality = (arr1, arr2) => JSON.stringify(arr1) === JSON.stringify(arr2);
@@ -348,4 +360,31 @@ const insertionSort = arr => {
   // return arr;
 };
 
-testSortingFunction(insertionSort);
+// testSortingFunction(insertionSort);
+
+const mergeSortedArrays = (arr1, arr2) => {
+  const newArr = [];
+  for (let i = 0, j = 0; newArr.length < arr1.length + arr2.length;) {
+    if (arr1[i] < arr2[j] || arr2[j] === undefined) {
+      newArr.push(arr1[i]);
+      i++;
+    } else {
+      newArr.push(arr2[j]);
+      j++;
+    }
+  }
+  return newArr;
+};
+
+const testMergeSortedArrays = () => {
+  const testArrayEquality = (arr1, arr2) => console.log( JSON.stringify(arr1) === JSON.stringify(arr2) );
+  testArrayEquality( mergeSortedArrays([ 3 ], [ 1 ]), [ 1, 3 ] );
+  testArrayEquality( mergeSortedArrays([ 1, 3 ], [ 1, 2 ]), [ 1, 1, 2, 3 ] );
+  testArrayEquality( mergeSortedArrays([ 0, 2, 3, 3, 4 ], [ 1, 3, 4, 5 ]), [ 0, 1, 2, 3, 3, 3, 4, 4, 5 ] );
+  testArrayEquality(
+    mergeSortedArrays([ 1, 2, 4, 5, 8, 15 ], [ -2, 0, 1, 1, 2, 3, 5, 7, 8, 9, 12 ]),
+    [ -2, 0, 1, 1, 1, 2, 2, 3, 4, 5, 5, 7, 8, 8, 9, 12, 15 ]
+  );
+};
+
+testMergeSortedArrays();
