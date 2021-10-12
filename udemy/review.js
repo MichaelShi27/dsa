@@ -301,18 +301,6 @@ const findRotatedIndex = (arr, num) => {
 // console.log(findRotatedIndex([ 2, 3, 4, 8, 1, 1, 1, 1, 1, 1, 1, 2 ]) === 3);
 // console.log(findRotatedIndex([ 2, 3, 4, 8, 9, 10, 11, 12, 13, -3, -2, -1, 0 ]) === 8);
 
-const testSortingFunction = sort => {
-  const testArrayEquality = (arr1, arr2) => JSON.stringify(arr1) === JSON.stringify(arr2);
-  const defaultSort = arr => arr.sort((a, b) => a - b);
-  console.log(testArrayEquality( sort([ 3, 2, 0, -1, 1, 2, 3, 9, 0, 1, 9, 7 ]), [ -1, 0, 0, 1, 1, 2, 2, 3, 3, 7, 9, 9 ] ));
-  console.log(testArrayEquality( sort([ 6, 5, 4, 3, 2, 1, 0, -1 ]), [ -1, 0, 1, 2, 3, 4, 5, 6 ] ));
-  console.log(testArrayEquality( sort([ -3, -4, 9, 1, 2, 3, 4, 11, 5, 6, 7, 8, 10 ]), [ -4, -3, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] ));
-  console.log(testArrayEquality( sort([ 1 ]), [ 1 ] ));
-  console.log(testArrayEquality( sort([ 2, 1 ]), [ 1, 2 ] ));
-  console.log(testArrayEquality( sort([ 1, 2 ]), [ 1, 2 ] ));
-  console.log(testArrayEquality( sort([ 2, 1, 3, 4, 5, 7, 6 ]), [ 1, 2, 3, 4, 5, 6, 7 ] ));
-};
-
 const bubbleSort = arr => {
   let swapFound = false;
   for (let i = arr.length - 1; i > 0; i--) {
@@ -364,7 +352,7 @@ const insertionSort = arr => {
 
 const mergeSortedArrays = (arr1, arr2) => {
   const newArr = [];
-  for (let i = 0, j = 0; newArr.length < arr1.length + arr2.length;) {
+  for (let i = 0, j = 0; i < arr1.length || j < arr2.length;) {
     if (arr1[i] < arr2[j] || arr2[j] === undefined) {
       newArr.push(arr1[i]);
       i++;
@@ -387,4 +375,39 @@ const testMergeSortedArrays = () => {
   );
 };
 
-testMergeSortedArrays();
+// testMergeSortedArrays();
+
+const mergeSort = arr => {
+  if (arr.length <= 1) return arr;
+  const mid = Math.floor(arr.length / 2);
+  const firstHalf = arr.slice(0, mid);
+  const secondHalf =  arr.slice(mid);
+  return mergeSortedArrays( mergeSort(firstHalf), mergeSort(secondHalf) );
+};
+
+const testSortingFunction = sort => {
+  const testArrayEquality = (arr1, arr2) => console.log( JSON.stringify(arr1) === JSON.stringify(arr2) );
+  testArrayEquality( sort([ 3 ]), [ 3 ] );
+  testArrayEquality( sort([ 3, 1 ]), [ 1, 3 ] );
+  testArrayEquality( sort([ 1, 2 ]), [ 1, 2 ] );
+  testArrayEquality( sort([ 1, 3, 1, 2 ]), [ 1, 1, 2, 3 ] );
+  testArrayEquality( sort([ 2, 1, 3, 4, 5, 7, 6 ]), [ 1, 2, 3, 4, 5, 6, 7 ] );
+  testArrayEquality( sort([ 6, 5, 4, 3, 2, 1, 0, -1 ]), [ -1, 0, 1, 2, 3, 4, 5, 6 ] );
+  testArrayEquality( sort([ 0, 2, 3, 3, 4, 1, 3, 4, 5 ]), [ 0, 1, 2, 3, 3, 3, 4, 4, 5 ] );
+  testArrayEquality( sort([ 3, 2, 0, -1, 1, 2, 3, 9, 0, 1, 9, 7 ]), [ -1, 0, 0, 1, 1, 2, 2, 3, 3, 7, 9, 9 ] );
+  testArrayEquality(
+    sort([ -3, -4, 9, 1, 2, 3, 4, 11, 5, 6, 7, 8, 10 ]),
+    [ -4, -3, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+  );
+  testArrayEquality(
+    sort([ 1, 2, 4, 5, 8, 15, -2, 0, 1, 1, 2, 3, 5, 7, 8, 9, 12 ]),
+    [ -2, 0, 1, 1, 1, 2, 2, 3, 4, 5, 5, 7, 8, 8, 9, 12, 15 ]
+  );
+  testArrayEquality(
+    sort([ 22, 0, -1, 80, -33, 3, 0, 8, 11, 0, 56, 5, 22, 1, 7, 3, -2, -18918, -99, -20, -101, 2, 8, 4, 9 ]),
+    [ -18918, -101, -99, -33, -20, -2, -1, 0, 0, 0, 1, 2, 3, 3, 4, 5, 7, 8, 8, 9, 11, 22, 22, 56, 80 ]
+  );
+};
+
+// testSortingFunction(mergeSort);
+
