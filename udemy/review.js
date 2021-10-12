@@ -411,3 +411,31 @@ const testSortingFunction = sort => {
 
 // testSortingFunction(mergeSort);
 
+
+const pivotHelper = (arr, start = 0, end = arr.length - 1) => {
+  const pivot = arr[start];
+  let pivotIdx = start;
+  for (let i = start + 1; i <= end; i++)
+    if (arr[i] < pivot) {
+      pivotIdx++;
+      [ arr[pivotIdx], arr[i] ] = [ arr[i], arr[pivotIdx] ];
+    }
+  [ arr[start], arr[pivotIdx] ] = [ arr[pivotIdx], arr[start] ];
+  return pivotIdx;
+};
+
+const testPivotHelper = func => {
+  const testArrayEquality = (arr1, arr2) => console.log( JSON.stringify(arr1) === JSON.stringify(arr2) );
+  testArrayEquality( func([ 1 ]), [ [ 1 ], 0 ] );
+  testArrayEquality( func([ 1, 3 ]), [ [ 1, 3 ], 0 ] );
+  testArrayEquality( func([ 3, 1 ]), [ [ 1, 3 ], 1 ] );
+  testArrayEquality( func([ 3, 1, 4, 2, 4, 5 ]), [ [ 2, 1, 3, 4, 4, 5 ], 2 ] );
+  testArrayEquality(
+    func([ 0, -2, 0, -3, -1, -1, 4, 2, 1, 4 ]),
+    [ [ -1, -2, -3, -1, 0, 0, 4, 2, 1, 4 ], 4 ]
+  );
+  testArrayEquality( func([ 0, 1, 0, 1, 4 ]), [ [ 0, 1, 0, 1, 4 ], 0 ] );
+  testArrayEquality( func([ 6, 3, 2, 1, 4, 5 ]), [ [  5, 3, 2, 1, 4, 6 ], 5 ] );
+};
+
+// testPivotHelper(pivotHelper);

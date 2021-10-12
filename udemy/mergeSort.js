@@ -19,6 +19,20 @@ const mergeSortedArrays = (arr1, arr2) => {
   return res;
 };
 
+// const mergeSortedArrays = (arr1, arr2) => {
+//   const newArr = [];
+//   for (let i = 0, j = 0; i < arr1.length || j < arr2.length;) {
+//     if (arr1[i] < arr2[j] || arr2[j] === undefined) {
+//       newArr.push(arr1[i]);
+//       i++;
+//     } else {
+//       newArr.push(arr2[j]);
+//       j++;
+//     }
+//   }
+//   return newArr;
+// };
+
 const mergeSort = arr => {
   if (arr.length <= 1) return arr;
 
