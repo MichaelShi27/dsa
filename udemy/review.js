@@ -409,12 +409,13 @@ const testSortingFunction = sort => {
   );
 };
 
-// testSortingFunction(mergeSort);
+const pivotHelper = (arr, start, end) => {
+  const randIdx = Math.floor( Math.random() * (end - start + 1) + start );
+  [ arr[start], arr[randIdx] ] = [ arr[randIdx], arr[start] ];
 
-
-const pivotHelper = (arr, start = 0, end = arr.length - 1) => {
   const pivot = arr[start];
   let pivotIdx = start;
+
   for (let i = start + 1; i <= end; i++)
     if (arr[i] < pivot) {
       pivotIdx++;
@@ -439,3 +440,13 @@ const testPivotHelper = func => {
 };
 
 // testPivotHelper(pivotHelper);
+
+const quickSort = (arr, start = 0, end = arr.length - 1) => {
+  if (end <= start) return arr;
+  const pivotIdx = pivotHelper(arr, start, end);
+  quickSort(arr, start, pivotIdx - 1);
+  quickSort(arr, pivotIdx + 1, end);
+  return arr;
+};
+
+testSortingFunction(quickSort);
