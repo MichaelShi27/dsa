@@ -400,6 +400,14 @@ const testSortingFunction = sort => {
     [ -4, -3, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
   );
   testArrayEquality(
+    sort([ 333, 2432, 321, 934, 154, 333, 5, 49, 2, 92 ]),
+    [ 2, 5, 49, 92, 154, 321, 333, 333, 934, 2432 ]
+  );
+  testArrayEquality(
+    sort([ 333, 2432, -321, 934, 154, 333, 5, 49, -2, 92 ]),
+    [ -321, -2, 5, 49, 92, 154, 333, 333, 934, 2432 ]
+  );
+    testArrayEquality(
     sort([ 1, 2, 4, 5, 8, 15, -2, 0, 1, 1, 2, 3, 5, 7, 8, 9, 12 ]),
     [ -2, 0, 1, 1, 1, 2, 2, 3, 4, 5, 5, 7, 8, 8, 9, 12, 15 ]
   );
@@ -449,4 +457,57 @@ const quickSort = (arr, start = 0, end = arr.length - 1) => {
   return arr;
 };
 
-testSortingFunction(quickSort);
+// testSortingFunction(quickSort);
+
+const getDigit = (num, place) => {
+  if (place < 0) return;
+  // const reversed = num.toString().split('').reverse();
+  // return Number(reversed[place]) || 0;
+  return Math.floor(( Math.abs(num) / (10 ** place) ) % 10);
+};
+
+console.log(getDigit(43210, 0));
+console.log(getDigit(43210, 1));
+console.log(getDigit(43210, 2));
+console.log(getDigit(43210, 3));
+console.log(getDigit(43210, 4));
+console.log(getDigit(43210, 5));
+console.log(getDigit(43210, -1));
+
+const radixSort = arr => {
+  let place = 0;
+  let currMax = arr[0];
+  let maxLen; // num of digits of largest num in arr (i.e. how many times we repeat)
+
+  while (place !== maxLen) {
+    const buckets = [ [], [], [], [], [], [], [], [], [], [] ];
+    for (const num of arr) {
+      const digit = Math.abs( getDigit(num, place) );
+      buckets[digit].push(num);
+
+      if (place === 0 && Math.abs(num) > currMax)
+        currMax = Math.abs(num);
+    }
+    if (place === 0)
+      maxLen = currMax.toString().length;
+
+    arr = [];
+    for (const bucket of buckets)
+      arr = arr.concat(bucket);
+    place++;
+  }
+  return radixSortNegatives(arr);
+};
+
+const radixSortNegatives = arr => {
+  const buckets = { pos: [], neg: [] };
+
+  for (const num of arr)
+    if (num < 0)
+      buckets.neg.push(num);
+    else
+      buckets.pos.push(num);
+  return buckets.neg.reverse().concat(buckets.pos);
+};
+
+testSortingFunction(radixSort);

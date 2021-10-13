@@ -28,7 +28,7 @@ const radixSort = arr => {
     while (true) {
       const buckets = { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: [] };
       for (let el of arr)
-        buckets[getDigit(el, place)].push(el);
+        buckets[Math.abs(getDigit(el, place))].push(el);
       place++;
       if (buckets[0].length === arr.length) break;
 
@@ -42,9 +42,7 @@ const radixSort = arr => {
     const buckets = { pos: [], neg: [] };
     for (let el of arr)
       buckets[ el > 0 ? 'pos' : 'neg' ].push(el);
-    arr = buckets.neg.reverse().concat(buckets.pos);
-
-    return arr;
+    return buckets.neg.reverse().concat(buckets.pos);
 };
 
 // const arr = [ 3, 2, 9, 1, 4 ];
@@ -72,3 +70,42 @@ const getDigitCount = num => {
 // console.log(getDigitCount(3));
 // console.log(getDigitCount(44));
 // console.log(getDigitCount(5555));
+
+
+
+// // alternate approach, not as good
+// const radixSort = arr => {
+//   let place = 0;
+//   let currMax = arr[0];
+//   let maxLen; // num of digits of largest num in arr (i.e. how many times we repeat)
+
+//   while (place !== maxLen) {
+//     const buckets = [ [], [], [], [], [], [], [], [], [], [] ];
+//     for (const num of arr) {
+//       const digit = Math.abs( getDigit(num, place) );
+//       buckets[digit].push(num);
+
+//       if (place === 0 && Math.abs(num) > currMax)
+//         currMax = Math.abs(num);
+//     }
+//     if (place === 0)
+//       maxLen = currMax.toString().length;
+
+//     arr = [];
+//     for (const bucket of buckets)
+//       arr = arr.concat(bucket);
+//     place++;
+//   }
+//   return radixSortNegatives(arr);
+// };
+
+// const radixSortNegatives = arr => {
+//   const buckets = { pos: [], neg: [] };
+
+//   for (const num of arr)
+//     if (num < 0)
+//       buckets.neg.push(num);
+//     else
+//       buckets.pos.push(num);
+//   return buckets.neg.reverse().concat(buckets.pos);
+// };
