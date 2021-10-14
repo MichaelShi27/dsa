@@ -1,126 +1,126 @@
-class Node {
-  constructor(val) {
-    this.val = val
-    this.next = null;
-  }
-}
+// class Node {
+//   constructor(val) {
+//     this.val = val
+//     this.next = null;
+//   }
+// }
 
-class SinglyLinkedList {
+// class SinglyLinkedList {
 
-  constructor(val) {
-    this.head = null;
-    this.tail = null;
-    this.length = 0;
-  }
+//   constructor(val) {
+//     this.head = null;
+//     this.tail = null;
+//     this.length = 0;
+//   }
 
-  push(val) {
-    const node = new Node(val);
-    if (!this.length)
-      this.head = node;
-    else
-      this.tail.next = node;
-    this.tail = node;
-    this.length++;
-  }
+//   push(val) {
+//     const node = new Node(val);
+//     if (!this.length)
+//       this.head = node;
+//     else
+//       this.tail.next = node;
+//     this.tail = node;
+//     this.length++;
+//   }
 
-  unshift(val) {
-    if (!this.length) this.push(val);
-    else {
-      const node = new Node(val);
-      node.next = this.head;
-      this.head = node;
-      this.length++;
-    }
-  }
+//   unshift(val) {
+//     if (!this.length) this.push(val);
+//     else {
+//       const node = new Node(val);
+//       node.next = this.head;
+//       this.head = node;
+//       this.length++;
+//     }
+//   }
 
-  insert(idx, val) {
-    if (idx > this.length || idx < 0) return false;
-    if (!idx)
-    this.unshift(val);
-    else if (idx === this.length)
-    this.push(val);
-    else {
-      const node = new Node(val);
-      let curr = this.head, prev = null;
-      while (idx--) {
-        prev = curr;
-        curr = curr.next;
-      }
-      prev.next = node;
-      node.next = curr;
-      this.length++;
-    }
-    return true;
-  }
+//   insert(idx, val) {
+//     if (idx > this.length || idx < 0) return false;
+//     if (!idx)
+//     this.unshift(val);
+//     else if (idx === this.length)
+//     this.push(val);
+//     else {
+//       const node = new Node(val);
+//       let curr = this.head, prev = null;
+//       while (idx--) {
+//         prev = curr;
+//         curr = curr.next;
+//       }
+//       prev.next = node;
+//       node.next = curr;
+//       this.length++;
+//     }
+//     return true;
+//   }
 
-  pop() {
-    if (!this.length) return;
-    const removed = this.tail;
+//   pop() {
+//     if (!this.length) return;
+//     const removed = this.tail;
 
-    if (this.length === 1) {
-      this.head = null;
-      this.tail = null;
-    } else {
-      let curr = this.head;
-      while (curr.next !== this.tail)
-        curr = curr.next;
-      this.tail = curr;
-      this.tail.next = null;
-    }
-    this.length--;
-    return removed;
-  }
+//     if (this.length === 1) {
+//       this.head = null;
+//       this.tail = null;
+//     } else {
+//       let curr = this.head;
+//       while (curr.next !== this.tail)
+//         curr = curr.next;
+//       this.tail = curr;
+//       this.tail.next = null;
+//     }
+//     this.length--;
+//     return removed;
+//   }
 
-  shift() {
-    if (!this.length) return false;
-    const removed = this.head;
-    this.head = this.head.next;
-    this.length--;
-    if (this.length === 0)
-      this.tail = null;
-    return removed;
-  }
+//   shift() {
+//     if (!this.length) return false;
+//     const removed = this.head;
+//     this.head = this.head.next;
+//     this.length--;
+//     if (this.length === 0)
+//       this.tail = null;
+//     return removed;
+//   }
 
-  remove(idx) {
-    if (!this.length) return false;
-    if (idx === 0) return this.shift();
-    if (idx === this.length - 1) return this.pop();
-    const prev = this.get(idx - 1);
-    const removed = prev.next;
-    prev.next = removed.next;
-    this.length--;
-    return removed;
-  }
+//   remove(idx) {
+//     if (!this.length) return false;
+//     if (idx === 0) return this.shift();
+//     if (idx === this.length - 1) return this.pop();
+//     const prev = this.get(idx - 1);
+//     const removed = prev.next;
+//     prev.next = removed.next;
+//     this.length--;
+//     return removed;
+//   }
 
-  get(idx) {
-    if (!this.length || idx >= this.length || idx < 0) return;
-    let curr = this.head;
-    while (idx--)
-      curr = curr.next;
-    return curr;
-  }
+//   get(idx) {
+//     if (!this.length || idx >= this.length || idx < 0) return;
+//     let curr = this.head;
+//     while (idx--)
+//       curr = curr.next;
+//     return curr;
+//   }
 
-  rotate(n) {
-    n %= this.length;
-    if (!n) return;
-    if (n < 0) n += this.length;
+//   rotate(n) {
+//     n %= this.length;
+//     if (!n) return;
+//     if (n < 0) n += this.length;
 
-    // while (n--) {
-    //   const newHead = this.head.next;
-    //   this.tail.next = this.head;
-    //   this.head.next = null;
-    //   this.tail = this.head;
-    //   this.head = newHead;
-    // }
+//     // while (n--) {
+//     //   const newHead = this.head.next;
+//     //   this.tail.next = this.head;
+//     //   this.head.next = null;
+//     //   this.tail = this.head;
+//     //   this.head = newHead;
+//     // }
 
-    const newTail = this.get(n - 1);
-    const newHead = newTail.next;
-    newTail.next = null;
-    this.tail.next = this.head;
-    this.head = newHead;
-    this.tail = newTail;
-  }
-}
+//     const newTail = this.get(n - 1);
+//     const newHead = newTail.next;
+//     newTail.next = null;
+//     this.tail.next = this.head;
+//     this.head = newHead;
+//     this.tail = newTail;
+//   }
+// }
 
 const printList = list => {
   const arr = [];
@@ -132,7 +132,7 @@ const printList = list => {
   return arr;
 };
 
-let list = new SinglyLinkedList();
+// let list = new SinglyLinkedList();
 // list.insert(0, 0);
 // console.log( printList(list) );
 
@@ -466,21 +466,13 @@ const getDigit = (num, place) => {
   return Math.floor(( Math.abs(num) / (10 ** place) ) % 10);
 };
 
-console.log(getDigit(43210, 0));
-console.log(getDigit(43210, 1));
-console.log(getDigit(43210, 2));
-console.log(getDigit(43210, 3));
-console.log(getDigit(43210, 4));
-console.log(getDigit(43210, 5));
-console.log(getDigit(43210, -1));
-
 const radixSort = arr => {
   let place = 0;
   let currMax = arr[0];
   let maxLen; // num of digits of largest num in arr (i.e. how many times we repeat)
 
   while (place !== maxLen) {
-    const buckets = [ [], [], [], [], [], [], [], [], [], [] ];
+    const buckets = Array.from({ length: 10 }, () => []);
     for (const num of arr) {
       const digit = Math.abs( getDigit(num, place) );
       buckets[digit].push(num);
@@ -510,4 +502,73 @@ const radixSortNegatives = arr => {
   return buckets.neg.reverse().concat(buckets.pos);
 };
 
-testSortingFunction(radixSort);
+// testSortingFunction(radixSort);
+
+class Stack {
+  constructor() {
+    this.q1 = new Queue();
+    this.q2 = new Queue();
+  }
+
+  push(val) {
+    this.q1.enqueue(val);
+    while (this.q2.size)
+      this.q1.enqueue( this.q2.dequeue() );
+    [ this.q1, this.q2 ] = [ this.q2, this.q1 ];
+  }
+
+  pop() {
+    return this.q2.dequeue();
+  }
+}
+
+class Node {
+  constructor(value) {
+      this.value = value;
+      this.next = null;
+  }
+}
+
+class Queue {
+  constructor() {
+      this.first = null;
+      this.last = null;
+      this.size = 0;
+  }
+  enqueue(data) {
+      var node = new Node(data);
+
+      if (!this.first) {
+          this.first = node;
+          this.last = node;
+      } else {
+          this.last.next = node;
+          this.last = node;
+      }
+
+      return ++this.size;
+  }
+
+  dequeue() {
+      if (!this.first) return null;
+
+      var temp = this.first;
+      if (this.first == this.last) {
+          this.last = null;
+      }
+      this.first = this.first.next;
+      this.size--;
+      return temp.value;
+  }
+}
+
+const s = new Stack();
+s.push(1)
+s.push(2)
+s.push(3)
+s.push(4)
+console.log(s.pop());
+console.log(s.pop());
+console.log(s.pop());
+console.log(s.pop());
+console.log(s.pop());
