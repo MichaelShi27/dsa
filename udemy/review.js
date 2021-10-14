@@ -510,14 +510,25 @@ class Stack {
     this.q2 = new Queue();
   }
 
+  // push(val) {
+  //   this.q1.enqueue(val);
+  //   while (this.q2.size)
+  //     this.q1.enqueue( this.q2.dequeue() );
+  //   [ this.q1, this.q2 ] = [ this.q2, this.q1 ];
+  // }
+
+  // pop() {
+  //   return this.q2.dequeue();
+  // }
+
   push(val) {
     this.q1.enqueue(val);
-    while (this.q2.size)
-      this.q1.enqueue( this.q2.dequeue() );
-    [ this.q1, this.q2 ] = [ this.q2, this.q1 ];
   }
 
   pop() {
+    while (this.q1.size > 1)
+      this.q2.enqueue( this.q1.dequeue() );
+    [ this.q1, this.q2 ] = [ this.q2, this.q1 ];
     return this.q2.dequeue();
   }
 }
