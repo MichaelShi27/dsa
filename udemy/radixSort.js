@@ -36,6 +36,7 @@ const radixSort = arr => {
       for (let i = 0; i < 10; i++)
         for (let el of buckets[i])
           arr.push(el);
+      // arr = [].concat(...buckets); // can also do this
     }
 
     // for negative nums

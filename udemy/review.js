@@ -533,6 +533,8 @@ class Stack {
   }
 }
 
+// stack with 2 queues
+/*
 class Node {
   constructor(value) {
       this.value = value;
@@ -572,14 +574,44 @@ class Queue {
       return temp.value;
   }
 }
+*/
 
-const s = new Stack();
-s.push(1)
-s.push(2)
-s.push(3)
-s.push(4)
-console.log(s.pop());
-console.log(s.pop());
-console.log(s.pop());
-console.log(s.pop());
-console.log(s.pop());
+
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class BinarySearchTree {
+  constructor() {
+    this.root = null;
+  }
+
+  insert(val){
+    const newNode = new Node(val);
+    if (!this.root) {
+      this.root = newNode;
+      return;
+    }
+    let curr = this.root;
+    while (true) {
+      if (val < curr.val) {
+        if (!curr.left) {
+          curr.left = newNode;
+          return;
+        }
+        curr = curr.left;
+      } else {
+        if (!curr.right) {
+          curr.right = newNode;
+          return;
+        }
+        curr = curr.right;
+      }
+    }
+  }
+}
+
