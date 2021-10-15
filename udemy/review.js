@@ -634,3 +634,19 @@ class BinarySearchTree {
   }
 }
 
+const printBST = (curr, arr = []) => {
+  if (!curr) return;
+  arr.push(curr.val);
+  printBST(curr.left, arr);
+  printBST(curr.right, arr);
+  return arr;
+};
+const testBST = () => {
+  const testArrayEquality = (a, b) => console.log( JSON.stringify(a) === JSON.stringify(b) );
+  const bst = new BinarySearchTree();
+  const arr = [ 10, 4, 1, 8, 14, 12, 17, 19, 18, 0, -1, 9, 8.5, 9.5 ];
+  arr.forEach(el => bst.insertRecursive(el));
+  const expected = [ 10, 4, 1, 0, -1, 8, 9, 8.5, 9.5, 14, 12, 17, 19, 18 ];
+  testArrayEquality(printBST(bst.root), expected);
+};
+testBST();
