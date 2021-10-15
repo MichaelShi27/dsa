@@ -621,15 +621,28 @@ class BinarySearchTree {
       return;
     }
     if (val < curr.val) {
-      if (!curr.left)
-        curr.left = newNode;
-      else
+      if (curr.left)
         this.insertRecursive(val, curr.left);
-    } else {
-      if (!curr.right)
-        curr.right = newNode;
       else
+        curr.left = newNode;
+    } else {
+      if (curr.right)
         this.insertRecursive(val, curr.right);
+      else
+        curr.right = newNode;
+    }
+  }
+
+  findIterative(val) {
+    let curr = this.root;
+    while (true) {
+      if (val < curr.val) {
+        if (!curr.left) return;
+        curr = curr.left;
+      } else if (val > curr.val) {
+        if (!curr.right) return;
+        curr = curr.right;
+      } else return curr;
     }
   }
 }
@@ -647,6 +660,15 @@ const testBST = () => {
   const arr = [ 10, 4, 1, 8, 14, 12, 17, 19, 18, 0, -1, 9, 8.5, 9.5 ];
   arr.forEach(el => bst.insertRecursive(el));
   const expected = [ 10, 4, 1, 0, -1, 8, 9, 8.5, 9.5, 14, 12, 17, 19, 18 ];
-  testArrayEquality(printBST(bst.root), expected);
+
+  // test insert()
+  // testArrayEquality(printBST(bst.root), expected);
+
+  // test find()
+  console.log(!!bst.findIterative(-1));
+  console.log(!!bst.findIterative(8.5));
+  console.log(!!bst.findIterative(19));
+  console.log(!bst.findIterative(20));
+  console.log(!bst.findIterative(7));
 };
 testBST();
