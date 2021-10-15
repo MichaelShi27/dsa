@@ -634,6 +634,7 @@ class BinarySearchTree {
   }
 
   findIterative(val) {
+    if (!this.root) return;
     let curr = this.root;
     while (true) {
       if (val < curr.val) {
@@ -642,8 +643,19 @@ class BinarySearchTree {
       } else if (val > curr.val) {
         if (!curr.right) return;
         curr = curr.right;
-      } else return curr;
+      } else
+        return curr;
     }
+  }
+
+  findRecursive(val, curr = this.root) {
+    if (!this.root) return;
+    if (val < curr.val)
+      return curr.left ? this.findRecursive(val, curr.left) : undefined;
+    else if (val > curr.val)
+      return curr.right ? this.findRecursive(val, curr.right) : undefined;
+    else
+      return curr;
   }
 }
 
@@ -659,16 +671,16 @@ const testBST = () => {
   const bst = new BinarySearchTree();
   const arr = [ 10, 4, 1, 8, 14, 12, 17, 19, 18, 0, -1, 9, 8.5, 9.5 ];
   arr.forEach(el => bst.insertRecursive(el));
-  const expected = [ 10, 4, 1, 0, -1, 8, 9, 8.5, 9.5, 14, 12, 17, 19, 18 ];
 
   // test insert()
+  // const expected = [ 10, 4, 1, 0, -1, 8, 9, 8.5, 9.5, 14, 12, 17, 19, 18 ];
   // testArrayEquality(printBST(bst.root), expected);
 
   // test find()
-  console.log(!!bst.findIterative(-1));
-  console.log(!!bst.findIterative(8.5));
-  console.log(!!bst.findIterative(19));
-  console.log(!bst.findIterative(20));
-  console.log(!bst.findIterative(7));
+  console.log(!!bst.findRecursive(-1));
+  console.log(!!bst.findRecursive(8.5));
+  console.log(!!bst.findRecursive(19));
+  console.log(!bst.findRecursive(20));
+  console.log(!bst.findRecursive(7));
 };
 testBST();
