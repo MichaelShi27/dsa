@@ -590,7 +590,7 @@ class BinarySearchTree {
     this.root = null;
   }
 
-  insert(val){
+  insertIterative(val){
     const newNode = new Node(val);
     if (!this.root) {
       this.root = newNode;
@@ -611,6 +611,25 @@ class BinarySearchTree {
         }
         curr = curr.right;
       }
+    }
+  }
+
+  insertRecursive(val, curr = this.root) {
+    const newNode = new Node(val);
+    if (!this.root) {
+      this.root = newNode;
+      return;
+    }
+    if (val < curr.val) {
+      if (!curr.left)
+        curr.left = newNode;
+      else
+        this.insertRecursive(val, curr.left);
+    } else {
+      if (!curr.right)
+        curr.right = newNode;
+      else
+        this.insertRecursive(val, curr.right);
     }
   }
 }
