@@ -18,9 +18,13 @@ class BinarySearchTree {
       return this;
     }
     if (val < curr.val)
-      curr.left ? this.insert(val, curr.left) : curr.left = node;
+      curr.left
+        ? this.insert(val, curr.left)
+        : curr.left = node;
     else if (val > curr.val)
-      curr.right ? this.insert(val, curr.right) : curr.right = node;
+      curr.right
+        ? this.insert(val, curr.right)
+        : curr.right = node;
     return this;
   }
 }
@@ -29,14 +33,14 @@ class BinarySearchTree {
 // post-order: explore children first, then visit/push node
 // in-order: explore left, then visited node, then explore right
 
-// // pre-order iterative
+// // pre-order iterative (can I only do pre-order?)
 // const dfs = root => {
 //   const visited = [];
 //   if (!root) return visited;
 
 //   const stack = [ root ];
 //   while (stack.length) {
-//     let curr = stack.pop();
+//     const curr = stack.pop();
 //     if (curr.right) stack.push(curr.right);
 //     if (curr.left) stack.push(curr.left);
 //     visited.push(curr.val);
@@ -62,8 +66,7 @@ class BinarySearchTree {
 // const dfs = node => {
 //   let visited = [];
 //   if (!node) return visited;
-//   if (node.left) visited = [ ...visited, ...dfs(node.left) ];
-//   if (node.right) visited = [ ...visited, ...dfs(node.right) ];
+//   visited = [ ...visited, ...dfs(node.left), ...dfs(node.right) ];
 //   visited.push(node.val);
 //   return visited;
 // };
@@ -72,8 +75,8 @@ class BinarySearchTree {
 const dfs = (node, visited = []) => {
   if (!node) return visited;
   visited.push(node.val);
-  if (node.left) dfs(node.left, visited);
-  if (node.right) dfs(node.right, visited);
+  dfs(node.left, visited);
+  dfs(node.right, visited);
   return visited;
 };
 
@@ -93,5 +96,5 @@ const res = dfs(bst.root);
 const postOrder = JSON.stringify([ 2, 6, 9, 8, 3, 12, 16, 18, 19, 14, 10 ]);
 const preOrder = JSON.stringify([ 10, 3, 2, 8, 6, 9, 14, 12, 19, 18, 16 ]);
 const inOrder = JSON.stringify([ 2, 3, 6, 8, 9, 10, 12, 14, 16, 18, 19 ]);
-console.log( JSON.stringify(res) === inOrder );
+console.log( JSON.stringify(res) === preOrder );
 // console.log(res);

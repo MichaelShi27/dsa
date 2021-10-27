@@ -684,3 +684,27 @@ const testBST = () => {
   console.log(!bst.findRecursive(7));
 };
 testBST();
+
+// recursive
+const dfs = (node, visited = []) => {
+  if (!node) return;
+  visited.push(node.val);
+  dfs(node.left, visited);
+  dfs(node.right, visited);
+  return visited;
+};
+
+// iterative
+const dfs = root => {
+  const visited = [];
+  if (!root) return visited;
+
+  const stack = [ root ];
+  while (stack.length) {
+    const curr = stack.pop();
+    visited.push(curr.val);
+    curr.right && stack.push(curr.right);
+    curr.left && stack.push(curr.left);
+  }
+  return visited;
+};
