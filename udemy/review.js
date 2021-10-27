@@ -666,6 +666,7 @@ const printBST = (curr, arr = []) => {
   printBST(curr.right, arr);
   return arr;
 };
+
 const testBST = () => {
   const testArrayEquality = (a, b) => console.log( JSON.stringify(a) === JSON.stringify(b) );
   const bst = new BinarySearchTree();
@@ -685,14 +686,14 @@ const testBST = () => {
 };
 testBST();
 
-// recursive
-const dfs = (node, visited = []) => {
-  if (!node) return;
-  visited.push(node.val);
-  dfs(node.left, visited);
-  dfs(node.right, visited);
-  return visited;
-};
+// // recursive
+// const dfs = (node, visited = []) => {
+//   if (!node) return;
+//   visited.push(node.val);
+//   dfs(node.left, visited);
+//   dfs(node.right, visited);
+//   return visited;
+// };
 
 // iterative
 const dfs = root => {
@@ -707,4 +708,48 @@ const dfs = root => {
     curr.left && stack.push(curr.left);
   }
   return visited;
+};
+
+// // iterative
+// const bfs = root => {
+//   const visited = [];
+//   if (!root) return visited;
+
+//   const q = [ root ];
+//   while (q.length) {
+//     const curr = q.shift();
+//     curr.right && q.push(curr.right);
+//     curr.left && q.push(curr.left);
+//     visited.push(curr.val);
+//   }
+//   return visited;
+// };
+
+// recursive w/ helper
+const bfs = root => {
+  const visited = [];
+  if (!root) return visited;
+
+  const q = [ root ];
+  const recurse = () => {
+    if (!q.length) return;
+    const node = q.shift();
+    visited.push(node.val);
+    node.left && q.push(node.left);
+    node.right && q.push(node.right);
+    recurse();
+  };
+  recurse(root);
+  return visited;
+};
+
+// recursive
+const bfs = (root, visited = [], q = [ root ]) => {
+  if (!root || !q.length) return visited;
+
+  const curr = q.shift();
+  visited.push(curr.val);
+  curr.left && q.push(curr.left);
+  curr.right && q.push(curr.right);
+  return bfs(root, visited, q);
 };

@@ -25,32 +25,22 @@ class BinarySearchTree {
   }
 }
 
+// recursive w/ helper
 const bfs = root => {
-  // // iterative
-  // const q = [ root ];
-  // const visited = [];
-
-  // while (q.length) {
-  //   root = q.shift();
-  //   if (root.left) q.push(root.left);
-  //   if (root.right) q.push(root.right);
-  //   visited.push(root.val)
-  // }
-  // return visited;
-
-  // recursive w/ helper
-  const q = [ root ];
   const visited = [];
+  if (!root) return visited;
 
-  const helper = () => {
-    if (!q.length) return visited;
-    let node = q.shift();
-    if (node.left) q.push(node.left);
-    if (node.right) q.push(node.right);
+  const q = [ root ];
+  const recurse = () => {
+    if (!q.length) return;
+    const node = q.shift();
     visited.push(node.val);
-    return helper();
+    node.left && q.push(node.left);
+    node.right && q.push(node.right);
+    recurse();
   };
-  return helper();
+  recurse(root);
+  return visited;
 };
 
 // // recursive
@@ -75,4 +65,4 @@ bst.insert(18);
 bst.insert(2);
 bst.insert(12);
 bst.insert(16);
-console.log( bfs(bst.root) );
+console.log(JSON.stringify( bfs(bst.root) ) === JSON.stringify( [ 10, 3, 14, 2, 8, 12, 19, 6, 9, 18, 16 ] ));
