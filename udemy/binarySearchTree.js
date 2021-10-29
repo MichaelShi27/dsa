@@ -62,8 +62,6 @@ class BinarySearchTree {
     // else return true;
 
     // iterative
-    if (!this.root) return;
-
     while (curr) {
       if (val < curr.val)
         curr = curr.left;
