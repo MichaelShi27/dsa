@@ -25,33 +25,45 @@ class BinarySearchTree {
   }
 }
 
-// recursive w/ helper
-const bfs = root => {
-  const visited = [];
-  if (!root) return visited;
+// const bfs = root => {
+//   // iterative
+//   const q = [ root ];
+//   const visited = [];
 
-  const q = [ root ];
-  const recurse = () => {
-    if (!q.length) return;
-    const node = q.shift();
-    visited.push(node.val);
-    node.left && q.push(node.left);
-    node.right && q.push(node.right);
-    recurse();
-  };
-  recurse(root);
-  return visited;
-};
+//   while (q.length) {
+//     root = q.shift();
+//     if (root.left) q.push(root.left);
+//     if (root.right) q.push(root.right);
+//     visited.push(root.val)
+//   }
+//   return visited;
 
-// // recursive
-// const bfs = (root, q = [ root ], visited = []) => {
-//   if (!q.length) return visited;
-//   root = q.shift();
-//   if (root.left) q.push(root.left);
-//   if (root.right) q.push(root.right);
-//   visited.push(root.val);
-//   return bfs(root, q, visited);
+//   // // recursive w/ helper
+//   // const q = [ root ];
+//   // const visited = [];
+
+//   // const helper = () => {
+//   //   if (!q.length) return visited;
+//   //   let node = q.shift();
+//   //   if (node.left) q.push(node.left);
+//   //   if (node.right) q.push(node.right);
+//   //   visited.push(node.val);
+//   //   return helper();
+//   // };
+//   // return helper();
 // };
+
+// recursive
+const bfs = (root, q = [ root ], visited = []) => {
+  if (!q.length) return visited;
+  root = q.shift();
+  if (root.left)
+    q.push(root.left);
+  if (root.right)
+    q.push(root.right);
+  visited.push(root.val);
+  return bfs(null, q, visited);
+};
 
 const bst = new BinarySearchTree();
 bst.insert(10);

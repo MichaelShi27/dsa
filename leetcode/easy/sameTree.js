@@ -55,3 +55,44 @@ var isSameTree = function(p, q) {
   }
   return true;
 };
+
+// bfs recursive helper
+var isSameTree = function(p, q) {
+  const queue = [ p, q ];
+
+  const recurse = () => {
+      if (!queue.length) return true;
+      p = queue.shift();
+      q = queue.shift();
+      if (p && !q || (!p && q))
+          return false;
+      if (p && q) {
+          if (p.val !== q.val)
+              return false;
+          queue.push(p.left);
+          queue.push(q.left);
+          queue.push(p.right);
+          queue.push(q.right);
+      }
+      return recurse();
+  };
+  return recurse();
+};
+
+// bfs recursive pure
+var isSameTree = function(p, q, queue = [ p, q ]) {
+    if (!queue.length) return true;
+    p = queue.shift();
+    q = queue.shift();
+    if (p && !q || (!p && q))
+        return false;
+    if (p && q) {
+        if (p.val !== q.val)
+            return false;
+        queue.push(p.left);
+        queue.push(q.left);
+        queue.push(p.right);
+        queue.push(q.right);
+    }
+    return isSameTree(null, null, queue);
+};
