@@ -28,10 +28,7 @@ var isSameTree = function(p, q) {
           continue;
       if (p.val !== q.val)
           return false;
-      stack.push(p.left);
-      stack.push(q.left);
-      stack.push(p.right);
-      stack.push(q.right);
+      stack.push(p.left, q.left, p.right, q.right);
   }
   return true;
 };
@@ -48,10 +45,7 @@ var isSameTree = function(p, q) {
           continue;
       if (p.val !== q.val)
           return false;
-      queue.push(p.left);
-      queue.push(q.left);
-      queue.push(p.right);
-      queue.push(q.right);
+      queue.push(p.left, q.left, p.right, q.right);
   }
   return true;
 };
@@ -69,10 +63,7 @@ var isSameTree = function(p, q) {
       if (p && q) {
           if (p.val !== q.val)
               return false;
-          queue.push(p.left);
-          queue.push(q.left);
-          queue.push(p.right);
-          queue.push(q.right);
+          queue.push(p.left, q.left, p.right, q.right);
       }
       return recurse();
   };
@@ -89,10 +80,7 @@ var isSameTree = function(p, q, queue = [ p, q ]) {
     if (p && q) {
         if (p.val !== q.val)
             return false;
-        queue.push(p.left);
-        queue.push(q.left);
-        queue.push(p.right);
-        queue.push(q.right);
+        queue.push(p.left, q.left, p.right, q.right);
     }
     return isSameTree(null, null, queue);
 };
