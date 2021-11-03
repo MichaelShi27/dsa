@@ -48,6 +48,15 @@ const climbStairs1 = n => {
   return recurse(n);
 };
 
+// tabulation
+const climbStairs2 = n => {
+  const arr = [ null, 1, 2 ];
+  for (let i = 3; i <= n; i++)
+    arr[i] = arr[i - 1] + arr[i - 2];
+  return arr[n];
+};
+
+
 const func = climbStairs1;
 const arr = [ 1, 2, 3, 4, 5, 6, 11 ].map(el => func(el));
 const expected = [ 1, 2, 3, 5, 8, 13, 144 ];
