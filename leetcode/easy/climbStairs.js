@@ -56,6 +56,23 @@ const climbStairs2 = n => {
   return arr[n];
 };
 
+// memoization => this approach is like approach 1, just going 0 to n instead of n to 0. this approach sort of simulates "real life" -
+// at each step, I can take 1 or 2 steps, and if I go past the end (whether using 1 or 2 steps) it doesn't count, while if I hit the end
+// exactly, it counts
+const climbStairs3 = n => {
+  const seen = {};
+
+  const recurse = (curStep, goal) => {
+    if (curStep > goal) return 0;
+    if (curStep === goal) return 1;
+    if (seen[curStep]) return seen[curStep];
+
+    const res = recurse(curStep + 1, goal) + recurse(curStep + 2, goal);
+    seen[curStep] = res;
+    return res;
+  };
+  return recurse(0, n);
+};
 
 const func = climbStairs1;
 const arr = [ 1, 2, 3, 4, 5, 6, 11 ].map(el => func(el));
