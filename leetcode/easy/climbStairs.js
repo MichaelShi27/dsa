@@ -1,8 +1,9 @@
+// 70. Climbing Stairs
+// https://leetcode.com/problems/climbing-stairs/
+
 // You are climbing a staircase. It takes n steps to reach the top.
 
 // Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
-
-
 
 // Example 1:
 
@@ -25,14 +26,45 @@
 
 // 1 <= n <= 45
 
-var climbStairs = function(n) {
-  return recurse(0, n);
+
+/*
+APPROACH:
+- solve for first few cases (e.g. n = 1-4) and look for pattern
+- intuition: can only get to n by taking 1 step from n-1 or 2 steps from n-2, so it's all of the ways to get to n-2 (since we simply add 2 to each to get to n) plus all the ways to get to n-1 (and we simply add 1 to each to get to n)
+*/
+
+// memoization
+const climbStairs1 = n => {
+  const seen = {};
+
+  const recurse = n => {
+    if (n === 1 || n === 2) return n;
+    if (seen[n]) return seen[n];
+
+    const res = recurse(n - 1) + recurse(n - 2);
+    seen[n] = res;
+    return res;
+  };
+  return recurse(n);
 };
 
-const recurse = (curr, limit) => {
-  if (curr > limit) return 0;
-  if (curr === limit) return 1;
-  return recurse(curr + 1, limit) + recurse(curr + 2, limit);
-}
+const func = climbStairs1;
+const arr = [ 1, 2, 3, 4, 5, 6, 11 ].map(el => func(el));
+const expected = [ 1, 2, 3, 5, 8, 13, 144 ];
+console.log( JSON.stringify(arr) === JSON.stringify(expected) );
 
-console.log(climbStairs(5));
+
+// // my original approach (exceeds time limit)
+// var climbStairs = function(n) {
+//   let ct = 1;
+
+//   const recurse = cur => {
+//       if (cur === n || cur === n - 1 )
+//           return;
+//       ct++;
+//       recurse(cur + 1);
+//       recurse(cur + 2);
+//   };
+//   recurse(0);
+//   return ct;
+// };

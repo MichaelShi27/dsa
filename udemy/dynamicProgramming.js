@@ -6,13 +6,13 @@ const getNthFib1 = n => {
 };
 
 // memoization
-const getNthFib2 = (n, o = {}) => {
+const getNthFib2 = (n, seen = {}) => {
   if (n === 1) return 0;
   if (n === 2) return 1;
-  if (o[n]) return o[n];
+  if (seen[n]) return seen[n];
 
-  const res = getNthFib2(n - 1, o) + getNthFib2(n - 2, o);
-  o[n] = res;
+  const res = getNthFib2(n - 1, seen) + getNthFib2(n - 2, seen);
+  seen[n] = res;
   return res;
 };
 
