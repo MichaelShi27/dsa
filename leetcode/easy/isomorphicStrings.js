@@ -44,3 +44,26 @@ var isIsomorphic = function(s, t) {
   return true;
 };
 
+// alter strings & compare
+var isIsomorphic = function(s, t) {
+  const sObj = {};
+  const tObj = {};
+  s = s.split('');
+  t = t.split('');
+
+  for (let i = 0; i < s.length; i++) {
+    if ( sObj[s[i]] !== undefined )
+      s[i] = sObj[s[i]];
+    else {
+      sObj[s[i]] = i;
+      s[i] = i;
+    }
+    if ( tObj[t[i]] !== undefined )
+      t[i] = tObj[t[i]];
+    else {
+      tObj[t[i]] = i;
+      t[i] = i;
+    }
+  }
+  return s.join(' ') === t.join(' ');
+};
