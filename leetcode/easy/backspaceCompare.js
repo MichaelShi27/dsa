@@ -152,3 +152,23 @@ var backspaceCompare3 = function(s, t) {
   return true;
 };
 
+// naive approach => best case O(2n) time but performs quite well on LC tests?
+var backspaceCompare4 = function(s, t) {
+  let newS = '', newT = '';
+  let ct = 0;
+
+  for (let i = s.length - 1; i >= 0; i--)
+    if (s[i] === '#')
+      ct++;
+    else
+      ct ? ct-- : newS += s[i];
+
+  ct = 0;
+  for (let i = t.length - 1; i >= 0; i--)
+    if (t[i] === '#')
+      ct++;
+    else
+      ct ? ct-- : newT += t[i];
+
+  return newS === newT;
+};
