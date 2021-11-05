@@ -1,3 +1,6 @@
+// 844. Backspace String Compare
+// https://leetcode.com/problems/backspace-string-compare/submissions/
+
 // // Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
 
 // // Note that after backspacing an empty text, the text will continue empty.
@@ -49,8 +52,8 @@
 //   return stack1.join('') === stack2.join('');
 // };
 
-// // backwards
-const backspaceCompare = (s, t) => {
+// // 2-pointer approach
+const backspaceCompare1 = (s, t) => {
   let sCount = 0;
   let tCount = 0;
 
@@ -83,8 +86,8 @@ const backspaceCompare = (s, t) => {
   return true;
 }
 
-// alt backwards
-const backspaceCompare = (s, t) => {
+// alt 2-pointer
+const backspaceCompare2 = (s, t) => {
   let sCount = 0;
   let tCount = 0;
 
@@ -116,3 +119,36 @@ const backspaceCompare = (s, t) => {
   }
   return true;
 }
+
+// like backspaceCompare1 but w/ a for-loop
+var backspaceCompare3 = function(s, t) {
+  for (let i = s.length - 1, j = t.length - 1, sCt = 0, tCt = 0; i >= 0 || j >= 0; i--, j--) {
+    while (s[i] === '#') {
+      sCt++;
+      i--;
+    }
+    while (sCt || s[i] === '#') {
+      if (s[i] === '#')
+        sCt++;
+      else
+        sCt--;
+      i--;
+    }
+
+    while (t[j] === '#') {
+      tCt++;
+      j--;
+    }
+    while (tCt || t[j] === '#') {
+      if (t[j] === '#')
+        tCt++;
+      else
+        tCt--;
+      j--;
+    }
+    if (s[i] !== t[j])
+      return false;
+  }
+  return true;
+};
+
