@@ -172,3 +172,24 @@ var backspaceCompare4 = function(s, t) {
 
   return newS === newT;
 };
+
+// like backspaceCompare4, but going forward => best case O(4n)?
+var backspaceCompare5 = function(s, t) {
+  let newS = [], newT = [];
+  let ct = 0;
+
+  for (let i = 0; i < s.length; i++)
+    if (s[i] === '#')
+      newS.length && newS.pop();
+    else
+      newS.push(s[i]);
+
+  ct = 0;
+  for (let i = 0; i < t.length; i++)
+    if (t[i] === '#')
+      newT.length && newT.pop();
+    else
+      newT.push(t[i]);
+
+  return newS.join('') === newT.join('');
+};
