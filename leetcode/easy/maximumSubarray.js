@@ -19,3 +19,14 @@ const maxSubArray = nums => {
   }
   return maxSum;
 };
+
+const maxSubArray = nums => {
+  let maxSum = nums[0];
+  let curSum = nums[0];
+
+  for (let num of nums) {
+    curSum = Math.max(num, curSum + num);
+    maxSum = Math.max(curSum, maxSum);
+  }
+  return maxSum;
+};
