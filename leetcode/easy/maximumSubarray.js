@@ -21,12 +21,23 @@ const maxSubArray = nums => {
 };
 
 const maxSubArray = nums => {
-  let maxSum = nums[0];
-  let curSum = nums[0];
+  let maxSum = -Infinity;
+  let curSum = 0;
 
   for (let num of nums) {
     curSum = Math.max(num, curSum + num);
     maxSum = Math.max(curSum, maxSum);
+  }
+  return maxSum;
+};
+
+// Kadan's algorithm (dynamic programming) => similar to above solution, just stores curSum in the arr itself
+const maxSubArray = nums => {
+  let maxSum = nums[0];
+
+  for (let i = 1; i < nums.length; i++) {
+    nums[i] = Math.max(nums[i], nums[i] + nums[i - 1]);
+    maxSum = Math.max(nums[i], maxSum);
   }
   return maxSum;
 };
