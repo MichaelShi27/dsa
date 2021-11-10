@@ -1,8 +1,11 @@
-// find longest substr with all unique chars
-// https://www.udemy.com/course/js-algorithms-and-data-structures-masterclass/learn/quiz/4410594
+// see also: ../../udemy/findLongestSubstring.js
 
-// better solution
-const findLongestSubstring = str => {
+// 3. Longest Substring Without Repeating Characters
+// https://leetcode.com/problems/longest-substring-without-repeating-characters/
+
+// Given a string s, find the length of the longest substring without repeating characters.
+
+const lengthOfLongestSubstring = str => {
   let longest = 0;
   const seen = {};
 
@@ -18,7 +21,7 @@ const findLongestSubstring = str => {
 };
 
 // my orig solution
-const findLongestSubstring = str => {
+const lengthOfLongestSubstring = str => {
   let longest = 0;
   const seen = {};
   let currLen = 0;
@@ -41,7 +44,7 @@ const findLongestSubstring = str => {
 };
 
 // similar to my orig solution
-const findLongestSubstring = str => {
+const lengthOfLongestSubstring = str => {
   const obj = {};
   let longest = 0;
   let curLen = 0;
