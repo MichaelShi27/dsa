@@ -31,7 +31,7 @@ const maxSubArray = nums => {
   return maxSum;
 };
 
-// Kadan's algorithm (dynamic programming) => similar to above solution, just stores curSum in the arr itself
+// Kadane's algorithm (dynamic programming) => similar to above solution, just stores curSum in the arr itself
 const maxSubArray = nums => {
   let maxSum = nums[0];
 
