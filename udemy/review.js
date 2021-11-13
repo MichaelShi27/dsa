@@ -256,50 +256,81 @@ const testSortedFrequency = () => {
 };
 // testSortedFrequency();
 
-const findRotatedIndex = (arr, num) => {
-  const firstEl = arr[0];
-  const lastEl = arr[arr.length - 1];
+// const findRotatedIndex = (arr, num) => {
+//   const firstEl = arr[0];
+//   const lastEl = arr[arr.length - 1];
 
+//   let low = 0;
+//   let high = arr.length - 1;
+//   let pivot;
+//   if (arr[low] < arr[high])
+//     pivot = -1;
+
+//   while (pivot === undefined) {
+//     let mid = Math.floor((low + high) / 2);
+//     console.log(low, high)
+//     if (low === high)
+//       pivot = -1;
+//     else if (arr[mid] <= arr[mid + 1]) {
+//       if (arr[mid] > arr[low] || arr[mid] > arr[high])
+//         low = mid;
+//       else if (arr[mid] < arr[high] || arr[mid] < arr[low])
+//         high = mid;
+//     } else
+//       pivot = mid;
+//   }
+//   return pivot;
+// };
+
+// findRotatedIndex - see also: ../leetcode/medium/searchInRotatedSortedArray.js
+
+const findRotatedIndex = (arr, num) => {
   let low = 0;
   let high = arr.length - 1;
-  let pivot;
-  if (arr[low] < arr[high])
-    pivot = -1;
+  const pivotIdx = findPivotIdx(arr);
 
-  while (pivot === undefined) {
-    let mid = Math.floor((low + high) / 2);
-    console.log(low, high)
-    if (low === high)
-      pivot = -1;
-    else if (arr[mid] <= arr[mid + 1]) {
-      if (arr[mid] > arr[low] || arr[mid] > arr[high])
-        low = mid;
-      else if (arr[mid] < arr[high] || arr[mid] < arr[low])
-        high = mid;
-    } else
-      pivot = mid;
+  if (pivotIdx !== 0) {
+    if (num > arr[0])
+      high = pivotIdx; // look to left of pivot
+    else if (num < arr[0])
+      low = pivotIdx; // look to right of pivot
+    else
+      return 0;
   }
-  console.log(pivot);
-  return pivot;
-  // while (true) {
-  //   let mid = Math.floor((low + high) / 2);
-  //   if (arr[mid] < num) {
 
-  //   } else if (arr[mid] > num) {
-
-  //   } else return mid;
-  // }
+  while (low <= high) {
+    const mid = Math.floor( (low + high) / 2 );
+    if (num < arr[mid])
+      high = mid - 1;
+    else if (num > arr[mid])
+      low = mid + 1;
+    else
+      return mid;
+  }
+  return -1;
 };
 
-// console.log(findRotatedIndex([ 1, 1, 1 ]) === -1);
-// console.log(findRotatedIndex([ 0, 1, 1 ]) === -1);
-// console.log(findRotatedIndex([ 1, 1, 1, 1, 1, 1, 1, 1 ]) === -1);
-// console.log(findRotatedIndex([ 0, 1, 1, 1, 1, 1, 1, 1 ]) === -1);
-// console.log(findRotatedIndex([ 1, 1, 1, 1, 1, 1, 1, 1, 0 ]) === 7);
-// console.log(findRotatedIndex([ 8, 1, 1, 1, 1, 1, 1, 1, 2 ]) === 0);
-// console.log(findRotatedIndex([ 8, 1, 1, 1, 1, 1, 1, 1, 2 ]) === 0);
-// console.log(findRotatedIndex([ 2, 3, 4, 8, 1, 1, 1, 1, 1, 1, 1, 2 ]) === 3);
-// console.log(findRotatedIndex([ 2, 3, 4, 8, 9, 10, 11, 12, 13, -3, -2, -1, 0 ]) === 8);
+const findPivotIdx = arr => { // essentially the same as ./findMinimumInRotatedSortedArray.js
+  const len = arr.length;
+  if (len === 1 || arr[len - 1] > arr[0]) return 0;
+
+  let start = 0;
+  let end = len - 1;
+
+  while (true) {
+    const mid = Math.floor( (start + end) / 2 );
+
+    if (arr[mid] < arr[mid - 1])
+      return mid;
+    if (arr[mid] > arr[mid + 1])
+      return mid + 1;
+
+    if (arr[start] > arr[mid])
+      end = mid - 1;
+    else
+      start = mid + 1;
+  }
+};
 
 const bubbleSort = arr => {
   let swapFound = false;
@@ -684,7 +715,7 @@ const testBST = () => {
   console.log(!bst.findRecursive(20));
   console.log(!bst.findRecursive(7));
 };
-testBST();
+// testBST();
 
 // // recursive
 // const dfs = (node, visited = []) => {
@@ -743,13 +774,13 @@ const bfs = root => {
   return visited;
 };
 
-// recursive
-const bfs = (root, visited = [], q = [ root ]) => {
-  if (!root || !q.length) return visited;
+// // recursive
+// const bfs = (root, visited = [], q = [ root ]) => {
+//   if (!root || !q.length) return visited;
 
-  const curr = q.shift();
-  visited.push(curr.val);
-  curr.left && q.push(curr.left);
-  curr.right && q.push(curr.right);
-  return bfs(root, visited, q);
-};
+//   const curr = q.shift();
+//   visited.push(curr.val);
+//   curr.left && q.push(curr.left);
+//   curr.right && q.push(curr.right);
+//   return bfs(root, visited, q);
+// };
