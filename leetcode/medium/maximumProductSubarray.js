@@ -21,4 +21,3 @@ const maxProduct = arr => {
   }
   return overallMaxProd;
 };
-
