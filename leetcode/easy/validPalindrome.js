@@ -48,24 +48,45 @@ const isPalindrome = s => {
     2: true, 3: true, 4: true, 5: true, 6: true, 7: true, 8: true, 9: true, 0: true
   };
 
-  let p = 0;
-  let q = s.length - 1;
-
-  while (p < q) {
+  for (let p = 0, q = s.length - 1; p < q; p++, q--) {
     if (!obj[s[p]] && !obj[s[p].toLowerCase()]) {
-      p++;
+      q++;
       continue;
     }
     if (!obj[s[q]] && !obj[s[q].toLowerCase()]) {
-      q--;
+      p--;
       continue;
     }
     if (s[p].toLowerCase() !== s[q].toLowerCase())
       return false;
-    p++;
-    q--;
   }
   return true;
 };
+
+// slightly different two-pointer approach => faster, even though I build new str
+const isPalindrome = s => {
+  let str = '';
+  for (let char of s)
+    if (isUpperCase(char))
+      str += char.toLowerCase();
+    else if (isValidCharCode(char))
+      str += char;
+
+  for (let p = 0, q = str.length - 1; p < q; p++, q--)
+    if (str[p] !== str[q])
+      return false;
+  return true;
+};
+
+const isUpperCase = char => {
+  const code = char.charCodeAt();
+  return code >= 65 && code <= 90;
+};
+
+const isValidCharCode = char => {
+  const code = char.charCodeAt();
+  return (code >= 47 && code <= 57) || (code >= 97 && code <= 122);
+};
+
 
 console.log(isPalindrome('A  b ba'))
