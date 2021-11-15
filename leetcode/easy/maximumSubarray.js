@@ -5,6 +5,7 @@
 
 // A subarray is a contiguous part of an array.
 
+// original approach
 const maxSubArray = nums => {
   let maxSum = -Infinity;
   let curSum = 0;
@@ -20,6 +21,7 @@ const maxSubArray = nums => {
   return maxSum;
 };
 
+// Kadane's algorithm (simple example of dynamic programming)
 const maxSubArray = nums => {
   let maxSum = -Infinity;
   let curSum = 0;
@@ -31,7 +33,7 @@ const maxSubArray = nums => {
   return maxSum;
 };
 
-// Kadane's algorithm (dynamic programming) => similar to above solution, just stores curSum in the arr itself
+// similar to above solution, just stores curSum in the arr itself (tabulation?)
 const maxSubArray = nums => {
   let maxSum = nums[0];
 
