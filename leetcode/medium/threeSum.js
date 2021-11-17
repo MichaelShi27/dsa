@@ -26,7 +26,7 @@ const threeSum = nums => {
   nums.sort((a, b) => a - b);
 
   for (let i = 0; i < nums.length; i++) {
-    if (nums[i] === nums[i - 1])
+    if (nums[i] === nums[i - 1]) // using an obj to keep track of repeat values rather than this if statement seems to be faster for some reason
       continue;
 
     for (let low = i + 1, high = nums.length - 1; low < high;) {
