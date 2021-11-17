@@ -23,18 +23,18 @@ s and t consist of lowercase English letters.
 
 var isAnagram = function(s, t) {
   if (s.length !== t.length)
-      return false;
+    return false;
 
   const obj = {};
 
   for (let i = 0; i < s.length; i++) {
-      obj[s[i]] = (obj[s[i]] || 0) + 1;
-      obj[t[i]] = (obj[t[i]] || 0) - 1;
+    obj[s[i]] = (obj[s[i]] || 0) + 1;
+    obj[t[i]] = (obj[t[i]] || 0) - 1;
   }
 
   for (let key in obj)
-      if (obj[key] !== 0)
-          return false;
+    if (obj[key] !== 0)
+      return false;
 
   return true;
 };
