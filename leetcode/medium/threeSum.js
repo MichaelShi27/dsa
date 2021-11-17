@@ -20,6 +20,35 @@
 // Input: nums = [0]
 // Output: []
 
+
+const threeSum = nums => {
+  const res = [];
+  nums.sort((a, b) => a - b);
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === nums[i - 1])
+      continue;
+
+    for (let low = i + 1, high = nums.length - 1; low < high;) {
+      const sum = nums[i] + nums[low] + nums[high];
+      if (sum > 0)
+        high--;
+      else if (sum < 0)
+        low++;
+      else {
+        res.push([ nums[i], nums[low], nums[high] ]);
+        low++;
+        while (nums[low] === nums[low - 1])
+          low++;
+      }
+    }
+  }
+  return res;
+};
+
+console.log( threeSum([ -1, 0, 1, 2, -1, -4 ]) ); // [ [ -1, -1, 2 ], [ -1, 0, 1 ] ];
+
+
 // // very slow solution => faster than ~12%
 // const threeSum = nums => {
 //   const seen = {};
