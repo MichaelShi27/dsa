@@ -1,3 +1,6 @@
+// 283. Move Zeroes
+// https://leetcode.com/problems/move-zeroes/
+
 // Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 
 // Note that you must do this in-place without making a copy of the array.
@@ -19,6 +22,19 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 
+// two pointers
+const moveZeroes = nums => {
+  for (let i = 0, j = 1; j < nums.length; i++, j++) {
+    if (nums[i] !== 0)
+      continue;
+    else if (nums[j] === 0)
+      i--;
+    else
+      [ nums[i], nums[j] ] = [ nums[j], nums[i] ];
+  }
+};
+
+
 // naive
 //  var moveZeroes = function(nums) {
 //   let count = 0;
@@ -34,7 +50,7 @@
 // };
 
 
-// iter
+// iter sub-optimal
 var moveZeroes = function(nums) {
     for (let i = 0, j = 0; i < nums.length; i++, j++) {
         if (nums[j] === 0) {
@@ -46,7 +62,7 @@ var moveZeroes = function(nums) {
 };
 
 
-// recurs
+// recurs sub-optimal
 var moveZeroes = function(nums, i = 0, j = 0) {
   if (i === nums.length) return;
 
