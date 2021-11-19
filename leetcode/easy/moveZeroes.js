@@ -28,14 +28,30 @@ const moveZeroes = nums => {
     if (nums[i] !== 0)
       continue;
     else if (nums[j] === 0)
-      i--;
+      i--; // since we only want j to increase in this case
     else
       [ nums[i], nums[j] ] = [ nums[j], nums[i] ];
   }
 };
 
+// O(2n)
+const moveZeroes = nums => {
+  const nonZeroes = [];
 
-// naive
+  for (let num of nums)
+    if (num !== 0)
+      nonZeroes.push(num);
+
+  for (let i = 0; i < nonZeroes.length; i++)
+    nums[i] = nonZeroes[i];
+
+  for (let i = nonZeroes.length; i < nums.length; i++)
+    nums[i] = 0;
+};
+
+
+// splice solutions below => O(n^2)?
+
 //  var moveZeroes = function(nums) {
 //   let count = 0;
 //   for (let i = 0; i < nums.length; i++) {
@@ -50,7 +66,7 @@ const moveZeroes = nums => {
 // };
 
 
-// iter sub-optimal
+// iterative
 var moveZeroes = function(nums) {
     for (let i = 0, j = 0; i < nums.length; i++, j++) {
         if (nums[j] === 0) {
@@ -62,7 +78,7 @@ var moveZeroes = function(nums) {
 };
 
 
-// recurs sub-optimal
+// recursive
 var moveZeroes = function(nums, i = 0, j = 0) {
   if (i === nums.length) return;
 
