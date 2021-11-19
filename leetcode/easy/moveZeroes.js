@@ -22,7 +22,7 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 
-// two pointers
+// two pointers => O(1n) time, O(1) space? (does ES6 array swapping use space?)
 const moveZeroes = nums => {
   for (let i = 0, j = 1; j < nums.length; i++, j++) {
     if (nums[i] !== 0)
@@ -34,7 +34,19 @@ const moveZeroes = nums => {
   }
 };
 
-// O(2n)
+// two pointers => O(1n) time, O(1) space
+const moveZeroes = nums => {
+    let lastNonZero = 0; // actually the idx after last nonzero num
+    for (let i = 0; i < nums.length; i++)
+        if (nums[i]) {
+            nums[lastNonZero] = nums[i];
+            lastNonZero++;
+        }
+    for (let i = lastNonZero; i < nums.length; i++)
+        nums[i] = 0;
+};
+
+// O(2n) time, O(1n) space
 const moveZeroes = nums => {
   const nonZeroes = [];
 
@@ -83,9 +95,9 @@ var moveZeroes = function(nums, i = 0, j = 0) {
   if (i === nums.length) return;
 
   if (nums[j] === 0) {
-      nums.push(0);
-      nums.splice(j, 1);
-      j--;
+    nums.push(0);
+    nums.splice(j, 1);
+    j--;
   }
   i++;
   j++;
