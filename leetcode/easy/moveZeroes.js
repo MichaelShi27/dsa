@@ -35,8 +35,9 @@ const moveZeroes = nums => {
 };
 
 // two pointers => O(1n) time, O(1) space
+// sub-optimal - if array has lots of 0s, the 2nd for loop is still writing 0s over the 0s which can be redundant
 const moveZeroes = nums => {
-    let lastNonZero = 0; // actually the idx after last nonzero num
+    let lastNonZero = 0; // actually the idx AFTER last nonzero num
     for (let i = 0; i < nums.length; i++)
         if (nums[i]) {
             nums[lastNonZero] = nums[i];
