@@ -1,4 +1,20 @@
+
 var reverseList = function(head) {
+    if (!head) return null;
+
+    let curr = head;
+    let prev = null, temp;
+    while (curr) {
+        temp = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = temp;
+
+    }
+    return prev;
+};
+
+const reverseList = head => {
   const arr = [];
   let cur = head;
   while (cur) {
