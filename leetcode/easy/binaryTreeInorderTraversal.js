@@ -14,3 +14,18 @@ const inorderTraversal = root => {
   recurse(root);
   return vals;
 };
+
+const inorderTraversal = root => {
+  const vals = [];
+
+  const recurse = (node, vals = []) => {
+    if (!node) return vals;
+
+    recurse(node.left, vals);
+    vals.push(node.val);
+    recurse(node.right, vals);
+
+    return vals;
+  };
+  return recurse(root);
+};
