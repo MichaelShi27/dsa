@@ -24,25 +24,38 @@ Explanation: In this case, no transactions are done and the max profit = 0.
 
 */
 
-const maxProfit = function(prices) {
+const maxProfit = prices => {
   let profit = 0;
-  let currLowest;
+  let currLowest; // idx, not val
 
   for (let i = 0; i < prices.length; i++) {
-      if (i === prices.length - 1)
-          return profit;
-      if (prices[i + 1] > prices[i]) {
-          currLowest = i;
-          break;
-      }
+    if (i === prices.length - 1)
+      return profit;
+    if (prices[i + 1] > prices[i]) {
+      currLowest = i;
+      break;
+    }
   }
 
   for (let i = currLowest + 1; i < prices.length; i++) {
-      const diff = prices[i] - prices[currLowest];
-      if (diff > profit)
-          profit = diff;
-      if (prices[i] < prices[currLowest])
-          currLowest = i;
+    const diff = prices[i] - prices[currLowest];
+    if (diff > profit)
+      profit = diff;
+    if (prices[i] < prices[currLowest])
+      currLowest = i;
   }
+  return profit;
+};
+
+// similar to above approach, just cleaned up
+const maxProfit = prices => {
+  let profit = 0;
+  let lowestVal = Infinity;
+
+  for (let i = 0; i < prices.length; i++)
+    if (prices[i] < lowestVal)
+      lowestVal = prices[i];
+    else
+      profit = Math.max(profit, prices[i] - lowestVal);
   return profit;
 };
