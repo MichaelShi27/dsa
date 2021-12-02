@@ -1,6 +1,20 @@
 // 189. Rotate Array
 // https://leetcode.com/problems/rotate-array/
 
+// O(n) time, O(1) space => reverse arr, then reverse first k elements of arr, then reverse rest
+const rotate = (nums, k) => {
+  if (k >= nums.length)
+    k %= nums.length;
+
+  // can use less space by not declaring p & q each time, and especially by not using ES6 syntax swap (temp var actually better!?)
+  for (let p = 0, q = nums.length - 1; p < q; p++, q--)
+    [ nums[p], nums[q] ] = [ nums[q], nums[p] ];
+  for (let p = 0, q = k - 1; p < q; p++, q--)
+    [ nums[p], nums[q] ] = [ nums[q], nums[p] ];
+  for (let p = k, q = nums.length - 1; p < q; p++, q--)
+    [ nums[p], nums[q] ] = [ nums[q], nums[p] ];
+};
+
 // O(n) time, O(n) space
 const rotate = (nums, k) => {
   if (k >= nums.length)
