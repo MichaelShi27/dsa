@@ -1,6 +1,16 @@
 // 189. Rotate Array
 // https://leetcode.com/problems/rotate-array/
 
+// O(n) time, O(n) space
+const rotate = (nums, k) => {
+  if (k >= nums.length)
+    k %= nums.length;
+
+  const pivotIdx = nums.length - k;
+  const spliced = nums.splice(0, pivotIdx);
+  nums.push(...spliced);
+};
+
 // O(2n) time, O(n) space
 const rotate = (nums, k) => {
   if (k >= nums.length)
