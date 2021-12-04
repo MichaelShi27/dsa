@@ -1,23 +1,43 @@
 // 134. Gas Station
 // https://leetcode.com/problems/gas-station/
 
-// O(3n) time, O(1) space
-const canCompleteCircuit = (stations, costs) => {
-  if (getArraySum(costs) > getArraySum(stations)) return -1;
 
-  let sum = 0;
+// O(2n) time, O(1) space
+const canCompleteCircuit = (stations, costs) => {
+  let tank = 0;
+  // this loop & if-statement checks if we have enough gas to make a cycle at all
+  for (let i = 0; i < costs.length; i++)
+    tank += stations[i] - costs[i];
+  if (tank < 0) return -1;
+
+  tank = 0;
   let startIdx = 0;
   for (let i = 0; i < costs.length; i++) {
-    sum += stations[i] - costs[i];
-    if (sum < 0) {
-      sum = 0;
+    tank += stations[i] - costs[i];
+    if (tank < 0) {
+      tank = 0;
       startIdx = i + 1;
-    }
+    } // if tank stays pos, we just keep moving i to end of arr. we don't need to move i back to start to check bc we know a solution exists thanks to 1st if statement
   }
-  return startIdx < costs.length ? startIdx : -1;
+  return startIdx;
 };
 
-const getArraySum = arr => arr.reduce( (sum, cur) => sum += cur );
+// similar to above, but one-pass instead of two
+const canCompleteCircuit = (stations, costs) => {
+  let start = 0;
+  let total = 0;
+  let tank = 0;
+
+  for (let i = 0; i < stations.length; i++) {
+    tank += stations[i] - costs[i];
+    total += stations[i] - costs[i];
+    if (tank < 0) {
+      start = i + 1;
+      tank = 0;
+    }
+  }
+  return (total < 0) ? -1 : start;
+};
 
 // same as below solution, but not using diffs array since we can calculate diffs as we go
 const canCompleteCircuit = (stations, costs) => {
@@ -68,4 +88,60 @@ const canCompleteCircuit = (stations, costs) => {
     }
   }
   return -1;
+};
+
+// one of my old solutions (performs decently)
+const canCompleteCircuit = (stations, costs) => {
+  let start = 0;
+  let cur = 0;
+  let ct = 0;
+  let tank = 0;
+  const len = costs.length;
+
+  while (start < len && ct !== len) {
+    let nextStationIdx = cur + 1 === len ? 0 : cur + 1;
+
+    const diff = stations[cur] - costs[cur];
+    if ((tank + diff) >= 0) {
+      tank += diff;
+      ct++;
+      cur = nextStationIdx;
+    } else {
+      tank += costs[start] - stations[start];
+      ct--;
+      start++;
+    }
+  }
+  return ct === len ? start : -1;
+};
+
+// one of old solutions (used to pass, but no longer does with massive input arrays - exceeds time limit)
+const canCompleteCircuit = (stations, costs) => {
+  let start = 0;
+  let cur = 0;
+  let tank = 0;
+  const len = stations.length;
+  let startHasMoved = false;
+
+  while (true) {
+    const diff = stations[cur] - costs[cur];
+    if ((tank + diff) >= 0) {
+      tank += diff;
+      cur++;
+    } else {
+      start++;
+      cur = start;
+      tank = 0;
+      startHasMoved = true;
+    }
+    if (start === len) start = 0;
+    if (cur === len) cur = 0;
+    if (startHasMoved && start === 0) return -1; // if we've made a complete circle w/o finding solution
+    if ( (tank + stations[cur] - costs[cur]) >= 0 ) {
+      if (
+        start === cur + 1 ||
+        ( start === 0 && cur === len - 1 ) // we've reached the end of the arr w/o ever moving start
+      ) return start;
+    }
+  }
 };
