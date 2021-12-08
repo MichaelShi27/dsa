@@ -65,3 +65,41 @@ const removeCoveredIntervals = intervals => {
   }
   return uncovered;
 };
+
+// from Discussion page => tracks the covered intervals, rather than uncovered
+const removeCoveredIntervals = intervals => {
+  intervals.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
+
+  let covered = 0;
+
+  // prev is basically [ left, right ] i.e. last uncovered => like above solution, if cur is uncovered we update, always keeping track of last uncovered
+  for (let prev = 0, cur = 1; cur < intervals.length; cur++) {
+    const [ prevStart, prevEnd ] = intervals[prev];
+    const [ curStart, curEnd ] = intervals[cur];
+
+    if (prevStart <= curStart && prevEnd >= curEnd)
+      covered++;
+    else
+      prev = cur;
+  }
+  return intervals.length - covered;
+};
+
+// also from Discussion - tracking uncovered
+const removeCoveredIntervals = intervals => {
+  intervals.sort((a, b) => b[0] - a[0] || a[1] - b[1]);
+
+  const coveredIntervals = [];
+  coveredIntervals.push(intervals.pop());
+
+  while (intervals.length > 0) {
+    const [ curStart, curEnd ] = intervals.pop();
+    const [ prevStart, prevEnd ] = coveredIntervals[coveredIntervals.length - 1];
+
+    if (curStart >= prevStart && curEnd <= prevEnd)
+      continue;
+    else
+      coveredIntervals.push([ curStart, curEnd ]);
+  }
+  return coveredIntervals.length;
+};
