@@ -1,6 +1,29 @@
 // 61. Rotate List
 // https://leetcode.com/problems/rotate-list/
 
+// O(2n) - similar to rotateRight3, but only need to move a tail ptr in while loop, then move head ptr afterwards
+const rotateRight4 = (head, k) => {
+  if (!head || !head.next) return head;
+
+  let cur = head;
+  let len = 1;
+  while (cur.next) { // find tail & length
+    cur = cur.next;
+    len++;
+  }
+  let tail = cur;
+  tail.next = head; // make list circular
+  k = len - (k % len) - 1;
+
+  let newTail = head;
+  while (k !== len && k-- > 0)
+    newTail = newTail.next;
+  head = newTail.next;
+  newTail.next = null;
+
+  return head;
+};
+
 // O(2n)
 const rotateRight3 = (head, k) => {
   if (!head || !head.next) return head;
