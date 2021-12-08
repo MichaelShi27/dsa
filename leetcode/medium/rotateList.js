@@ -1,6 +1,29 @@
 // 61. Rotate List
 // https://leetcode.com/problems/rotate-list/
 
+// O(2n)
+const rotateRight3 = (head, k) => {
+  if (!head || !head.next) return head;
+
+  let cur = head;
+  let len = 1;
+  while (cur.next) { // find tail & length
+    cur = cur.next;
+    len++;
+  }
+  let tail = cur;
+  tail.next = head; // make list circular
+  k = len - (k % len); // we'll have to move head & tail (len - k) since we're technically rotating left in the below while loop
+
+  while (k !== len && k-- > 0) { // 1st condition handles edge case - avoid rotating len # of times since the list would already be in the correct order
+    head = head.next;
+    tail = tail.next;
+  }
+  tail.next = null;
+
+  return head;
+};
+
 // like rotateRight1, but with a rotateLeft in case it's more efficient to use it
 const rotateRight2 = (head, k) => {
   if (!head || !head.next) return head;
