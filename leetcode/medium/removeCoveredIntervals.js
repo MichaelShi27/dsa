@@ -47,3 +47,21 @@ const removeCoveredIntervals = intervals => {
   }
   return uncovered;
 };
+
+// can also sort so if left els of intervals are equal, then sort right els in reverse order
+// in this case, only previous intervals can cover current interval, i.e. current can't ever cover previous ones
+// now we only check cur1, since due to sorting, if cur1 > right we already know cur0 is also greater
+// essentially, this sort eliminates the possibility of = >
+const removeCoveredIntervals = intervals => {
+  intervals.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
+  let uncovered = 0;
+
+  for (let right = -1, i = 0; i < intervals.length; i++) {
+    const curRight = intervals[i][1];
+    if (curRight > right) {
+      uncovered++;
+      right = curRight;
+    }
+  }
+  return uncovered;
+};
