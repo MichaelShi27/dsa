@@ -43,3 +43,18 @@ const merge = intervals => {
   }
   return res;
 };
+
+// similar solution to above, but from Solution tab (if/else inside the for-loop is essentially reversed)
+const merge = intervals => {
+  intervals.sort((a, b) => a[0] - b[0]);
+  const res = [];
+
+  for (const interval of intervals) {
+    const mostRecent = res[res.length - 1];
+    if (!res.length || mostRecent[1] < interval[0])
+      res.push(interval);
+    else if (mostRecent[1] < interval[1])
+     mostRecent[1] = interval[1];
+  }
+  return res;
+};
