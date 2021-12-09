@@ -4,7 +4,7 @@
 // O( n log n + n )
 const merge = intervals => {
   const res = [];
-  intervals.sort( (a, b) => a[0] - b[0] || a[1] - b[1] );
+  intervals.sort((a, b) => a[0] - b[0]);
 
   for (let i = 0; i < intervals.length; i++) {
     const cur = intervals[i];
@@ -27,23 +27,19 @@ const arr = [ [ 1, 4 ],[ 1, 4 ] ];
 console.log(merge(arr));
 
 
-// old solution, similar to above approach
+// old solution - similar to above approach, but 'cur' is stored directly in 'res'
 const merge = intervals => {
   intervals.sort((a, b) => a[0] - b[0]);
   const res = [ intervals[0] ];
 
-  let ptr = 0;
-  for (let i = 1; i < intervals.length; i++) {
-    const curInter = intervals[i];
-    const resInter = res[ptr];
+  for (const interval of intervals) {
+    const cur = res[res.length - 1];
 
-    if (curInter[0] <= resInter[1]) {
-      if (curInter[1] > resInter[1])
-        resInter[1] = curInter[1];
-    } else {
-      res.push(curInter);
-      ptr++;
-    }
+    if (interval[0] <= cur[1]) {
+      if (interval[1] > cur[1])
+        cur[1] = interval[1];
+    } else
+      res.push(interval);
   }
   return res;
 };
