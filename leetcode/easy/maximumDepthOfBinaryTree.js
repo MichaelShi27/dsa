@@ -11,6 +11,26 @@
  * @return {number}
  */
 
+// bfs iterative (inspired by someone else's approach)
+ const maxDepth = root => {
+  if (!root) return 0;
+  let depth = 0;
+  const q = [ root ];
+
+  while (q.length) {
+    depth++;
+    const len = q.length;
+    for (let i = 0; i < len; i++) {
+      if (q[i].left) q.push(q[i].left);
+      if (q[i].right) q.push(q[i].right);
+    }
+    q.splice(0, len);
+  }
+
+  return depth;
+};
+
+// dfs recursive
  const maxDepth = root => {
   let curMax = 0;
 
