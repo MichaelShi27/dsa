@@ -10,7 +10,24 @@
  * @param {TreeNode} root
  * @return {number}
  */
- var maxDepth = function(root, depth = 0, currMax = 0) {
+
+ const maxDepth = root => {
+  let curMax = 0;
+
+  const dfs = (node, level) => {
+    if (!node) return;
+    if (level > curMax)
+      curMax = level;
+    dfs(node.right, level + 1);
+    dfs(node.left, level + 1);
+  };
+  dfs(root, 1);
+
+  return curMax;
+};
+
+// old solution
+ const maxDepth = (root, depth = 0, currMax = 0) => {
   if (!root) return depth;
 
   if (currMax < depth) currMax = depth;
@@ -20,11 +37,8 @@
   let temp = Math.max(left, right);
   if (currMax < temp) currMax = temp;
 
-
   return currMax;
 };
 
 
-// var maxDepth = function(root) {
-//   return !root ? 0 : 1 + Math.max( maxDepth(root.left), maxDepth(root.right) );
-// };
+const maxDepth = root => !root ? 0 : 1 + Math.max( maxDepth(root.left), maxDepth(root.right) );
