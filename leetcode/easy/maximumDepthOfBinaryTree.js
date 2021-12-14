@@ -12,7 +12,7 @@
  */
 
 // bfs iterative (inspired by someone else's approach)
- const maxDepth = root => {
+const maxDepth = root => {
   if (!root) return 0;
   let depth = 0;
   const q = [ root ];
@@ -60,5 +60,5 @@
   return currMax;
 };
 
-
+// one-line solution
 const maxDepth = root => !root ? 0 : 1 + Math.max( maxDepth(root.left), maxDepth(root.right) );

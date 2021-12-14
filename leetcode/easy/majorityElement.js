@@ -17,17 +17,20 @@ Output: 2
  * @return {number}
  */
 
-// var majorityElement = function(nums) {
-//     const obj = {};
-//     const num = nums.length / 2;
+// O(n)
+const majorityElement = nums => {
+  const obj = {};
+  const half = nums.length / 2;
 
-//     for (let el of nums) {
-//         obj[el] = (obj[el] || 0) + 1;
-//         if (obj[el] > num) return el;
-//     }
-// };
+  for (let num of nums) {
+    obj[num] = ++obj[num] || 1;
+    if (obj[num] > half) return num;
+  }
+};
 
-var majorityElement = function(nums) {
-  nums = nums.sort((a, b) => a - b);
-  return nums[ Math.floor(nums.length / 2) ];
+// O(n log n)
+const majorityElement = nums => {
+  nums.sort((a, b) => a - b);
+  const mid = Math.floor(nums.length / 2);
+  return nums[mid];
 };
