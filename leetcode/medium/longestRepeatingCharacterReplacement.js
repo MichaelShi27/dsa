@@ -1,7 +1,26 @@
 // 424. Longest Repeating Character Replacement
 // https://leetcode.com/problems/longest-repeating-character-replacement/
 
+// also O(26n), pretty similar to below approach
+const characterReplacement = (str, k) => {
+  const obj = {};
+  let longestSubstrLen = 0;
 
+  for (let p = 0, q = 0; q < str.length; q++) {
+    obj[str[q]] = ++obj[str[q]] || 1;
+
+    let mostCommonCharCt = 0;
+    for (let i = p; i <= q; i++)
+      mostCommonCharCt = Math.max( mostCommonCharCt, obj[str[i]] );
+
+    if ((q - p + 1) - mostCommonCharCt > k) {
+      obj[str[p]]--;
+      p++;
+    }
+    longestSubstrLen = Math.max(longestSubstrLen, q - p + 1);
+  }
+  return longestSubstrLen;
+};
 
 // O(26n) since the obj would have all letters in the worst case so Math.max(...Object.values(obj)) would check 26 keys
 const characterReplacement = (str, k) => {
