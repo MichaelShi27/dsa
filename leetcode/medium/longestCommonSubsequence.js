@@ -1,7 +1,8 @@
 // 1143. Longest Common Subsequence
 // https://leetcode.com/problems/longest-common-subsequence/
 
-
+// O(2 * m * n) time, O(m * n) space
+// bottom-up approach (can also do top-down? i.e. upper left of chart to bottom right)
 const longestCommonSubsequence = (str1, str2) => {
   const dp = []; // if I use .fill(), I get a bug that seems inherent to .fill()
   for (let i = 0; i < str1.length + 1; i++) {
@@ -24,8 +25,31 @@ const longestCommonSubsequence = (str1, str2) => {
 // console.log( longestCommonSubsequence("abcba", "abcbcba") );
 console.log( longestCommonSubsequence("abcde", "ace") );
 
-// // naive recursive solution w/o DP => exceeds time limit but passes 17/44 test cases
+/*
+- attempted memoized recursive solution => passes 42/44 test cases but gets this error msg:
+  terminate called after throwing an instance of 'std::bad_alloc'
+    what():  std::bad_alloc
+- the test case it fails has massive string inputs => perhaps the key eventually gets too large to store in the object?
+*/
+const longestCommonSubsequence = (str1, str2, seen = {}) => {
+  if (!str1 || !str2) return 0;
+
+  let res;
+  if (str1[0] === str2[0]) {
+    const temp = seen[`${str1.slice(1)} ${str2.slice(1)}`] || longestCommonSubsequence( str1.slice(1), str2.slice(1), seen );
+    res = 1 + temp;
+  } else {
+    const temp1 = seen[`${str1.slice(1)} ${str2}`] || longestCommonSubsequence( str1.slice(1), str2, seen );
+    const temp2 = seen[`${str1} ${str2.slice(1)}`] || longestCommonSubsequence( str1, str2.slice(1), seen );
+    res =  Math.max(temp1, temp2);
+  }
+  seen[`${str1} ${str2}`] = res;
+  return seen[`${str1} ${str2}`];
+};
+
+// // naive recursive solution w/o DP => exceeds time limit after 17/44 test cases
 // // O(2^n)?
+// // top-down approach
 // const longestCommonSubsequence = (str1, str2) => {
 //   if (!str1 || !str2) return 0;
 
