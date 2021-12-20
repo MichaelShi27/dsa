@@ -2,9 +2,9 @@
 // https://leetcode.com/problems/longest-common-subsequence/
 
 // O(2 * m * n) time, O(m * n) space
-// bottom-up approach (can also do top-down? i.e. upper left of chart to bottom right)
-// based off NeetCode video
-const longestCommonSubsequence4 = (str1, str2) => {
+// bottom-up iterative DP approach (can also do top-down? i.e. upper left of chart to bottom right)
+// based off NeetCode vid: https://www.youtube.com/watch?v=Ua0GhsJSlWM
+const longestCommonSubsequence5 = (str1, str2) => {
   const dp = []; // if I use .fill(), I get a bug that seems inherent to .fill()
   for (let i = 0; i < str1.length + 1; i++) {
     const row = [];
@@ -23,11 +23,30 @@ const longestCommonSubsequence4 = (str1, str2) => {
   return dp[0][0];
 };
 
-// console.log( longestCommonSubsequence("abcba", "abcbcba") );
+// iterative DP approach based off Abdul Bari's vid: https://www.youtube.com/watch?v=sSno9rV8Rhg
+// similar to longestCommonSubsequence5 but nested for-loops go "up" instead of "down"
+const longestCommonSubsequence4 = (str1, str2) => {
+  const dp = []; // if I use .fill(), I get a bug that seems inherent to .fill()
+  for (let i = 0; i < str1.length + 1; i++) {
+    const row = [];
+    for (let j = 0; j < str2.length + 1; j++)
+      row.push(0);
+    dp.push(row);
+  }
 
+  for (let row = 1; row <= str1.length; row++)
+    for (let col = 1; col <= str2.length; col++)
+      if (str1[row - 1] === str2[col - 1]) // need the -1s to acct for the 0-indexed strs
+        dp[row][col] = 1 + dp[row - 1][col - 1];
+      else
+        dp[row][col] = Math.max( dp[row][col - 1], dp[row - 1][col] );
 
-// memoized approach based off https://www.youtube.com/watch?v=sSno9rV8Rhg
-// O(m * n)
+  return dp[str1.length][str2.length];
+};
+console.log( longestCommonSubsequence4("abc", "def") );
+
+// memoized approach based off Abdul Bari's vid => uses table
+// O(2 * m * n)
 const longestCommonSubsequence3 = (str1, str2) => {
   const dp = []; // if I use .fill(), I get a bug that seems inherent to .fill()
   for (let i = 0; i < str1.length + 1; i++) {
@@ -53,7 +72,7 @@ const longestCommonSubsequence3 = (str1, str2) => {
   return recurse(0, 0);
 };
 
-console.log( longestCommonSubsequence3("abcde", "ace") );
+// console.log( longestCommonSubsequence3("abcde", "ace") );
 
 /*
 - attempted memoized recursive solution => passes 42/44 test cases but gets this error msg:
@@ -77,13 +96,13 @@ const longestCommonSubsequence2 = (str1, str2, seen = {}) => {
   return seen[`${str1} ${str2}`];
 };
 
-// // naive recursive solution w/o DP => exceeds time limit after 17/44 test cases
-// // exponential time
-// // top-down approach
-// const longestCommonSubsequence1 = (str1, str2) => {
-//   if (!str1 || !str2) return 0;
+// naive recursive solution w/o DP => exceeds time limit after 17/44 test cases
+// exponential time
+// top-down approach
+const longestCommonSubsequence1 = (str1, str2) => {
+  if (!str1 || !str2) return 0;
 
-//   return str1[0] === str2[0]
-//     ? 1 + longestCommonSubsequence( str1.slice(1), str2.slice(1) );
-//     : Math.max( longestCommonSubsequence(str1, str2.slice(1)), longestCommonSubsequence(str1.slice(1), str2) );
-// };
+  return str1[0] === str2[0]
+    ? 1 + longestCommonSubsequence( str1.slice(1), str2.slice(1) )
+    : Math.max( longestCommonSubsequence(str1, str2.slice(1)), longestCommonSubsequence(str1.slice(1), str2) );
+};
