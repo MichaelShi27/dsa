@@ -5,12 +5,10 @@
 // bottom-up iterative DP approach (can also do top-down? i.e. upper left of chart to bottom right)
 // based off NeetCode vid: https://www.youtube.com/watch?v=Ua0GhsJSlWM
 const longestCommonSubsequence5 = (str1, str2) => {
-  const dp = []; // if I use .fill(), I get a bug that seems inherent to .fill()
-  for (let i = 0; i < str1.length + 1; i++) {
-    const row = [];
-    for (let j = 0; j < str2.length + 1; j++)
-      row.push(0);
-    dp.push(row);
+  const dp = [];
+  for (let i = 0; i < str1.length + 1; i++) { // can't use .fill here since it's a non-primitive value
+    const row = new Array(str2.length + 1);
+    dp.push( row.fill(0) );
   }
 
   for (let row = str1.length - 1; row >= 0; row--)
@@ -26,12 +24,10 @@ const longestCommonSubsequence5 = (str1, str2) => {
 // iterative DP approach based off Abdul Bari's vid: https://www.youtube.com/watch?v=sSno9rV8Rhg
 // similar to longestCommonSubsequence5 but nested for-loops go "up" instead of "down"
 const longestCommonSubsequence4 = (str1, str2) => {
-  const dp = []; // if I use .fill(), I get a bug that seems inherent to .fill()
+  const dp = [];
   for (let i = 0; i < str1.length + 1; i++) {
-    const row = [];
-    for (let j = 0; j < str2.length + 1; j++)
-      row.push(0);
-    dp.push(row);
+    const row = new Array(str2.length + 1);
+    dp.push( row.fill(0) );
   }
 
   for (let row = 1; row <= str1.length; row++)
@@ -48,12 +44,10 @@ console.log( longestCommonSubsequence4("abc", "def") );
 // memoized approach based off Abdul Bari's vid => uses table
 // O(2 * m * n)
 const longestCommonSubsequence3 = (str1, str2) => {
-  const dp = []; // if I use .fill(), I get a bug that seems inherent to .fill()
+  const dp = [];
   for (let i = 0; i < str1.length + 1; i++) {
-    const row = [];
-    for (let j = 0; j < str2.length + 1; j++)
-      row.push(null);
-    dp.push(row);
+    const row = new Array(str2.length + 1);
+    dp.push( row.fill(null) );
   }
 
   const recurse = (row, col) => {
