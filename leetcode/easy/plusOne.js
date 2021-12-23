@@ -1,6 +1,7 @@
 // 66. Plus One
 // https://leetcode.com/problems/plus-one/
 
+// O(2n time), O(1) space
 const plusOne = digits => {
   let carry;
   let i = digits.length - 1;
@@ -16,5 +17,19 @@ const plusOne = digits => {
   } while (i >= 0 && carry);
 
   if (carry) digits.unshift(1);
+  return digits;
+};
+
+// a more "naive" approach w/o a carry var, same space & time
+const plusOne = digits => {
+  for (let i = digits.length - 1; i >= 0; i--)
+    if (digits[i] === 9)
+      digits[i] = 0;
+    else {
+      digits[i]++;
+      return digits;
+    }
+
+  if (digits[0] === 0) digits.unshift(1);
   return digits;
 };
