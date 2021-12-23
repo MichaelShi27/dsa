@@ -51,21 +51,21 @@ var productExceptSelf = function(nums) {
 var productExceptSelf = function(nums) {
   const left = [];
 
-  for (let i = 0; i < nums.length; i++) {
-      if (i === 0)
-          left.push(1);
-      else
-          left.push( left[i - 1] * nums[i - 1] );
-  }
+  for (let i = 0; i < nums.length; i++)
+    if (i === 0)
+      left.push(1);
+    else
+      left.push( left[i - 1] * nums[i - 1] );
+
   let right = 1;
   for (let i = nums.length - 1; i >= 0; i--) {
-      left[i] *= right;
-      right *= nums[i];
+    left[i] *= right;
+    right *= nums[i];
   }
 
   const res = [];
   for (let i = 0; i < nums.length; i++)
-      res.push( left[i] );
+    res.push( left[i] );
 
   return res;
 };
@@ -76,12 +76,12 @@ var productExceptSelf = function(nums) {
   const res = [ 1 ];
 
   for (let i = 1; i < nums.length; i++)
-      res.push( res[i - 1] * nums[i - 1] );
+    res.push( res[i - 1] * nums[i - 1] );
 
   let right = 1;
   for (let i = nums.length - 1; i >= 0; i--) {
-      res[i] *= right;
-      right *= nums[i];
+    res[i] *= right;
+    right *= nums[i];
   }
 
   return res;
@@ -106,4 +106,4 @@ const productExceptSelf = function(nums) {
     }
 
     return output;
-}
+};

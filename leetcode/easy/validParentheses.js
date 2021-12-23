@@ -30,27 +30,15 @@
 
 
 var isValid = function(str) {
-  // init obj to map pairs
-  // init empty stack
-
-  // iterate thru str
-      // if obj[curr] => curr is an opener
-          // stack.push(obj[curr])
-  // else => curr is a closer
-      // if stack.pop() !== curr
-          // return false
-
-  // return true;
-
   const obj = { "(": ")", "[" : "]", "{" : "}" };
   const stack = [];
 
   for (let char of str) {
-      if (obj[char])
-          stack.push(obj[char]);
-      else
-          if (stack.pop() !== char)
-              return false;
+    if (obj[char])
+    stack.push(obj[char]);
+    else
+      if (stack.pop() !== char)
+        return false;
   }
   return stack.length === 0;
 };

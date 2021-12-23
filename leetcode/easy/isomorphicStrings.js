@@ -31,15 +31,15 @@ var isIsomorphic = function(s, t) {
   const sObj = {};
   const tObj = {};
   for (let i = 0; i < s.length; i++) {
-      const sChar = s[i];
-      const tChar = t[i];
-      if (tObj[sChar] || sObj[tChar]) {
-          if (sChar !== sObj[tChar] || tChar !== tObj[sChar])
-              return false;
-      } else {
-          sObj[tChar] = sChar;
-          tObj[sChar] = tChar;
-      }
+    const sChar = s[i];
+    const tChar = t[i];
+    if (tObj[sChar] || sObj[tChar]) {
+      if (sChar !== sObj[tChar] || tChar !== tObj[sChar])
+        return false;
+    } else {
+      sObj[tChar] = sChar;
+      tObj[sChar] = tChar;
+    }
   }
   return true;
 };

@@ -20,15 +20,15 @@ var isSameTree = function(p, q) {
 var isSameTree = function(p, q) {
   const stack = [ p, q ];
   while (stack.length) {
-      q = stack.pop();
-      p = stack.pop();
-      if (p && !q || (!p && q))
-          return false;
-      if (!p && !q)
-          continue;
-      if (p.val !== q.val)
-          return false;
-      stack.push(p.left, q.left, p.right, q.right);
+    q = stack.pop();
+    p = stack.pop();
+    if (p && !q || (!p && q))
+      return false;
+    if (!p && !q)
+      continue;
+    if (p.val !== q.val)
+      return false;
+    stack.push(p.left, q.left, p.right, q.right);
   }
   return true;
 };
@@ -37,15 +37,15 @@ var isSameTree = function(p, q) {
 var isSameTree = function(p, q) {
   const queue = [ p, q ];
   while (queue.length) {
-      p = queue.shift();
-      q = queue.shift();
-      if (p && !q || (!p && q))
-          return false;
-      if (!p && !q)
-          continue;
-      if (p.val !== q.val)
-          return false;
-      queue.push(p.left, q.left, p.right, q.right);
+    p = queue.shift();
+    q = queue.shift();
+    if (p && !q || (!p && q))
+      return false;
+    if (!p && !q)
+      continue;
+    if (p.val !== q.val)
+      return false;
+    queue.push(p.left, q.left, p.right, q.right);
   }
   return true;
 };
@@ -55,17 +55,17 @@ var isSameTree = function(p, q) {
   const queue = [ p, q ];
 
   const recurse = () => {
-      if (!queue.length) return true;
-      p = queue.shift();
-      q = queue.shift();
-      if (p && !q || (!p && q))
-          return false;
-      if (p && q) {
-          if (p.val !== q.val)
-              return false;
-          queue.push(p.left, q.left, p.right, q.right);
-      }
-      return recurse();
+    if (!queue.length) return true;
+    p = queue.shift();
+    q = queue.shift();
+    if (p && !q || (!p && q))
+      return false;
+    if (p && q) {
+      if (p.val !== q.val)
+        return false;
+      queue.push(p.left, q.left, p.right, q.right);
+    }
+    return recurse();
   };
   return recurse();
 };

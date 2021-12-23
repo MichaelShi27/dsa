@@ -12,7 +12,7 @@
 /**
  * initialize your data structure here.
  */
- var MinStack = function() {
+var MinStack = function() {
   this.stack = [];
   this.minStack = [];
 };

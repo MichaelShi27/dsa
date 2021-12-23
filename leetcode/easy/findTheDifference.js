@@ -36,19 +36,10 @@ s and t consist of lower-case English letters.
 var findTheDifference = function(s, t) {
   const o = {};
   for (let i = 0; i < t.length; i++) {
-      o[s[i]] = o[s[i]] === undefined ? -1 : --o[s[i]];
-      o[t[i]] = o[t[i]] === undefined ? 1 : ++o[t[i]];
+    o[s[i]] = o[s[i]] === undefined ? -1 : --o[s[i]];
+    o[t[i]] = o[t[i]] === undefined ? 1 : ++o[t[i]];
   }
   for (let key in o)
-      if (o[key] === 1)
-          return key;
+    if (o[key] === 1)
+      return key;
 };
-
-const max = 10000
-let ct = 0;
-for (let i = 0; i < max; i++) {
-  for (let j = i; j < max; j++) {
-    ct++;
-  }
-}
-console.log(ct);

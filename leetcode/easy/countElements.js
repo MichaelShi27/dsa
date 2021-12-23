@@ -38,11 +38,11 @@ var countElements = function(arr) {
   let count = 0;
 
   for (let el of arr)
-      obj[el] = true;
+    obj[el] = true;
 
   for (let el of arr)
-      if (obj[el + 1])
-          count++;
+    if (obj[el + 1])
+      count++;
 
   return count;
 };
@@ -54,12 +54,11 @@ var countElements = function(arr) {
   let count = 0;
 
   for (let el of arr) {
-      obj[el] = 1 + (obj[el] || 0);
-      if (obj[el + 1])
-          count++;
-      if (obj[el - 1] && obj[el] === 1)
-          count += obj[el - 1];
+    obj[el] = 1 + (obj[el] || 0);
+    if (obj[el + 1])
+      count++;
+    if (obj[el - 1] && obj[el] === 1)
+      count += obj[el - 1];
   }
-
   return count;
 };

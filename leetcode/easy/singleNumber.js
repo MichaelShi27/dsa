@@ -9,9 +9,9 @@ const singleNumber = function(nums) {
   const seen = {};
 
   for (let el of nums)
-      seen[el] = 1 + (seen[el] || 0);
+    seen[el] = 1 + (seen[el] || 0);
 
   for (let key in seen)
-      if (seen[key] === 1)
-          return key;
+    if (seen[key] === 1)
+      return key;
 };

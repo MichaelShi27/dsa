@@ -24,15 +24,15 @@ const countPrimes = n => {
   const arr = new Array(n);
 
   for (let i = 2; i < n ** 0.5; i++) {
-      if (arr[i] === false) continue;
-      for (let j = i ** 2; j < n; j += i)
-          arr[j] = false;
+    if (arr[i] === false) continue;
+    for (let j = i ** 2; j < n; j += i)
+      arr[j] = false;
   }
 
   let count = 0;
   for (let i = 2; i < n; i++)
-      if (arr[i] !== false)
-          count++;
+    if (arr[i] !== false)
+      count++;
 
   return count;
 };
@@ -45,13 +45,13 @@ const countPrimes = n => {
 
   const obj = {};
   for (let i = 3; i < n; i += 2)
-      obj[i] = true;
+    obj[i] = true;
 
   for (let i = 3; i < n ** 0.5; i += 2) {
-      for (let j = i ** 2; j < n; j += i) {
-          if (obj[j] === undefined) continue;
-          delete obj[j];
-      }
+    for (let j = i ** 2; j < n; j += i) {
+      if (obj[j] === undefined) continue;
+      delete obj[j];
+    }
   }
   return Object.keys(obj).length + 1;
 };
@@ -64,9 +64,9 @@ const countPrimes = n => {
   const obj = {};
 
   for (let i = 2; i < n ** 0.5; i++) {
-      if (obj[i]) continue;
-      for (let j = i ** 2; j < n; j += i)
-          obj[j] = true;
+    if (obj[i]) continue;
+    for (let j = i ** 2; j < n; j += i)
+      obj[j] = true;
   }
   return n - Object.keys(obj).length - 2;
 };

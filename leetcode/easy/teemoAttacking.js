@@ -36,10 +36,10 @@ var findPoisonedDuration = function(arr, dur) {
   let ct = 0;
 
   for (let i = 0; i < arr.length; i++) {
-      if (arr[i] + dur - 1 >= arr[i + 1])
-          ct += arr[i + 1] - arr[i];
-      else
-          ct += dur;
+    if (arr[i] + dur - 1 >= arr[i + 1])
+      ct += arr[i + 1] - arr[i];
+    else
+      ct += dur;
   }
   return ct;
 };
@@ -49,6 +49,6 @@ var findPoisonedDuration = function(arr, dur) {
 var findPoisonedDuration = function(arr, dur) {
   let ct = 0;
   for (let i = 0; i < arr.length - 1; i++)
-      ct += Math.min( dur, arr[i + 1] - arr[i] );
+    ct += Math.min( dur, arr[i + 1] - arr[i] );
   return ct + dur;
 };

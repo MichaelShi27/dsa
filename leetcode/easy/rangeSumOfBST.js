@@ -21,11 +21,11 @@ Given the root node of a binary search tree and two integers low and high, retur
  var rangeSumBST = function(root, low, high) {
   let sum = 0;
   const recurse = node => {
-      if (!node) return;
-      if (node.val <= high && node.val >= low)
-          sum += node.val;
-      recurse(node.left);
-      recurse(node.right);
+    if (!node) return;
+    if (node.val <= high && node.val >= low)
+      sum += node.val;
+    recurse(node.left);
+    recurse(node.right);
   };
   recurse(root);
   return sum;
