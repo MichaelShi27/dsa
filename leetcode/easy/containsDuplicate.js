@@ -22,3 +22,6 @@ const containsDuplicate = nums => {
   return false;
 };
 
+// n space, n time?
+// can't end early when duplicate is found, must iterate thru whole thing
+const containsDuplicate = nums => nums.length !== new Set(nums).size;
