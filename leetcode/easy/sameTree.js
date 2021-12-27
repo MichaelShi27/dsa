@@ -1,19 +1,28 @@
-/*
-100. Same Tree
-https://leetcode.com/problems/same-tree/
-
-Given the roots of two binary trees p and q, write a function to check if they are the same or not.
-
-Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
-
-*/
+// 100. Same Tree
+// https://leetcode.com/problems/same-tree/
 
 // dfs recursive
-var isSameTree = function(p, q) {
-  if (!p && !q) return true;
-  if (p && !q || (!p && q)) return false;
-  if (p.val !== q.val) return false;
-  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+const isSameTree = (p, q) => {
+  if (!p && !q)
+    return true;
+  if (!p && q || (p && !q))
+    return false;
+  if (p.val !== q.val)
+    return false;
+  if (!dfs(p.right, q.right))
+    return false;
+  if (!dfs(p.left, q.left))
+    return false;
+  return true;
+};
+
+// shofter dfs recursive
+const isSameTree = (p, q) => {
+  if (!p && !q)
+    return true;
+  if (!p && q || (p && !q) || (p.val !== q.val))
+    return false;
+  return dfs(p.right, q.right) && dfs(p.left, q.left);
 };
 
 // dfs iterative
