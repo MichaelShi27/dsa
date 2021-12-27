@@ -42,19 +42,18 @@ var isSameTree = function(p, q) {
   return true;
 };
 
-// bfs iterative
-var isSameTree = function(p, q) {
+// bfs iterative - can also do w/ 2 queues, 1 for each tree
+const isSameTree = (p, q) => {
   const queue = [ p, q ];
+
   while (queue.length) {
-    p = queue.shift();
-    q = queue.shift();
-    if (p && !q || (!p && q))
-      return false;
-    if (!p && !q)
+    const pNode = queue.shift();
+    const qNode = queue.shift();
+    if (!pNode && !qNode)
       continue;
-    if (p.val !== q.val)
+    if (!pNode && qNode || (pNode && !qNode) || (pNode.val !== qNode.val))
       return false;
-    queue.push(p.left, q.left, p.right, q.right);
+    queue.push(pNode.right, qNode.right, pNode.left, qNode.left);
   }
   return true;
 };
