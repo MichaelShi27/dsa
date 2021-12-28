@@ -56,8 +56,8 @@ const isSameTree = (p, q) => {
   return true;
 };
 
-// bfs recursive helper
-var isSameTree = function(p, q) {
+// bfs recursive w/ helper
+const isSameTree = (p, q) => {
   const queue = [ p, q ];
 
   const recurse = () => {
@@ -66,7 +66,7 @@ var isSameTree = function(p, q) {
     q = queue.shift();
     if (p && !q || (!p && q))
       return false;
-    if (p && q) {
+    if (p && q) { // can't follow the format of the above solutions where it checks !p && !q first bc of cases e.g. [1], [1,null,2]
       if (p.val !== q.val)
         return false;
       queue.push(p.left, q.left, p.right, q.right);
@@ -77,16 +77,16 @@ var isSameTree = function(p, q) {
 };
 
 // bfs recursive pure
-var isSameTree = function(p, q, queue = [ p, q ]) {
-    if (!queue.length) return true;
-    p = queue.shift();
-    q = queue.shift();
-    if (p && !q || (!p && q))
-        return false;
-    if (p && q) {
-        if (p.val !== q.val)
-            return false;
-        queue.push(p.left, q.left, p.right, q.right);
-    }
-    return isSameTree(null, null, queue);
+const isSameTree = (p, q, queue = [ p, q ]) => {
+  if (!queue.length) return true;
+  p = queue.shift();
+  q = queue.shift();
+  if (p && !q || (!p && q))
+    return false;
+  if (p && q) {
+    if (p.val !== q.val)
+      return false;
+    queue.push(p.left, q.left, p.right, q.right);
+  }
+  return isSameTree(null, null, queue);
 };
