@@ -33,20 +33,20 @@ class BinarySearchTree {
 // post-order: explore children first, then visit/push node
 // in-order: explore left, then visited node, then explore right
 
-// // pre-order iterative (can I only do pre-order?)
-// const dfs = root => {
-//   const visited = [];
-//   if (!root) return visited;
+// pre-order iterative (can I only do pre-order?)
+const dfs = root => {
+  const visited = [];
+  if (!root) return visited;
 
-//   const stack = [ root ];
-//   while (stack.length) {
-//     const curr = stack.pop();
-//     if (curr.right) stack.push(curr.right);
-//     if (curr.left) stack.push(curr.left);
-//     visited.push(curr.val);
-//   }
-//   return visited;
-// };
+  const stack = [ root ];
+  while (stack.length) {
+    const curr = stack.pop();
+    if (curr.right) stack.push(curr.right);
+    if (curr.left) stack.push(curr.left);
+    visited.push(curr.val);
+  }
+  return visited;
+};
 
 // // in-order recursive w/ helper
 // const dfs = root => {
@@ -66,19 +66,19 @@ class BinarySearchTree {
 // const dfs = node => {
 //   let visited = [];
 //   if (!node) return visited;
-//   visited = [ ...visited, ...dfs(node.left), ...dfs(node.right) ];
+//   visited = [ ...dfs(node.left), ...dfs(node.right) ];
 //   visited.push(node.val);
 //   return visited;
 // };
 
-// pre-order recursive
-const dfs = (node, visited = []) => {
-  if (!node) return visited;
-  visited.push(node.val);
-  dfs(node.left, visited);
-  dfs(node.right, visited);
-  return visited;
-};
+// // pre-order recursive
+// const dfs = (node, visited = []) => {
+//   if (!node) return visited;
+//   visited.push(node.val);
+//   dfs(node.left, visited);
+//   dfs(node.right, visited);
+//   return visited;
+// };
 
 const bst = new BinarySearchTree();
 bst.insert(10);
@@ -96,5 +96,5 @@ const res = dfs(bst.root);
 const postOrder = JSON.stringify([ 2, 6, 9, 8, 3, 12, 16, 18, 19, 14, 10 ]);
 const preOrder = JSON.stringify([ 10, 3, 2, 8, 6, 9, 14, 12, 19, 18, 16 ]);
 const inOrder = JSON.stringify([ 2, 3, 6, 8, 9, 10, 12, 14, 16, 18, 19 ]);
-console.log( JSON.stringify(res) === preOrder );
+console.log( JSON.stringify(res) === postOrder );
 // console.log(res);

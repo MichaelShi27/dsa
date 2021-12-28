@@ -26,18 +26,16 @@ const isSameTree = (p, q) => {
 };
 
 // dfs iterative
-var isSameTree = function(p, q) {
+const isSameTree = (p, q) => {
   const stack = [ p, q ];
   while (stack.length) {
     q = stack.pop();
     p = stack.pop();
-    if (p && !q || (!p && q))
-      return false;
     if (!p && !q)
       continue;
-    if (p.val !== q.val)
+    if (p && !q || (!p && q) || p.val !== q.val)
       return false;
-    stack.push(p.left, q.left, p.right, q.right);
+    stack.push(p.right, q.right, p.left, q.left);
   }
   return true;
 };
