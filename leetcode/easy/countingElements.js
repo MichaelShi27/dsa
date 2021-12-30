@@ -48,5 +48,29 @@ const countElements = nums => {
   return count;
 };
 
+// one-pass solution
+const countElements1 = arr => {
+  const obj = {};
+  let count = 0;
 
+  for (let el of arr) {
+    obj[el] = 1 + (obj[el] || 0);
+    if (obj[el + 1])
+      count++;
+    if (obj[el - 1] && obj[el] === 1)
+      count += obj[el - 1];
+  }
+  return count;
+};
 
+const test = func => {
+  console.log( func([1,2,3]) === 2 );
+  console.log( func([1,1,3,3,5,5,7,7]) === 0 );
+  console.log( func([1,3,2,3,5,0]) === 3 );
+  console.log( func([1,1,2,2]) === 2 );
+  console.log( func([1,1,2]) === 2 );
+  console.log( func([1,2,3,1]) === 3 );
+  console.log( func([1,1,1,2,1,1]) === 5 );
+};
+
+test(countElements1);
