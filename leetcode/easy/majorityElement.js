@@ -103,3 +103,26 @@ const majorityElement5 = nums => {
 const arr = [ 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 ];
 console.log(majorityElement6(arr));
 
+
+// recursive boyer-moore algo => see LC solution tab
+const majorityElement6 = nums => {
+  const boyerMoore = start => {
+    let ct = 0;
+    let cand = nums[start];
+
+    while (true) {
+      if (start === nums.length - 1)
+        return cand;
+
+      if (nums[start] === cand)
+        ct++;
+      else
+        ct--;
+
+      start++;
+      if (ct === 0)
+        return boyerMoore(start);
+    }
+  };
+  return boyerMoore(0);
+};
