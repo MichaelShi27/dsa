@@ -104,7 +104,7 @@ const arr = [ 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 ];
 console.log(majorityElement6(arr));
 
 
-// recursive boyer-moore algo => see LC solution tab
+// recursive Boyer-Moore algo => see LC solution tab
 const majorityElement6 = nums => {
   const boyerMoore = start => {
     let ct = 0;
@@ -126,3 +126,21 @@ const majorityElement6 = nums => {
   };
   return boyerMoore(0);
 };
+
+// iterative Boyer-Moore
+const majorityElement7 = nums => {
+  let ct = 0;
+  let cand;
+  for (const num of nums) {
+    if (ct === 0)
+      cand = num;
+    ct += cand === num ? 1 : -1;
+  }
+  return cand;
+};
+
+// const arr = [7, 7, 5, 7, 5, 1, 5, 7, 5, 5, 7, 7, 7, 7, 7, 7];
+// const arr = [7, 7, 5, 7, 5, 1, 5, 7, 5, 5, 7, 7, 5, 5, 5, 5];
+const arr = [ 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 ];
+
+console.log(majorityElement6(arr));
