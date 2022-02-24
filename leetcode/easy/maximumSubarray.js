@@ -7,21 +7,20 @@
 
 // original approach
 const maxSubArray = nums => {
-  let maxSum = -Infinity;
   let curSum = 0;
+  let maxSum = -Infinity;
 
-  for (let start = 0, end = 0; end < nums.length; end++) {
-    curSum += nums[end];
-    maxSum = Math.max(maxSum, curSum);
-    if (curSum < 0) {
-      start = end + 1;
+  for (let i = 0; i < nums.length; i++) {
+    curSum += nums[i];
+    maxSum = Math.max(curSum, maxSum);
+    if (curSum <= 0)
       curSum = 0;
-    }
   }
   return maxSum;
 };
 
 // Kadane's algorithm (simple example of dynamic programming)
+// - actually quite similar to above solution, just abstracting the logic, e.g. num is just  0 + num
 const maxSubArray = nums => {
   let maxSum = -Infinity;
   let curSum = 0;
