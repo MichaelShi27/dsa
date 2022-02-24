@@ -20,20 +20,11 @@ const reverseList = head => {
 // O(2n) time, O(1n) space
 const reverseList = head => {
   const arr = [];
-  let cur = head;
-  while (cur) {
+  for (let cur = head; cur; cur = cur.next)
     arr.push(cur);
-    cur = cur.next;
-  }
-  head = arr[arr.length - 1];
-  cur = head;
-  for (let i = arr.length - 2; i >= 0; i--) {
-    const next = arr[i];
-    next.next = null;
-    cur.next = next;
-    cur = cur.next;
-  }
-  return head || null;
+  for (let i = arr.length - 1; i >= 0; i--)
+    arr[i].next = arr[i - 1] || null;
+  return arr[arr.length - 1] || null;
 };
 
 // recursive w/ helper (copied from LC discussion)
