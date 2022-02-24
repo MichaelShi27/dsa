@@ -1,4 +1,7 @@
-var hasCycle = function(head) {
+// 141. Linked List Cycle
+// https://leetcode.com/problems/linked-list-cycle/
+
+const hasCycle = head => {
   if (!head) return false;
 
   let slow = head;
