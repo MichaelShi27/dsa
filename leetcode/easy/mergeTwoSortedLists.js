@@ -21,3 +21,17 @@ const mergeTwoLists = (l1, l2) => {
   return prehead.next;
 };
 
+// pure recursive
+const mergeTwoLists = (l1, l2) => {
+  if (!l1 || !l2) return l1 || l2;
+  let cur = new ListNode(null);
+
+  if (l1.val < l2.val) {
+    cur.next = l1;
+    cur.next.next = mergeTwoLists(l1.next, l2);
+  } else {
+    cur.next = l2;
+    cur.next.next = mergeTwoLists(l1, l2.next);
+  }
+  return cur.next;
+};
