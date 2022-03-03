@@ -42,6 +42,37 @@ const travel = (dir, [ row, col ]) => {
   return [ row + vertShift, col + horizShift ];
 };
 
-
 // can do something more abstract e.g. 'dir' is a num & 'nextDirs' already keeps track of
 // vertShift/horizShift, e.g. [ [ 0, 1 ], [ 1, 0 ] [ 0, -1 ], [ -1, 0 ] ]
+// can also use boundary vars for const space
+
+
+// from LC Discussion tab
+// m * n time, const space
+const spiralOrder = matrix => {
+  let [ left, right, top, bot ] = [ 0, matrix[0].length - 1, 0, matrix.length - 1 ];
+  const res = [];
+
+  while (left <= right && top <= bot) {
+    for (let i = left; i <= right; i++) // travel right, across top
+      res.push(matrix[top][i])
+    top++; // "lower" the top boundary
+
+    for (let i = top; i <= bot; i++)
+      res.push(matrix[i][right])
+    right--;
+
+    if (top <= bot) {
+      for (let i = right; i >= left; i--)
+        res.push(matrix[bot][i])
+      bot--;
+    }
+
+    if (left <= right) {
+      for (let i = bot; i >= top; i--)
+        res.push(matrix[i][left])
+      left++;
+    }
+  }
+  return res;
+};
