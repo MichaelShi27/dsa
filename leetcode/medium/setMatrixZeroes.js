@@ -51,10 +51,8 @@ const setZeroes = matrix => {
   // fill rows & cols
   for (let c = 1; c < matrix[0].length; c++)
     for (let r = 1; r < matrix.length; r++) {
-      if (matrix[r][0] === 0 || matrix[0][c] === 0) {
+      if (matrix[r][0] === 0 || matrix[0][c] === 0)
         matrix[r][c] = 0;
-      }
-    }
 
   // fill 1st row & col if needed
   if (firstRowHasZero)
