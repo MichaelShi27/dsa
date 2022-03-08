@@ -1,59 +1,36 @@
-// Given a string s, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+// 125. Valid Palindrome
+// https://leetcode.com/problems/valid-palindrome/
 
-// Example 1:
+const isAlphanumeric = char => {
+  const code = char.charCodeAt();
+  return (code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
+};
 
-// Input: s = "A man, a plan, a canal: Panama"
-// Output: true
-// Explanation: "amanaplanacanalpanama" is a palindrome.
-// Example 2:
+// split in half & reverse one half (can also reverse & compare entire str)
+// n time, n space
+const isPalindrome = s => {
+  const arr = [];
+  for (const char of s)
+    if ( isAlphanumeric(char) )
+      arr.push( char.toLowerCase() );
+  const str = arr.join('');
 
-// Input: s = "race a car"
-// Output: false
-// Explanation: "raceacar" is not a palindrome.
+  const mid = Math.floor(str.length / 2);
+  const firstHalf = str.slice(0, mid);
+  const secondHalf = str.slice( str.length % 2 === 0 ? mid : mid + 1 );
 
-
-// Constraints:
-
-// 1 <= s.length <= 2 * 105
-// s consists only of printable ASCII characters.
-
-// split in half & reverse
-// const isPalindrome = s => {
-//   let str = '';
-//   const obj = {
-//     a: true, b: true, c: true, d: true, e: true, f: true, g: true, h: true, i: true,
-//     j: true, k: true, l: true, m: true, n: true, o: true, p: true, q: true, r: true,
-//     s: true, t: true, u: true, v: true, w: true, x: true, y: true, z: true, 1: true,
-//     2: true, 3: true, 4: true, 5: true, 6: true, 7: true, 8: true, 9: true, 0: true
-//   };
-
-//   for (let i = 0; i < s.length; i++) {
-//     if ( obj[s[i]] || obj[s[i].toLowerCase()] )
-//       str = `${str}${s[i].toLowerCase()}`;
-//   }
-
-//   const half = Math.floor(str.length / 2);
-//   const s1 = str.slice(0, half);
-//   const s2 = str.length % 2 === 0 ? str.slice(half) : str.slice(half + 1);
-
-//   return s1 === s2.split('').reverse().join('');
-// };
+  return firstHalf === secondHalf.split('').reverse().join('');
+};
 
 // two pointers
+// n time, const space
 const isPalindrome = s => {
-  const obj = {
-    a: true, b: true, c: true, d: true, e: true, f: true, g: true, h: true, i: true,
-    j: true, k: true, l: true, m: true, n: true, o: true, p: true, q: true, r: true,
-    s: true, t: true, u: true, v: true, w: true, x: true, y: true, z: true, 1: true,
-    2: true, 3: true, 4: true, 5: true, 6: true, 7: true, 8: true, 9: true, 0: true
-  };
-
   for (let p = 0, q = s.length - 1; p < q; p++, q--) {
-    if (!obj[s[p]] && !obj[s[p].toLowerCase()]) {
-      q++;
+    if (!isAlphanumeric(s[p])) {
+      q++; // since the last condition in for-loop declaration will still run
       continue;
     }
-    if (!obj[s[q]] && !obj[s[q].toLowerCase()]) {
+    if (!isAlphanumeric(s[q])) {
       p--;
       continue;
     }
@@ -64,6 +41,7 @@ const isPalindrome = s => {
 };
 
 // slightly different two-pointer approach => faster, even though I build new str
+// n time, n space
 const isPalindrome = s => {
   let str = '';
   for (let char of s)
