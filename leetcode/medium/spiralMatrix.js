@@ -62,6 +62,9 @@ const spiralOrder = matrix => {
       res.push(matrix[i][right])
     right--;
 
+    // the if-statements for the next 2 loops are for the very end
+    // the while-loop condition checks for the 1st 2 loops, but then
+    // the 1st 2 loops alter 'top' & 'right' so that's why we check again below
     if (top <= bot) {
       for (let i = right; i >= left; i--)
         res.push(matrix[bot][i])
