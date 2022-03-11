@@ -1,58 +1,47 @@
 // 844. Backspace String Compare
 // https://leetcode.com/problems/backspace-string-compare/submissions/
 
-// // Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
-
-// // Note that after backspacing an empty text, the text will continue empty.
-
-
-
-// // Example 1:
-
-// // Input: s = "ab#c", t = "ad#c"
-// // Output: true
-// // Explanation: Both s and t become "ac".
-// // Example 2:
-
-// // Input: s = "ab##", t = "c#d#"
-// // Output: true
-// // Explanation: Both s and t become "".
-// // Example 3:
-
-// // Input: s = "a##c", t = "#a#c"
-// // Output: true
-// // Explanation: Both s and t become "c".
-// // Example 4:
-
-// // Input: s = "a#c", t = "b"
-// // Output: false
-// // Explanation: s becomes "c" while t becomes "b".
-
-
-// // Constraints:
-
-// // 1 <= s.length, t.length <= 200
-// // s and t only contain lowercase letters and '#' characters.
-
 
 // // stacks
-// var backspaceCompare = function(s, t) {
-//   const stack1 = [];
-//   const stack2 = [];
+// // max(m, n) time, m + n space
+// const backspaceCompare = (s, t) => {
+//   const sStack = [];
+//   const tStack = [];
 
-//   let len = Math.max(s.length, t.length);
+//   for (let i = 0; i < Math.max(s.length, t.length); i++) {
+//     if (s[i] === '#')
+//       sStack.pop();
+//     else
+//       sStack.push(s[i]);
 
-//   for (let i = 0; i < len; i++) {
-//       if (s[i] === '#') stack1.pop();
-//       else stack1.push(s[i]);
-
-//       if (t[i] === '#') stack2.pop();
-//       else stack2.push(t[i]);
+//     if (t[i] === '#')
+//       tStack.pop();
+//     else
+//       tStack.push(t[i]);
 //   }
-//   return stack1.join('') === stack2.join('');
+//   return sStack.join('') === tStack.join('');
 // };
 
+
+// m + n time, m + n space
+// str-building backwards
+const backspaceCompare = (s, t) => {
+  const editStr = str => {
+    let res = '';
+    let ct = 0;
+    for (let i = str.length - 1; i >= 0; i--)
+      if (str[i] === '#')
+        ct++;
+      else
+        ct ? ct-- : res += str[i];
+    return res;
+  }
+
+  return editStr(s) === editStr(t);
+};
+
 // // 2-pointer approach
+// // max(m, n) time, const space
 const backspaceCompare1 = (s, t) => {
   let sCount = 0;
   let tCount = 0;
@@ -84,7 +73,7 @@ const backspaceCompare1 = (s, t) => {
     if (s[i--] !== t[j--]) return false;
   }
   return true;
-}
+};
 
 // alt 2-pointer
 const backspaceCompare2 = (s, t) => {
@@ -120,8 +109,8 @@ const backspaceCompare2 = (s, t) => {
   return true;
 }
 
-// like backspaceCompare1 but w/ a for-loop
-var backspaceCompare3 = function(s, t) {
+// like backspaceCompare1 but w/ a for-loop & no continue statements
+const backspaceCompare3 = (s, t) => {
   for (let i = s.length - 1, j = t.length - 1, sCt = 0, tCt = 0; i >= 0 || j >= 0; i--, j--) {
     while (s[i] === '#') {
       sCt++;
@@ -152,44 +141,69 @@ var backspaceCompare3 = function(s, t) {
   return true;
 };
 
-// naive approach => best case O(2n) time but performs quite well on LC tests?
-var backspaceCompare4 = function(s, t) {
-  let newS = '', newT = '';
-  let ct = 0;
 
-  for (let i = s.length - 1; i >= 0; i--)
-    if (s[i] === '#')
-      ct++;
-    else
-      ct ? ct-- : newS += s[i];
+// another 2 ptr approach, easier to understand
+const backspaceCompare4 = (s, t) => {
+  let sCt = 0, tCt = 0;
+  let sPtr = s.length - 1, tPtr = t.length - 1;
 
-  ct = 0;
-  for (let i = t.length - 1; i >= 0; i--)
-    if (t[i] === '#')
-      ct++;
-    else
-      ct ? ct-- : newT += t[i];
+  while (sPtr >= 0 || tPtr >= 0) {
+    const sChar = s[sPtr];
+    const tChar = t[tPtr];
 
-  return newS === newT;
+    if (sChar === '#') {
+      sCt++;
+      sPtr--;
+      continue;
+    } else if (sCt) {
+      sCt--;
+      sPtr--;
+      continue;
+    }
+
+    if (tChar === '#') {
+      tCt++;
+      tPtr--;
+      continue;
+    } else if (tCt) {
+      tCt--;
+      tPtr--;
+      continue;
+    }
+
+    if (sChar !== tChar)
+      return false;
+    sPtr--;
+    tPtr--;
+  }
+  return true;
 };
 
-// like backspaceCompare4, but going forward => best case O(4n)?
-var backspaceCompare5 = function(s, t) {
-  let newS = [], newT = [];
-  let ct = 0;
+// like backspaceCompare4 but more concise
+const backspaceCompare5 = (s, t) => {
+  let sCt = 0, tCt = 0;
+  let sPtr = s.length - 1, tPtr = t.length - 1;
 
-  for (let i = 0; i < s.length; i++)
-    if (s[i] === '#')
-      newS.length && newS.pop();
-    else
-      newS.push(s[i]);
+  while (sPtr >= 0 || tPtr >= 0) {
+    const sChar = s[sPtr];
+    const tChar = t[tPtr];
 
-  ct = 0;
-  for (let i = 0; i < t.length; i++)
-    if (t[i] === '#')
-      newT.length && newT.pop();
-    else
-      newT.push(t[i]);
+    if (sChar === '#' || sCt) {
+      sChar === '#' ? sCt++ : sCt--;
+      sPtr--;
+      continue;
+    }
 
-  return newS.join('') === newT.join('');
+    if (tChar === '#' || tCt) {
+      tChar === '#' ? tCt++ : tCt--;
+      tPtr--;
+      continue;
+    }
+
+    if (sChar !== tChar)
+      return false;
+    sPtr--;
+    tPtr--;
+  }
+  return true;
 };
