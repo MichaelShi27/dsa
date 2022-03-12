@@ -1,39 +1,38 @@
-// Given two strings s and t, determine if they are isomorphic.
+// 205. Isomorphic Strings
+// https://leetcode.com/problems/isomorphic-strings/
 
-// Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+// obj approach
+// n time, n space
+const isIsomorphic = (s, t) => {
+  const sObj = {};
+  const tObj = {};
 
-// All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.
+  for (let i = 0; i < s.length; i++) {
+    const sChar = s[i];
+    const tChar = t[i];
 
+    if (sObj[sChar] === undefined)
+      sObj[sChar] = tChar;
+    else if (sObj[sChar] !== tChar)
+      return false;
 
+    if (tObj[tChar] === undefined)
+      tObj[tChar] = sChar;
+    else if (tObj[tChar] !== sChar)
+      return false;
+  }
+  return true;
+};
 
-// Example 1:
-
-// Input: s = "egg", t = "add"
-// Output: true
-// Example 2:
-
-// Input: s = "foo", t = "bar"
-// Output: false
-// Example 3:
-
-// Input: s = "paper", t = "title"
-// Output: true
-
-
-// Constraints:
-
-// 1 <= s.length <= 5 * 104
-// t.length == s.length
-// s and t consist of any valid ascii character.
-
-// store each mapping
-var isIsomorphic = function(s, t) {
+// alt obj approach
+// n time, n space
+const isIsomorphic = (s, t) => {
   const sObj = {};
   const tObj = {};
   for (let i = 0; i < s.length; i++) {
     const sChar = s[i];
     const tChar = t[i];
-    if (tObj[sChar] || sObj[tChar]) {
+    if (tObj[sChar] || sObj[tChar]) { // what if only 1 exists? not sure why this works lol
       if (sChar !== sObj[tChar] || tChar !== tObj[sChar])
         return false;
     } else {
@@ -44,26 +43,46 @@ var isIsomorphic = function(s, t) {
   return true;
 };
 
-// alter strings & compare
-var isIsomorphic = function(s, t) {
-  const sObj = {};
+// build new strings based on idx of 1st char occurence, then compare
+// n time, n space
+const isIsomorphic = (s, t) => {
   const tObj = {};
-  s = s.split('');
-  t = t.split('');
+  const sObj = {};
+  const sArr = [];
+  const tArr = [];
 
   for (let i = 0; i < s.length; i++) {
-    if ( sObj[s[i]] !== undefined )
-      s[i] = sObj[s[i]];
-    else {
-      sObj[s[i]] = i;
-      s[i] = i;
-    }
-    if ( tObj[t[i]] !== undefined )
-      t[i] = tObj[t[i]];
-    else {
-      tObj[t[i]] = i;
-      t[i] = i;
-    }
+    const sChar = s[i];
+    const tChar = t[i];
+
+    if (sObj[sChar] === undefined)
+      sObj[sChar] = i;
+    sArr.push(sObj[sChar]);
+
+    if (tObj[tChar] === undefined)
+      tObj[tChar] = i;
+    tArr.push(tObj[tChar]);
   }
-  return s.join(' ') === t.join(' ');
+  return sArr.join(',') === tArr.join(',');
+};
+
+// track idx of 1st char occurrence in obj, compare as we go => can return false early
+// n time, n space
+const isIsomorphic = (s, t) => {
+  const tObj = {};
+  const sObj = {};
+
+  for (let i = 0; i < s.length; i++) {
+    const sChar = s[i];
+    const tChar = t[i];
+
+    if (sObj[sChar] === undefined)
+      sObj[sChar] = i;
+    if (tObj[tChar] === undefined)
+      tObj[tChar] = i;
+
+    if (sObj[sChar] !== tObj[tChar])
+      return false;
+  }
+  return true;
 };
