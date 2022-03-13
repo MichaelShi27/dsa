@@ -1,17 +1,22 @@
-// Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+// 136. Single Number
+// https://leetcode.com/problems/single-number/
 
-// Example 1:
-
-// Input: nums = [2,2,1]
-// Output: 1
-
-const singleNumber = function(nums) {
+// n time, n space
+const singleNumber = nums => {
   const seen = {};
 
-  for (let el of nums)
-    seen[el] = 1 + (seen[el] || 0);
+  for (const num of nums)
+    seen[num] = 1 + (seen[el] || 0);
 
-  for (let key in seen)
+  for (const key in seen)
     if (seen[key] === 1)
       return key;
+};
+
+// n log n time, const space
+const singleNumber = nums => {
+  nums.sort((a, b) => a - b);
+  for (let i = 0; i < nums.length; i += 2)
+    if (nums[i] !== nums[i + 1])
+        return nums[i];
 };
