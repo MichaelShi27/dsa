@@ -7,7 +7,7 @@ const addStrings = (num1, num2) => {
   let sumStr = '';
   const maxLen = Math.max(num1.length, num2.length);
 
-  for (let i = 0; i < maxLen || carry; i++) {
+  for (let i = 0; (i < maxLen) || carry; i++) {
     const char1 = num1[num1.length - 1 - i];
     const char2 = num2[num2.length - 1 - i];
     let curSum = carry + (Number(char1) || 0) + (Number(char2) || 0);
@@ -26,12 +26,10 @@ const addStrings = (num1, num2) => {
 // 2-pointer approach
 // O( max(n, m) )
 const addStrings = (num1, num2) => {
-  let i = num1.length - 1;
-  let j = num2.length - 1;
   let carry = 0;
   let sum = '';
 
-  for (; i >= 0 || j >= 0 || carry; i--, j--) {
+  for (let i = num1.length - 1, j = num2.length - 1; i >= 0 || j >= 0 || carry; i--, j--) {
     const digit1 = num1[i] - '0' || 0;
     const digit2 = num2[j] - '0' || 0;
     const tempSum = digit1 + digit2 + carry;
