@@ -35,25 +35,27 @@
 // 1 <= arr.length <= 1000
 // 0 <= arr[i] <= 1000
 
-// 2n solution
-const countElements = nums => {
-  const obj = {};
-  for (const num of nums)
-    obj[num + 1] = true;
+// // 2n solution
+// const countElements = arr => {
+//   const obj = {};
+//   let ct = 0;
 
-  let count = 0;
-  for (const num of nums)
-    if (obj[num])
-      count++;
-  return count;
-};
+//   for (const num of arr)
+//     obj[num - 1] = true;
+
+//   for (const num of arr)
+//     if (obj[num])
+//       ct++;
+
+//   return ct;
+// };
 
 // one-pass solution
 const countElements1 = arr => {
   const obj = {};
   let count = 0;
 
-  for (let el of arr) {
+  for (const el of arr) {
     obj[el] = 1 + (obj[el] || 0);
     if (obj[el + 1])
       count++;
@@ -61,6 +63,28 @@ const countElements1 = arr => {
       count += obj[el - 1];
   }
   return count;
+};
+
+// convoluted one-pass approach that seems to work
+const countElements = arr => {
+  const obj = {};
+  let ct = 0;
+
+  for (const num of arr) {
+    if (obj[num] === undefined)
+      obj[num] = 0;
+
+    if (obj[num + 1] !== undefined)
+      ct++;
+    else
+      obj[num]++;
+
+    if (obj[num - 1] !== undefined) {
+      ct += obj[num - 1];
+      obj[num - 1] = 0;
+    }
+  }
+  return ct;
 };
 
 const test = func => {
@@ -71,6 +95,7 @@ const test = func => {
   console.log( func([1,1,2]) === 2 );
   console.log( func([1,2,3,1]) === 3 );
   console.log( func([1,1,1,2,1,1]) === 5 );
+  console.log( func([1,1,3,2,3,4,1,1,5,7]) === 8 );
 };
 
-test(countElements1);
+test(countElements);
