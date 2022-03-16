@@ -1,6 +1,7 @@
 // 242. Valid Anagram
 // https://leetcode.com/problems/valid-anagram/
 
+// single obj approach
 // n time, n space
 const isAnagram = (s, t) => {
   if (s.length !== t.length)
@@ -31,11 +32,7 @@ const isAnagram = (s, t) => {
   s.sort();
   t.sort();
 
-  for (let i = 0; i < s.length; i++)
-    if (s[i] !== t[i])
-      return false;
-
-  return true;
+  return s.join('') === t.join('');
 };
 
 // double obj approach
@@ -56,5 +53,23 @@ const isAnagram = (s, t) => {
     if (tObj[key] !== sO[key])
       return false;
 
+  return true;
+};
+
+// alt single obj approach (from Discussion tab)
+// breaks out early
+const isAnagram = (s, t) => {
+  if (t.length !== s.length)
+    return false;
+
+  const obj = {};
+  for (const char of s)
+    obj[char] = 1 + (obj[char] || 0);
+
+  for (const char of t) {
+    if (!obj[char])
+      return false;
+    obj[char]--;
+  }
   return true;
 };
