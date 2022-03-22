@@ -32,4 +32,29 @@ const findTheDifference = (s, t) => {
       return char;
 };
 
+// charCode solution from LC Discussion
+// 2(m + n) time?, m + n space
+// don't use .split() or .reduce() to improve time?
+const findTheDifference = (s, t) => {
+  const sSum = s.split('').reduce((sum, cur) => sum + cur.charCodeAt(0));
+  const tSum = t.split('').reduce((sum, cur) => sum + cur.charCodeAt(0));
+  return String.fromCharCode(tSum - sSum);
+};
 
+// sort solution
+const findTheDifference = (s, t) => {
+  s = s.split('').sort();
+  t = t.split('').sort();
+  return t.find((char, i) => char !== s[i]);
+};
+
+// xor solution
+const findTheDifference = (s, t) => {
+  let sum = t.charCodeAt(t.length - 1);
+
+  for (let i = 0; i < s.length; i++) {
+    sum ^= s.charCodeAt(i);
+    sum ^= t.charCodeAt(i);
+  }
+  return String.fromCharCode(sum);
+};
