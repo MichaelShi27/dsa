@@ -1,62 +1,93 @@
-// Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+// 155. Min Stack
+// https://leetcode.com/problems/min-stack/
 
-// Implement the MinStack class:
-
-// MinStack() initializes the stack object.
-// void push(val) pushes the element val onto the stack.
-// void pop() removes the element on the top of the stack.
-// int top() gets the top element of the stack.
-// int getMin() retrieves the minimum element in the stack.
-
-
-/**
- * initialize your data structure here.
- */
-var MinStack = function() {
+// pushing into mins every time -----------------------------------------------------------
+const MinStack = function() {
   this.stack = [];
-  this.minStack = [];
+  this.mins = [];
 };
 
-/**
-* @param {number} val
-* @return {void}
-*/
-
-// also possible to only push to minStack when there's a new min, not every time
 MinStack.prototype.push = function(val) {
-  this.stack.push(val);
-  let currMin = this.minStack[this.minStack.length - 1];
-  if (!this.minStack.length || val < currMin) this.minStack.push(val);
-  else this.minStack.push(currMin);
+  const { stack, mins } = this;
+  stack.push(val);
+  const curMin = mins.length ? this.getMin() : Infinity;
+  mins.push( Math.min(curMin, val) );
 };
 
-/**
-* @return {void}
-*/
 MinStack.prototype.pop = function() {
-  this.stack.pop();
-  this.minStack.pop();
+  const { mins, stack } = this;
+  mins.pop();
+  return stack.pop();
 };
 
-/**
-* @return {number}
-*/
 MinStack.prototype.top = function() {
-  return this.stack[this.stack.length - 1];
+  const { stack, stack: { length } } = this;
+  return stack[length - 1];
 };
 
-/**
-* @return {number}
-*/
 MinStack.prototype.getMin = function() {
-  return this.minStack[this.minStack.length - 1];
+  const { mins, mins: { length } } = this;
+  return mins[length - 1];
 };
 
-/**
-* Your MinStack object will be instantiated and called as such:
-* var obj = new MinStack()
-* obj.push(val)
-* obj.pop()
-* var param_3 = obj.top()
-* var param_4 = obj.getMin()
-*/
+
+// pushing into mins only when necessary -----------------------------------------------------------
+const MinStack = function() {
+  this.stack = [];
+  this.mins = [];
+};
+
+MinStack.prototype.push = function(val) {
+  const { stack, mins } = this;
+  stack.push(val);
+  const curMin = mins.length ? this.getMin() : Infinity;
+  if (val <= curMin)
+    mins.push(val);
+};
+
+MinStack.prototype.pop = function() {
+  const { mins, stack } = this;
+  const popped = stack.pop();
+  if (popped === this.getMin())
+    mins.pop();
+  return popped;
+};
+
+MinStack.prototype.top = function() {
+  const { stack, stack: { length } } = this;
+  return stack[length - 1];
+};
+
+MinStack.prototype.getMin = function() {
+  const { mins, mins: { length } } = this;
+  return mins[length - 1];
+};
+
+
+// similar to 1st approach but w/ 1 stack -----------------------------------------------------------
+const MinStack = function() {
+  this.stack = [];
+};
+
+MinStack.prototype.push = function(val) {
+  const { stack } = this;
+  stack.push({
+    val,
+    min: stack.length ? Math.min(val, this.getMin()) : val
+  });
+};
+
+MinStack.prototype.pop = function() {
+  const { stack } = this;
+  return stack.pop();
+};
+
+MinStack.prototype.top = function() {
+  const { stack, stack: { length } } = this;
+  return stack[length - 1].val;
+};
+
+MinStack.prototype.getMin = function() {
+  const { stack, stack: { length } } = this;
+  return stack[length - 1].min;
+};
