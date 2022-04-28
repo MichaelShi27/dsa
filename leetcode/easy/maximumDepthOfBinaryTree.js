@@ -1,32 +1,23 @@
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-/**
- * @param {TreeNode} root
- * @return {number}
- */
+// 104. Maximum Depth of Binary Tree
+// https://leetcode.com/problems/maximum-depth-of-binary-tree/
 
-// bfs iterative (inspired by someone else's approach)
+
+// bfs iterative
 const maxDepth = root => {
   if (!root) return 0;
+
   let depth = 0;
   const q = [ root ];
 
   while (q.length) {
     depth++;
-    const len = q.length;
-    for (let i = 0; i < len; i++) {
-      if (q[i].left) q.push(q[i].left);
-      if (q[i].right) q.push(q[i].right);
+    let len = q.length;
+    while (len-- > 0) {
+      const node = q.shift();
+      node.left && q.push(node.left);
+      node.right && q.push(node.right);
     }
-    q.splice(0, len);
   }
-
   return depth;
 };
 
@@ -46,18 +37,20 @@ const maxDepth = root => {
   return curMax;
 };
 
-// old solution
- const maxDepth = (root, depth = 0, currMax = 0) => {
+// recursive top-down?
+const maxDepth = (root, depth = 0) => {
   if (!root) return depth;
+  const leftDepth = maxDepth(root.left, depth + 1);
+  const rightDepth = maxDepth(root.right, depth + 1);
+  return Math.max(leftDepth, rightDepth);
+};
 
-  if (currMax < depth) currMax = depth;
-  let left = maxDepth(root.left, depth + 1, currMax);
-  let right = maxDepth(root.right, depth + 1, currMax);
-
-  let temp = Math.max(left, right);
-  if (currMax < temp) currMax = temp;
-
-  return currMax;
+// recursive bottom-up?
+const maxDepth = root => {
+  if (!root) return 0;
+  const leftDepth = maxDepth(root.left);
+  const rightDepth = maxDepth(root.right);
+  return 1 + Math.max(leftDepth, rightDepth);
 };
 
 // one-line solution
