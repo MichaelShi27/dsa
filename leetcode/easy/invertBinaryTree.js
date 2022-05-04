@@ -1,32 +1,53 @@
+// 226. Invert Binary Tree
 // https://leetcode.com/problems/invert-binary-tree/
-// Given the root of a binary tree, invert the tree, and return its root.
 
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-/**
- * @param {TreeNode} root
- * @return {TreeNode}
- */
+// // recursive
+// const invertTree = root => {
+//   if (root) {
+//     [ root.right, root.left ] = [ root.left, root.right ]; // can combine 3 lines into 1: [ root.right, root.left ] = [ invertTree(root.right), invertTree(root.left) ];
+//     invertTree(root.right);
+//     invertTree(root.left);
+//   }
+//   return root;
+// };
 
+// // recursive one-liner, created new tree/nodes but still passes tests
+// const invertTree = root => root && new TreeNode(root.val, invertTree(root.right), invertTree(root.left));
 
- function TreeNode(val, left, right) {
-  this.val = (val===undefined ? 0 : val)
-  this.left = (left===undefined ? null : left)
-  this.right = (right===undefined ? null : right)
-}
-var invertTree = function(root) {
-  if (!root) return;
-  [ root.left, root.right ] = [ root.right, root.left ];
-  invertTree(root.right);
-  invertTree(root.left);
+// iterative DFS
+const invertTree = root => {
+  const stack = [ root ];
+
+  while (stack.length) {
+    const cur = stack.pop();
+    if (!cur) continue;
+    [ cur.right, cur.left ] = [ cur.left, cur.right ];
+    stack.push(cur.left, cur.right);
+  }
+
   return root;
 };
+
+// iterative BFS
+const invertTree = root => {
+  const q = [ root ];
+
+  while (q.length) {
+    const cur = q.shift();
+    if (!cur) continue;
+    [ cur.right, cur.left ] = [ cur.left, cur.right ];
+    q.push(cur.left, cur.right);
+  }
+
+  return root;
+};
+
+// test cases
+function TreeNode(val = 0, left = null, right = null) {
+  this.val = val;
+  this.left = left;
+  this.right = right;
+}
 
 const one = new TreeNode(1);
 const three = new TreeNode(3);
@@ -45,5 +66,4 @@ const printTree = (node, arr = []) => {
 };
 
 invertTree(four);
-
-console.log(printTree(four));
+console.log(printTree(four)); // [ 4, 7, 9, 6, 2, 3, 1 ]
