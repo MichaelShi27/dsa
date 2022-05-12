@@ -3,6 +3,7 @@
 
 
 // bfs iterative
+// n time n space
 const maxDepth = root => {
   if (!root) return 0;
 
