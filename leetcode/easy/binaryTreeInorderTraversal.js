@@ -49,3 +49,9 @@ const inorderTraversal = root => {
 //   };
 //   return recurse(root);
 // };
+
+// pure recursive
+// const inorderTraversal = root => {
+//   if (!root) return [];
+//   return [ ...inorder(root.left), root.val, ...inorderTraversal(root.right) ];
+// };
