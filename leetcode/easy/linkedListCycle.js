@@ -1,7 +1,7 @@
 // 141. Linked List Cycle
 // https://leetcode.com/problems/linked-list-cycle/
 
-// floyd's algo (2 pointers/fast & slow/tortois & hare)
+// floyd's algo (2 pointers/fast & slow/tortoise & hare)
 // n time, const space
 const hasCycle = head => {
   if (!head) return false;
@@ -23,7 +23,8 @@ const hasCycle = head => {
   let cur = head;
 
   while (cur) {
-    if (set.has(cur)) return true;
+    if (set.has(cur))
+      return true;
     set.add(cur);
     cur = cur.next;
   }
@@ -34,7 +35,8 @@ const hasCycle = head => {
 const hasCycle = head => {
   let cur = head;
   while (cur) {
-    if (cur.seen) return true;
+    if (cur.seen)
+      return true;
     cur.seen = true;
     cur = cur.next;
   }
