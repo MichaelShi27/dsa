@@ -38,6 +38,14 @@ const reverseList = head => {
   return helper(head, null);
 };
 
+// recursive (copied from LC discussion) - similar to above
+const reverseList = (head, prev = null) => {
+  if (!head) return prev;
+  const next = head.next;
+  head.next = prev;
+  return reverseList(next, head);
+};
+
 // recursive (copied from LC discussion)
 const reverseList = head => {
   if (!head || !head.next) return head;
@@ -47,12 +55,4 @@ const reverseList = head => {
   head.next = null;
 
   return finalHead; // this will be "set" once at the very end of the input list, & passed back up
-};
-
-// recursive (copied from LC discussion)
-const reverseList = (head, prev = null) => {
-  if (!head) return prev;
-  const next = head.next;
-  head.next = prev;
-  return reverseList(next, head);
 };
