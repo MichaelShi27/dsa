@@ -8,3 +8,19 @@ const maxProfit = prices => {
       maxProfit += prices[i + 1] - prices[i];
   return maxProfit;
 };
+
+// less optimal
+const maxProfit = prices => {
+  let boughtAt = null;
+  let sum = 0;
+
+  for (let i = 0; i < prices.length; i++) {
+    const [ cur, next ] = [ prices[i], prices[i + 1] ];
+    if (boughtAt !== null && (next < cur || next === undefined)) {
+      sum += cur - boughtAt;
+      boughtAt = null;
+    } else if (boughtAt === null && next > cur)
+      boughtAt = cur;
+  }
+  return sum;
+};
