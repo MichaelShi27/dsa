@@ -5,19 +5,56 @@
 
 // Given a string s, find the length of the longest substring without repeating characters.
 
+// optimal - keep track of indices
 const lengthOfLongestSubstring = str => {
   let longest = 0;
   const seen = {};
 
-  for (let i = 0, j = 0; j < str.length; j++) {
-    const char = str[j];
+  for (let start = 0, i = 0; i < str.length; i++) {
+    const char = str[i];
     if (seen[char] !== undefined)
-      i = Math.max(i, seen[char] + 1);
-    seen[char] = j;
-    longest = Math.max(longest, j - i + 1);
+      start = Math.max(start, seen[char] + 1);
+    seen[char] = i;
+    longest = Math.max(longest, i - start + 1);
   }
 
   return longest;
+};
+
+// similar to above
+const lengthOfLongestSubstring = s => {
+  const seen = {};
+  let start = 0;
+  let maxLen = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i];
+    if (seen[char] >= start)
+      start = seen[char] + 1;
+    maxLen = Math.max(maxLen, i - start + 1);
+    seen[char] = i;
+  }
+  return maxLen;
+};
+
+// similar to above 2, but less optimal - doesn't keep track of indices, just # of occurrences
+const lengthOfLongestSubstring = (s) => {
+  const seen = {};
+  let start = 0;
+  let maxLen = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i];
+    seen[char] = ++seen[char] || 1;
+
+    while (seen[char] > 1) {
+      const cur = s[start];
+      seen[cur]--;
+      start++;
+    }
+    maxLen = Math.max(maxLen, i - start + 1);
+  }
+  return maxLen;
 };
 
 // my orig solution
