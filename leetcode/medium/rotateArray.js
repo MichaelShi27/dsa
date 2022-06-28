@@ -45,3 +45,12 @@ const rotate = (nums, k) => {
 
 const arr = [ 1, 2, 3, 4, 5, 6, 7 ];
 console.log( rotate(arr, 3) ); // [ 5, 6, 7, 1, 2, 3, 4 ]
+
+// from LC Discussion - put each el at i + k w/o worrying about bounds, then assign empty beginning portion to out-of-bounds portion
+const rotate = (nums, k) => {
+  for (let i = nums.length - 1; i >= 0; i--)
+    nums[i + k] = nums[i];
+
+  for (let j = k - 1; j >= 0; j--)
+    nums[j] = nums.pop();
+};
