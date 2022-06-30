@@ -3,6 +3,17 @@
 
 
 // sieve of eratosthenes using array
+/*
+2 optimizations:
+- j = i ** 2 instead of j = 2i in inner loop
+  - there's no point in checking below i ** 2 bc all the multiples of i below i ** 2 will have been checked off by earlier cycles. for example, if i = 5,
+    we start at 25. the lower multiples are 10, 15, & 20, aka 5 * 2, 5 * 3, & 5 * 4. these values will have been checked off in the previous iterations
+    of the outer loop, when we checked off all multiples of 2, 3, & 4
+- i < (n ** 0.5) instead of i < n in outer loop
+  - this is sort of building off the logic of the previous optimization. there's no point in even attempting to run iterations of the outer loop once we go past n ** 0.5,
+    since j starts at i ** 2 and has to be less than n for the inner loop to run. if i > n ** 0.5, i ** 2 will be greater than n & the inner loop won't run, thus we can
+    just save the trouble & cut off the outer loop once i hits that point
+*/
 const countPrimes = n => {
   const arr = new Array(n);
 
