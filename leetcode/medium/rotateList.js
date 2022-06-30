@@ -1,25 +1,62 @@
 // 61. Rotate List
 // https://leetcode.com/problems/rotate-list/
 
+// from LC discussion - doesn't make LL circular immediately, but similar logic
+const rotateRight5 = (head, k) => {
+  if (!head || !head.next) return head;
+	let count = 0,
+		  ptr = head;
+
+	//Step 1 of the algo, count list nodes
+	while (ptr) {
+		count++;
+		ptr = ptr.next;
+	}
+
+	//Step 2: Number of rotations are now restricted within limit
+	k = k % count;
+	let prev = head;
+	ptr = head;
+
+	//Step 3: Moving one pointer k positions ahead
+	while (k--) {
+		ptr = ptr.next;
+	}
+
+	//Step 4: The actual magic, explained above
+	while (ptr.next) {
+		prev = prev.next;
+		ptr = ptr.next;
+	}
+
+	//Step 5: Simply modifying the head and last node
+	ptr.next = head;
+	head = prev.next;
+	prev.next = null;
+	return head;
+};
+
 // O(2n) - similar to rotateRight3, but only need to move a tail ptr in while loop, then move head ptr afterwards
 const rotateRight4 = (head, k) => {
   if (!head || !head.next) return head;
 
   let cur = head;
   let len = 1;
-  while (cur.next) { // find tail & length
+  while (cur.next) {
     cur = cur.next;
     len++;
   }
-  let tail = cur;
-  tail.next = head; // make list circular
-  k = len - (k % len) - 1;
 
-  let newTail = head;
-  while (k !== len && k-- > 0)
-    newTail = newTail.next;
-  head = newTail.next;
-  newTail.next = null;
+  let tail = cur;
+  tail.next = head; // make it circular
+
+  k %= len;
+  let rounds = len - k;
+  while (rounds--)
+    tail = tail.next;
+
+  head = tail.next;
+  tail.next = null;
 
   return head;
 };
@@ -94,7 +131,9 @@ const rotateLeft = (head, k) => {
   return head;
 };
 
-// O( (k % n) * n + n )? worst case is if k % n is n - 1, so time is (n - 1) * n
+
+// naive
+// O( (k % n) * n )? worst case is if k % n is n - 1, so time is (n - 1) * n
 const rotateRight1 = (head, k) => {
   if (!head || !head.next) return head;
 
