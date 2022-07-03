@@ -8,15 +8,15 @@
 
 // A subarray is a contiguous subsequence of the array.
 
-const maxProduct = arr => {
+const maxProduct = nums => {
   let curMaxProd = 1;
   let curMinProd = 1;
-  let overallMaxProd = arr[0];
+  let overallMaxProd = nums[0];
 
-  for (let el of arr) {
+  for (const num of nums) {
     const temp = curMaxProd;
-    curMaxProd = Math.max(el, el * curMaxProd, el * curMinProd);
-    curMinProd = Math.min(el, el * temp, el * curMinProd);
+    curMaxProd = Math.max(num, num * curMaxProd, num * curMinProd);
+    curMinProd = Math.min(num, num * temp, num * curMinProd);
     overallMaxProd = Math.max(overallMaxProd, curMaxProd);
   }
   return overallMaxProd;
