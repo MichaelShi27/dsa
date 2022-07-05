@@ -3,8 +3,6 @@
 // 209. Minimum Size Subarray Sum
 // https://leetcode.com/problems/minimum-size-subarray-sum/
 
-// Given an array of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray [numsl, numsl+1, ..., numsr-1, numsr] of which the sum is greater than or equal to target. If there is no such subarray, return 0 instead.
-
 const minSubArrayLen = (target, arr) => {
   let minLength = Infinity;
   let currSum = 0;
@@ -26,20 +24,17 @@ const minSubArrayLen = (target, arr) => {
 
 
 // alternate-but-similar approach
-const minSubArrayLen = (target, arr) => {
-  let minLength = Infinity;
+const minSubArrayLen = (target, nums) => {
+  let minLen = Infinity;
 
-  let i = 0;
-  let curSum = 0;
-
-  for (let j = 0; j < arr.length; j++) {
-    curSum += arr[j];
-
-    while (curSum >= target) {
-      minLength = Math.min(minLength, j - i + 1);
-      curSum -= arr[i];
-      i++;
+  for (let left = 0, right = 0, sum = 0; right < nums.length; right++) {
+    if (nums[right] >= target) return 1;
+    sum += nums[right];
+    while (sum >= target) {
+      minLen = Math.min(minLen, right - left + 1);
+      sum -= nums[left];
+      left++;
     }
   }
-  return minLength === Infinity ? 0 : minLength;
+  return minLen === Infinity ? 0 : minLen;
 };
