@@ -3,9 +3,10 @@
 
 // don't actually need a var to keep track of longest substr len, we can just return substr size at the end
 // see https://leetcode.com/problems/longest-repeating-character-replacement/discuss/872604/99-Javascript-Solution-with-Explanation
+// I believe this is only possible with the if-statement instead of while-loop - this means the size of substr will never get smaller, since q and p will increase by 1 each time,
+// so at the end, q - p will still be the largest substr you found
 const characterReplacement4 = (str, k) => {
   const obj = {};
-  let longestSubstrLen = 0;
   let mostCommonCharCt = 0;
   let p = 0;
   let q = 0;
@@ -33,7 +34,7 @@ const characterReplacement3 = (str, k) => {
     obj[str[q]] = ++obj[str[q]] || 1;
     mostCommonCharCt = Math.max( mostCommonCharCt, obj[str[q]] );
 
-    if ((q - p + 1) - mostCommonCharCt > k) {
+    while ((q - p + 1) - mostCommonCharCt > k) {
       obj[str[p]]--;
       p++;
     }
