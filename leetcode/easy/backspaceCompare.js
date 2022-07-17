@@ -40,6 +40,37 @@ const backspaceCompare = (s, t) => {
   return editStr(s) === editStr(t);
 };
 
+// 2 ptr approach w/ helper func
+// max(m, n) time, const space
+const backspaceCompare = (s, t) => {
+  let sCt = 0, tCt = 0;
+  let i = s.length - 1, j = t.length - 1;
+
+  for (i >= 0 || j >= 0) {
+    i = skipBackspaces(s, i);
+    j = skipBackspaces(t, j);
+    if (s[i] !== t[j])
+        return false;
+    i--;
+    j--;
+  }
+  return true;
+};
+
+const skipBackspaces = (str, idx) => {
+  let ct = 0;
+  while (idx >= 0) {
+    if (str[idx] === '#')
+      ct++;
+    else if (ct > 0)
+      ct--;
+   else
+      break;
+    idx--;
+  }
+  return idx;
+};
+
 // // 2-pointer approach
 // // max(m, n) time, const space
 const backspaceCompare1 = (s, t) => {
@@ -207,3 +238,7 @@ const backspaceCompare5 = (s, t) => {
   }
   return true;
 };
+
+const s = 'zsabc'
+const t = 'z#s###abc'
+console.log( backspaceComparez(s, t) );
