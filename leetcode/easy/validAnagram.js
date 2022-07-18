@@ -2,7 +2,7 @@
 // https://leetcode.com/problems/valid-anagram/
 
 // single obj approach
-// n time, n space
+// n time, const space (since max of 26 keys in obj)
 const isAnagram = (s, t) => {
   if (s.length !== t.length)
     return false;
@@ -50,7 +50,7 @@ const isAnagram = (s, t) => {
     tObj[char] = ++tObj[char] || 1;
 
   for (const key in sObj)
-    if (tObj[key] !== sO[key])
+    if (tObj[key] !== sObj[key])
       return false;
 
   return true;

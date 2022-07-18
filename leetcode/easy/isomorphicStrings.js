@@ -2,7 +2,7 @@
 // https://leetcode.com/problems/isomorphic-strings/
 
 // obj approach
-// n time, n space
+// n time, const space (bc fixed max # of keys in objs)
 const isIsomorphic = (s, t) => {
   const sObj = {};
   const tObj = {};
@@ -24,8 +24,21 @@ const isIsomorphic = (s, t) => {
   return true;
 };
 
+// rewrite of above approach
+const isIsomorphic = (s, t) => {
+  const sObj = {}, tObj = {};
+
+  for (let i = 0; i < s.length; i++) {
+    const si = s[i], ti = t[i];
+    sObj[si] = sObj[si] ?? ti;
+    tObj[ti] = tObj[ti] ?? si;
+    if ( (sObj[si] !== ti) || (tObj[ti] !== si) )
+      return false;
+  }
+  return true;
+};
+
 // alt obj approach
-// n time, n space
 const isIsomorphic = (s, t) => {
   const sObj = {};
   const tObj = {};
@@ -67,7 +80,7 @@ const isIsomorphic = (s, t) => {
 };
 
 // track idx of 1st char occurrence in obj, compare as we go => can return false early
-// n time, n space
+// n time, const space
 const isIsomorphic = (s, t) => {
   const tObj = {};
   const sObj = {};

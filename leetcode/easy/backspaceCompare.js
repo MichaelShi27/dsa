@@ -46,11 +46,11 @@ const backspaceCompare = (s, t) => {
   let sCt = 0, tCt = 0;
   let i = s.length - 1, j = t.length - 1;
 
-  for (i >= 0 || j >= 0) {
+  while (i >= 0 || j >= 0) {
     i = skipBackspaces(s, i);
     j = skipBackspaces(t, j);
     if (s[i] !== t[j])
-        return false;
+      return false;
     i--;
     j--;
   }
@@ -60,12 +60,9 @@ const backspaceCompare = (s, t) => {
 const skipBackspaces = (str, idx) => {
   let ct = 0;
   while (idx >= 0) {
-    if (str[idx] === '#')
-      ct++;
-    else if (ct > 0)
-      ct--;
-   else
-      break;
+    if (str[idx] === '#')  ct++;
+    else if (ct > 0) ct--;
+    else break;
     idx--;
   }
   return idx;
