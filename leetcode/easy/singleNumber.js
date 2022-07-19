@@ -20,3 +20,11 @@ const singleNumber = nums => {
     if (nums[i] !== nums[i + 1])
         return nums[i];
 };
+
+// n time, const space
+const singleNumber = nums => {
+  let res = 0;
+  for (const num of nums)
+    res ^= num;
+  return res;
+};

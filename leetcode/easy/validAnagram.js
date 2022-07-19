@@ -36,7 +36,7 @@ const isAnagram = (s, t) => {
 };
 
 // double obj approach
-// n time, n space (or const space since only set # of possible chars?)
+// n time, const space
 const isAnagram = (s, t) => {
   if (s.length !== t.length)
     return false;
