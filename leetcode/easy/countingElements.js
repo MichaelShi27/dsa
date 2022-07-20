@@ -35,7 +35,7 @@
 // 1 <= arr.length <= 1000
 // 0 <= arr[i] <= 1000
 
-// // 2n solution
+// // 2-pass solution
 // const countElements = arr => {
 //   const obj = {};
 //   let ct = 0;
@@ -74,10 +74,10 @@ const countElements = arr => {
     if (obj[num] === undefined)
       obj[num] = 0;
 
-    if (obj[num + 1] !== undefined)
-      ct++;
-    else
+    if (obj[num + 1] === undefined) // this if-else structure replaces the obj[el] === 1 check in above approach
       obj[num]++;
+    else
+      ct++;
 
     if (obj[num - 1] !== undefined) {
       ct += obj[num - 1];
@@ -95,7 +95,8 @@ const test = func => {
   console.log( func([1,1,2]) === 2 );
   console.log( func([1,2,3,1]) === 3 );
   console.log( func([1,1,1,2,1,1]) === 5 );
+  console.log( func([1,1,8,2,7,1,7]) === 5 );
   console.log( func([1,1,3,2,3,4,1,1,5,7]) === 8 );
 };
 
-test(countElements);
+test(countElements1);
