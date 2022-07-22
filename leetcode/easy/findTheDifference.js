@@ -58,3 +58,15 @@ const findTheDifference = (s, t) => {
   }
   return String.fromCharCode(sum);
 };
+
+// alt xor solution
+const findTheDifference = (s, t) => {
+  let xor = 0
+
+  for (const char of s)
+    xor ^= char.charCodeAt();
+  for (const char of t)
+    xor ^= char.charCodeAt();
+
+  return String.fromCharCode(xor);
+};
