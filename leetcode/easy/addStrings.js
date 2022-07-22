@@ -30,8 +30,8 @@ const addStrings = (num1, num2) => {
   let sum = '';
 
   for (let i = num1.length - 1, j = num2.length - 1; i >= 0 || j >= 0 || carry; i--, j--) {
-    const digit1 = num1[i] - '0' || 0;
-    const digit2 = num2[j] - '0' || 0;
+    const digit1 = (num1[i] - '0') || 0;
+    const digit2 = (num2[j] - '0') || 0;
     const tempSum = digit1 + digit2 + carry;
     sum = `${tempSum % 10}${sum}`;
     carry = Math.floor(tempSum / 10);

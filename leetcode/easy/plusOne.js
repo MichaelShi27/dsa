@@ -48,3 +48,34 @@ const plusOne = digits => {
   if (digits[0] === 0) digits.unshift(1);
   return digits;
 };
+
+// uses break statement
+const plusOne = digits => {
+  let carry = 1;
+  for (let i = digits.length - 1; i >= 0; i--) {
+    digits[i] += carry;
+    carry = 0;
+    if (digits[i] === 10) {
+      digits[i] = 0;
+      carry = 1;
+    } else
+      break;
+  }
+  if (carry)
+    digits.unshift(1);
+  return digits;
+};
+
+// uses diff logic - Math.floor & %=
+const plusOne = digits => {
+  let carry = 1;
+  for (let i = digits.length - 1; i >= 0; i--) {
+    digits[i] += carry;
+    carry = Math.floor(digits[i] / 10);
+    if (digits[i] < 10) break;
+    digits[i] %= 10;
+  }
+  if (carry)
+    digits.unshift(1);
+  return digits;
+};
