@@ -2,10 +2,11 @@
 // https://leetcode.com/problems/gas-station/
 
 
+// from NeetCode: https://www.youtube.com/watch?v=lJwbPZGo05A
 // O(2n) time, O(1) space
 const canCompleteCircuit = (stations, costs) => {
   let tank = 0;
-  // this loop & if-statement checks if we have enough gas to make a cycle at all
+  // check if we have enough gas to make a cycle at all
   for (let i = 0; i < costs.length; i++)
     tank += stations[i] - costs[i];
   if (tank < 0) return -1;
@@ -22,7 +23,7 @@ const canCompleteCircuit = (stations, costs) => {
   return startIdx;
 };
 
-// similar to above, but one-pass instead of two
+// similar to above, but one-pass instead of two - we do both loops in above approach at the same time
 const canCompleteCircuit = (stations, costs) => {
   let start = 0;
   let total = 0;
