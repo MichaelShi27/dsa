@@ -41,7 +41,7 @@ const longestCommonSubsequence4 = (str1, str2) => {
 };
 console.log( longestCommonSubsequence4("abc", "def") );
 
-// memoized approach based off Abdul Bari's vid => uses table
+// recursive memoized approach based off Abdul Bari's vid => uses table
 // O(2 * m * n)
 const longestCommonSubsequence3 = (str1, str2) => {
   const dp = [];
@@ -99,4 +99,48 @@ const longestCommonSubsequence1 = (str1, str2) => {
   return str1[0] === str2[0]
     ? 1 + longestCommonSubsequence( str1.slice(1), str2.slice(1) )
     : Math.max( longestCommonSubsequence(str1, str2.slice(1)), longestCommonSubsequence(str1.slice(1), str2) );
+};
+
+// memoization w/ object (from LC Discussion)
+const longestCommonSubsequence0 = (str1, str2) => recurse( str1, str2, str1.length - 1, str2.length - 1, {} );
+
+const recurse = (str1, str2, idx1, idx2, memo) => {
+  if (idx1 < 0 || idx2 < 0) return 0;
+
+  const key = idx1 + '#' + idx2;
+  if (memo[key]) return memo[key];
+
+  let res;
+
+  if (str1[idx1] === str2[idx2])
+    res = 1 + recurse( str1, str2, idx1 - 1, idx2 - 1, memo );
+  else
+    res = Math.max(
+      recurse( str1, str2, idx1, idx2 - 1, memo ),
+      recurse( str1, str2, idx1 - 1, idx2, memo )
+    );
+
+  memo[key] = res;
+  return res;
+};
+
+// iter version of longestCommonSubsequence0
+const longestCommonSubsequence01 = (str1, str2) => {
+  const memo = {};
+
+  for (let i = 0; i < str1.length; i++)
+    for (let j = 0; j < str2.length; j++) {
+      let val;
+
+      if (str1[i] === str2[j])
+        val = 1 + ( memo[`${i - 1}/${j - 1}`] ?? 0 );
+      else
+        val = Math.max(
+          memo[`${i}/${j - 1}`] ?? 0,
+          memo[`${i - 1}/${j}`] ?? 0
+        );
+      memo[`${i}/${j}`] = val;
+    }
+
+  return memo[`${str1.length - 1}/${str2.length - 1}`];
 };
