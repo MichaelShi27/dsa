@@ -11,20 +11,20 @@
 // since all intervals are unique, there will be at least 1 uncovered interval (so we can start left & right at -1)
 
 // O(n log n)
-const removeCoveredIntervals = intervals => {
+const removeCoveredIntervals1 = intervals => {
   intervals.sort((a, b) => a[0] - b[0]);
   // left & right represent the interval that currently covers the most space, where it is still possible that future intervals could fall inside
   let left = -1;
   let right = -1;
   let uncovered = 0;
 
-  for (const [ cur0, cur1 ] of intervals)
-    if (cur1 > right) {
-      if (cur0 > left) {
+  for (const [ curStart, curEnd ] of intervals)
+    if (curEnd > right) {
+      if (curStart > left) {
         uncovered++;
-        left = cur0;
+        left = curStart;
       }
-      right = cur1;
+      right = curEnd;
     }
 
   return uncovered;
@@ -34,7 +34,7 @@ const removeCoveredIntervals = intervals => {
 // in this case, only previous intervals can cover current interval, i.e. current can't ever cover previous ones
 // now we only check cur1, since due to sorting, if cur1 > right we already know cur0 is also greater
 // essentially, this sort eliminates the possibility of = >
-const removeCoveredIntervals = intervals => {
+const removeCoveredIntervals2 = intervals => {
   intervals.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
   let uncovered = 0;
 
@@ -48,8 +48,8 @@ const removeCoveredIntervals = intervals => {
   return uncovered;
 };
 
-// from Discussion page => tracks the covered intervals, rather than uncovered
-const removeCoveredIntervals = intervals => {
+// from Discussion page => tracks the covered intervals, rather than uncovered - note that it sorts 2nd el in reverse order
+const removeCoveredIntervals3 = intervals => {
   intervals.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
 
   let covered = 0;
@@ -68,7 +68,7 @@ const removeCoveredIntervals = intervals => {
 };
 
 // also from Discussion - tracking uncovered, n space
-const removeCoveredIntervals = intervals => {
+const removeCoveredIntervals4 = intervals => {
   intervals.sort((a, b) => b[0] - a[0] || a[1] - b[1]);
 
   const uncovered = [];
@@ -78,7 +78,7 @@ const removeCoveredIntervals = intervals => {
     const [ curStart, curEnd ] = intervals.pop();
     const [ prevStart, prevEnd ] = uncovered[uncovered.length - 1];
 
-    if (curStart >= prevStart && curEnd <= prevEnd) // can simplify this if-else a la 2nd solution
+    if (curStart >= prevStart && curEnd <= prevEnd) // can simplify this if-else a la removeCoveredIntervals2
       continue;
     else
       uncovered.push([ curStart, curEnd ]);
@@ -86,8 +86,8 @@ const removeCoveredIntervals = intervals => {
   return uncovered.length;
 };
 
-// 2nd time - similar to 2nd solution but w/ 2 pointers instead of 1 => I believe the main diff is the sort
-const removeCoveredIntervals = intervals => {
+// 2nd time - similar to removeCoveredIntervals2 but w/ 2 pointers instead of 1 => I believe the main diff is the sort
+const removeCoveredIntervals5 = intervals => {
   intervals.sort((a, b) => a[0] - b[0]);
   let [ bigStart, bigEnd ] = [ null, -1 ]; // can also start at intervals[0], but then have to return uncovered + 1 at end
 
@@ -101,4 +101,40 @@ const removeCoveredIntervals = intervals => {
     }
 
   return uncovered;
+};
+
+const removeCoveredIntervals6 = intervals => {
+  intervals.sort((a, b) => a[0] - b[0]);
+
+  let [ start, end ] = intervals[0];
+  let covered = 0;
+
+  for (let i = 1; i < intervals.length; i++) {
+    const [ curStart, curEnd ] = intervals[i];
+    if (curStart > start && curEnd > end) // if uncovered
+      [ start, end ] = [ curStart, curEnd ];
+    else {
+      covered++;
+      if (end < curEnd) // bottom int covered => update start & end
+        [ start, end ] = [ curStart, curEnd ];
+    }
+  }
+  return intervals.length - covered;
+};
+
+// sorting 2nd els in ascending order
+const removeCoveredIntervals7 = intervals => {
+  intervals.sort( (a, b) => a[0] - b[0] || (a[1] - b[1]) );
+  let [ start, end ] = intervals[0];
+  let covered = 0;
+
+  for (let i = 1; i < intervals.length; i++) {
+      const [ curStart, curEnd ] = intervals[i];
+      if (curStart > start && curEnd > end) // if uncovered
+        start = curStart;
+      else
+        covered++;
+      end = Math.max(curEnd, end);
+  }
+  return intervals.length - covered;
 };
