@@ -40,6 +40,9 @@ const moveZeroes = nums => {
     if (num !== 0)
       nonZeroes.push(num);
 
+  if (nonZeroes.length === 0 || (nonZeroes.length === nums.length)) // not required
+    return nums;
+
   for (let i = 0; i < nums.length; i++)
     nums[i] = nonZeroes[i] || 0;
 };
