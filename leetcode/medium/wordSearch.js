@@ -6,13 +6,11 @@ const exist = (board, word) => {
     if (idx >= word.length) return true;
     board[row][col] = null; // mark position as visited - we'll unmark it at the bottom of this func if full word isn't found
 
-    let found = false;
     const neighbors = [ [ row + 1, col ], [ row - 1, col ], [ row, col + 1 ], [ row, col - 1 ] ];
     for (const [ r, c ] of neighbors)
-      if ( checkNeighbor(r, c, word[idx]) ) {
-        found = search(r, c, idx + 1);
-        if (found) return found;
-      }
+      if (checkNeighbor(r, c, word[idx]))
+        if (search(r, c, idx + 1))
+          return true;
     board[row][col] = word[idx - 1];
     return false;
   };
@@ -21,8 +19,7 @@ const exist = (board, word) => {
     if (
       r >= board.length || r < 0 ||
       c >= board[0].length || c < 0 ||
-      board[r][c] === null || // we've already visited
-      board[r][c] !== char
+      board[r][c] !== char // this will trigger if it's null i.e. already visited
     ) return false;
     return true;
   };
@@ -42,14 +39,12 @@ const exist = (board, word) => {
     if (board[row][col] !== word[idx]) return false; // this is a check for idx 0
     board[row][col] = null;
 
-    let found = false;
     const neighbors = [ [ row + 1, col ], [ row - 1, col ], [ row, col + 1 ], [ row, col - 1 ] ];
     for (const [ r, c ] of neighbors) {
       if (idx === word.length - 1) return true; // need this line
-      if ( checkNeighbor(r, c, word[idx + 1]) ) {
-        found = search(r, c, idx + 1);
-        if (found) return found;
-      }
+      if ( checkNeighbor(r, c, word[idx + 1]) )
+        if (search(r, c, idx + 1))
+          return true;
     }
     board[row][col] = word[idx];
     return false;
@@ -59,7 +54,6 @@ const exist = (board, word) => {
     if (
       r >= board.length || r < 0 ||
       c >= board[0].length || c < 0 ||
-      board[r][c] === null || // we've already visited
       board[r][c] !== char
     ) return false;
     return true;
@@ -69,5 +63,37 @@ const exist = (board, word) => {
     for (let col = 0; col < board[0].length; col++)
       if (search(row, col, 0))
         return true;
+  return false;
+};
+
+
+// using 2 funcs total, idea is similar
+const exist = (board, word) => {
+  for (let r = 0; r < board.length; r++)
+    for (let c = 0; c < board[0].length; c++)
+      if (board[r][c] === word[0])
+        if (checkNeighbors( board, r, c, word ))
+          return true;
+  return false;
+};
+
+const checkNeighbors = (board, r, c, word) => {
+  if (word.length === 0) return true;
+  if (
+    r < 0 || r >= board.length ||
+    c < 0 || c >= board[0].length ||
+    board[r][c] !== word[0]
+  ) return false;
+
+  board[r][c] = null;
+  
+  const neighbors = [
+    [ r + 1, c ], [ r, c + 1 ],
+    [ r - 1, c ], [ r,  c - 1 ]
+  ];
+  for (const [ row, col ] of neighbors)
+    if (checkNeighbors( board, row, col, word.slice(1) ))
+      return true;
+  board[r][c] = word[0];
   return false;
 };
