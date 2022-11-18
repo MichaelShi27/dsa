@@ -5,10 +5,11 @@
 // n time, n space
 /*
 - 3 possibilities for if/else-if/else:
-  - newInt ends before cur (after which we're basically done & can return early)
+  - newInt ends before cur (after which we're basically done & can return here)
   - newInt ends after cur (in which case we worry about it later)
   - newInt and cur overlap somehow (merge the 2 into newInt using Math.max & Math.min)
-- consider if 'intervals' is empty or if we never hit 1st option (i.e. we finish loop still merging intervals) => push newInt at end
+- consider if 'intervals' is empty (or len 1 & newInt doesn't overlap), 
+  or if we never hit 1st option (i.e. we finish loop still merging intervals) => simply push newInt at end
 */
 const insert = (intervals, newInterval) => {
   let [ newStart, newEnd ] = newInterval;
