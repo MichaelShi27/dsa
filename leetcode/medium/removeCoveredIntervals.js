@@ -48,25 +48,6 @@ const removeCoveredIntervals2 = intervals => {
   return uncovered;
 };
 
-// from Discussion page => tracks the covered intervals, rather than uncovered - note that it sorts 2nd el in reverse order
-const removeCoveredIntervals3 = intervals => {
-  intervals.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
-
-  let covered = 0;
-
-  // prev is basically [ left, right ] i.e. last uncovered => like above solution, if cur is uncovered we update, always keeping track of last uncovered
-  for (let prev = 0, cur = 1; cur < intervals.length; cur++) {
-    const [ prevStart, prevEnd ] = intervals[prev];
-    const [ curStart, curEnd ] = intervals[cur];
-
-    if (prevStart <= curStart && prevEnd >= curEnd)
-      covered++;
-    else
-      prev = cur;
-  }
-  return intervals.length - covered;
-};
-
 // also from Discussion - tracking uncovered, n space
 const removeCoveredIntervals4 = intervals => {
   intervals.sort((a, b) => b[0] - a[0] || a[1] - b[1]);
@@ -129,12 +110,28 @@ const removeCoveredIntervals7 = intervals => {
   let covered = 0;
 
   for (let i = 1; i < intervals.length; i++) {
-      const [ curStart, curEnd ] = intervals[i];
-      if (curStart > start && curEnd > end) // if uncovered
-        start = curStart;
-      else
-        covered++;
-      end = Math.max(curEnd, end);
+    const [ curStart, curEnd ] = intervals[i];
+    if (curStart > start && curEnd > end) // if uncovered
+      start = curStart;
+    else
+      covered++;
+    end = Math.max(curEnd, end);
   }
+  return intervals.length - covered;
+};
+
+// 3rd time - best => sort by both els (ends in reverse), then just use 1 ptr
+const removeCoveredIntervals8 = intervals => {
+  intervals.sort( (a, b) => a[0] - b[0] || (b[1] - a[1]) );
+
+  let end = -1; // since we know all els will be pos (we can also init at intervals[0][1] & start loop at intervals[1])
+  let covered = 0;
+
+  for (const [ , curEnd ] of intervals)
+    if (curEnd <= end) // if covered
+      covered++;
+    else
+      end = curEnd;
+
   return intervals.length - covered;
 };
