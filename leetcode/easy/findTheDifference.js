@@ -2,7 +2,7 @@
 // https://leetcode.com/problems/find-the-difference/
 
 // obj approach
-// max(m, n) time, n space
+// n time, n space
 const findTheDifference = (s, t) => {
   const o = {};
   for (let i = 0; i < t.length; i++) {
